@@ -6,7 +6,7 @@ using namespace std;
 
 class Output {
 private:
-	string _message;
+	string _outputMessage;
 
 public:
 	Output(void);

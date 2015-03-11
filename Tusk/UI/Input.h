@@ -6,9 +6,12 @@ using namespace std;
 
 class Input {
 private:
-	string _command;
+	string _inputCommand;
 
 public:
 	Input(void);
 	~Input(void);
+
+	void inputCommand(string);
+	string getInputCommand();
 };
