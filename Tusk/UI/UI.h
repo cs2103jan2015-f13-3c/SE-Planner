@@ -5,10 +5,13 @@
 
 class UI {
 private:
-	Input _input(void);
-	Output _output(void);
+	Input _input;
+	Output _output;
 
 public:
 	UI(void);
 	~UI(void);
+
+	void inputCommand(string);
+	string getCommand();
 };
