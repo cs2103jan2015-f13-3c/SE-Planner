@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tusk", "Tusk\Tusk.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UI", "UI\UI.vcxproj", "{FA6C9E53-CA8C-4C2D-BA08-B619ABDBE921}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Parser", "Parser\Parser.vcxproj", "{4EF329FC-C9FD-4C52-A340-A265E7AE8324}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +21,10 @@ Global
 		{FA6C9E53-CA8C-4C2D-BA08-B619ABDBE921}.Debug|Win32.Build.0 = Debug|Win32
 		{FA6C9E53-CA8C-4C2D-BA08-B619ABDBE921}.Release|Win32.ActiveCfg = Release|Win32
 		{FA6C9E53-CA8C-4C2D-BA08-B619ABDBE921}.Release|Win32.Build.0 = Release|Win32
+		{4EF329FC-C9FD-4C52-A340-A265E7AE8324}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4EF329FC-C9FD-4C52-A340-A265E7AE8324}.Debug|Win32.Build.0 = Debug|Win32
+		{4EF329FC-C9FD-4C52-A340-A265E7AE8324}.Release|Win32.ActiveCfg = Release|Win32
+		{4EF329FC-C9FD-4C52-A340-A265E7AE8324}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
