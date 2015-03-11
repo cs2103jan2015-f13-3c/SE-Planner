@@ -13,5 +13,5 @@ public:
 	~Input(void);
 
 	void inputCommand(string);
-	string getInputCommand();
+	string getInputedCommand();
 };
