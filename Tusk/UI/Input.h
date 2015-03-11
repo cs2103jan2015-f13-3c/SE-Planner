@@ -6,7 +6,7 @@ using namespace std;
 
 class Input {
 private:
-	string _inputCommand;
+	string _inputedCommand;
 
 public:
 	Input(void);
