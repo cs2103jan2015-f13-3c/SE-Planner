@@ -66,11 +66,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Task.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\UI\UI.vcxproj">
       <Project>{fa6c9e53-ca8c-4c2d-ba08-b619abdbe921}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Task.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
