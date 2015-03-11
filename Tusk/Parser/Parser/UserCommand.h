@@ -8,6 +8,6 @@ public:
 	UserCommand(string userInput);
 	~UserCommand(void);
 	bool readUserInput(void);
-	void getUserCommand(void);
+	Task getUserCommand(void);
 };
 
