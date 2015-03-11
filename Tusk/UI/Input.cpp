@@ -6,10 +6,10 @@ Input::Input(void) {
 Input::~Input(void) {
 }
 
-void Input::inputCommand(string inputedCommand) {
-	_inputedCommand = inputedCommand;
+void Input::inputCommand(string command) {
+	_command = command;
 }
 
-string Input::getInputedCommand() {
-	return _inputedCommand;
+string Input::getCommand() {
+	return _command;
 }
