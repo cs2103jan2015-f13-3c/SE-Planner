@@ -1,6 +1,6 @@
 #pragma once
-#include "../Tusk/Command.h"
-#include "../Tusk/Task.h"
+#include "Command.h"
+#include "Task.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
