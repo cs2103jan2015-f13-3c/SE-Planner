@@ -6,10 +6,10 @@ Command::Command(void) {
 Command::~Command(void) {
 }
 
-void Command::inputType(CommandType type) {
-	_type = type;
+void Command::inputCommandType(CommandType commandType) {
+	_commandType = commandType;
 }
 
-CommandType Command::getType() {
-	return _type;
+CommandType Command::getCommandType() {
+	return _commandType;
 }

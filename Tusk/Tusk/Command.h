@@ -6,12 +6,12 @@ enum CommandType {
 
 class Command {
 private:
-	CommandType _type;
+	CommandType _commandType;
 
 public:
 	Command(void);
 	~Command(void);
 
-	void inputType(CommandType);
-	CommandType getType();
+	void inputCommandType(CommandType);
+	CommandType getCommandType();
 };
