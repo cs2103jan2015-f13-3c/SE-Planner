@@ -21,10 +21,10 @@
     <ClInclude Include="Create.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Read.h">
+    <ClInclude Include="Delete.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Delete.h">
+    <ClInclude Include="Read.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Update.h">
@@ -35,16 +35,16 @@
     <ClCompile Include="Logic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Create.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Read.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Delete.cpp">
+    <ClCompile Include="Update.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Update.cpp">
+    <ClCompile Include="Create.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Delete.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

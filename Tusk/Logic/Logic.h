@@ -15,6 +15,11 @@ private:
 	Command _command;
 	std::vector<Task> _taskList;
 
+	Create _create;
+	Read _read;
+	Update _update;
+	Delete _delete;
+
 public:
 	Logic(void);
 	~Logic(void);

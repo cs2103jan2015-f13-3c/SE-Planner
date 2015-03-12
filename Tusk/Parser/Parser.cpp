@@ -68,14 +68,14 @@ std::string Parser::processString(std::string s){
 
 // TaskTypes: /d /t /r + FloatingTask
 TaskType Parser::findTaskType(std::string input){
-	TaskType userTaskType = FloatingTask;
+	TaskType userTaskType = FLOATINGTASK;
 
 	if(input.find("/d") != std::string::npos){
-		userTaskType = Deadline;
+		userTaskType = DEADLINE;
 	} else if(input.find("/t") != std::string::npos){
-		userTaskType = TimedTask;
+		userTaskType = TIMEDTASK;
 	} else if(input.find("/r") != std::string::npos){
-		userTaskType = RecurringTask;
+		userTaskType = RECURRINGTASK;
 	}
 
 return userTaskType;
@@ -132,19 +132,19 @@ CommandType Parser::extractCommandFromInput(std::string input){
 	int numCommands = 0;
 
 	if(searchForCreateCommand(input)){
-	commandType = Create;
+	commandType = CREATE;
 	numCommands++;
 	
 	} else if(searchForUpdateCommand(input)){
-	commandType = Update;
+	commandType = UPDATE;
 	numCommands++;
 	
 	} else if(searchForReadCommand(input)){
-	commandType = Read;
+	commandType = READ;
 	numCommands++;
 	
 	} else if(searchForDeleteCommand(input)){
-	commandType = Delete;
+	commandType = DELETE;
 	numCommands++;
 	
 	}

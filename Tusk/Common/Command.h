@@ -1,7 +1,7 @@
 #pragma once
 
 enum CommandType {
-	Create, Read, Update, Delete
+	CREATE, READ, UPDATE, DELETE
 };
 
 class Command {

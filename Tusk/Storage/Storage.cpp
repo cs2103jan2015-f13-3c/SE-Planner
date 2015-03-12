@@ -54,7 +54,7 @@ vector<Task> getAllTask() {
 		{
 			Task newFloatTask;
 
-			newFloatTask.setTaskType(FloatingTask);
+			newFloatTask.setTaskType(FLOATINGTASK);
 			newFloatTask.setTitle(TaskObject["TaskTitle"].GetString());
 
 			newVector.push_back(newFloatTask);
@@ -77,7 +77,7 @@ void writeToFile(vector<Task> TaskVector) {
 		Value obj(kObjectType);
 		obj.SetObject();
 		
-		if (TaskVector[i].getTaskType() == FloatingTask)
+		if (TaskVector[i].getTaskType() == FLOATINGTASK)
 		{
 			char title[MAX_TITLE_SIZE];
 			sprintf(title, "%s", TaskVector[i].getTitle().c_str());

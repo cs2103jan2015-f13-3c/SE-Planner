@@ -3,7 +3,7 @@
 #include <string>
 
 enum TaskType {
-	TimedTask, Deadline, FloatingTask, RecurringTask
+	TIMEDTASK, DEADLINE, FLOATINGTASK, RECURRINGTASK
 };
 
 class Task {
