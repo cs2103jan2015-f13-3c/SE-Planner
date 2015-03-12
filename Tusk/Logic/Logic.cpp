@@ -18,6 +18,14 @@ void Logic::setTask(Task task) {
 	_task = task;
 }
 
+Command Logic::getCommand() {
+	return _command;
+}
+
+Task Logic::getTask() {
+	return _task;
+}
+
 void Logic::executeCommand(Command command, std::vector<Task> mainTaskList) {
 	switch (command.getCommandType()) {
 	case CREATE:

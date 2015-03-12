@@ -29,5 +29,8 @@ public:
 	void setCommand(Command);
 	void setTask(Task);
 
+	Command getCommand();
+	Task getTask();
+
 	void executeCommand(Command, std::vector<Task>);
 };
