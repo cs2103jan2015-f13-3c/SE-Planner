@@ -1,8 +1,7 @@
 #pragma once
-class Create
-{
+
+class Create {
 public:
 	Create(void);
 	~Create(void);
 };
-

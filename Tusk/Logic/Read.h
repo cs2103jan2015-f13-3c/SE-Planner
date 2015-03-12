@@ -1,8 +1,7 @@
 #pragma once
-class Read
-{
+
+class Read {
 public:
 	Read(void);
 	~Read(void);
 };
-

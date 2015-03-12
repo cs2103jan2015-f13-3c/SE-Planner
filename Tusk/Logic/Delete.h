@@ -1,8 +1,7 @@
 #pragma once
-class Delete
-{
+
+class Delete {
 public:
 	Delete(void);
 	~Delete(void);
 };
-
