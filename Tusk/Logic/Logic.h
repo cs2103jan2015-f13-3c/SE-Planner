@@ -13,7 +13,8 @@ class Logic {
 private:
 	std::string _inputedMessage;
 	Command _command;
-	std::vector<Task> _taskList;
+	Task _task;
+	std::vector<Task> _displayedTaskList;
 
 	Create _create;
 	Read _read;
@@ -23,4 +24,6 @@ private:
 public:
 	Logic(void);
 	~Logic(void);
+
+	void executeCommand(Command, std::vector<Task>);
 };

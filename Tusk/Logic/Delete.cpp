@@ -6,7 +6,7 @@ Delete::Delete(void) {
 Delete::~Delete(void) {
 }
 
-void Delete::execute(std::vector<Task>& mainTaskList, std::vector<Task> displayedTaskList, Task& task) {
+void Delete::execute(std::vector<Task>& mainTaskList, Task& task, std::vector<Task> displayedTaskList) {
 	int index;
 	index = std::stoi(task.getTitle(), nullptr, 10);
 	task = displayedTaskList[index - 1];
