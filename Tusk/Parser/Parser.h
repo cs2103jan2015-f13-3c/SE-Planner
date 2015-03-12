@@ -16,15 +16,9 @@ class Parser {
 	Task _task;
 	Command _command;
 
-	public:
-	Parser(void);
-	~Parser(void);
-	Command getCommand();
-	Task getTask();
-
 	Command createNewCommand(CommandType);
 	Task createNewTask(TaskType, std::string);
-	std::pair <Command, Task> parseUserInput(std::string);
+	
 	std::string removeFirstWord(std::string);
 	std::string processString(std::string);
 
@@ -32,10 +26,24 @@ class Parser {
 
 	std::pair <TaskType, std::string> extractTaskFromInput(std::string);
 
+	std::string getKeyword(std::string);
+	std::string	removeKeyword(std::string);
+
 	bool searchForCreateCommand(std::string);
 	bool searchForUpdateCommand(std::string);
 	bool searchForReadCommand(std::string);
 	bool searchForDeleteCommand(std::string);
 
 	CommandType extractCommandFromInput(std::string);
+
+	public:
+	Parser(void);
+	~Parser(void);
+
+	Command getCommand();
+	Task getTask();
+
+	std::pair <Command, Task> parseUserInput(std::string);
+	
+	
 };
