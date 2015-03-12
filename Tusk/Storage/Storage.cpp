@@ -26,6 +26,7 @@ Storage::Storage(void) {
 }
 
 Storage::~Storage(void) {
+<<<<<<< HEAD
 }
 
 vector<Task> getAllTask() {
@@ -102,4 +103,6 @@ void writeToFile(vector<Task> TaskVector) {
 	d.Accept(out_writer);
 	fclose(out);
 		
+=======
+>>>>>>> 579d8fb3bc5a64874e0c13ea92c67b031465547b
 }

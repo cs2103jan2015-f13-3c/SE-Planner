@@ -1,14 +1,14 @@
 #include "Logic.h"
 
 Logic::Logic(void) {
-	_myStorage = new Storage;
-	_myParser = new Parser;
+	/*_myStorage = new Storage;
+	_myParser = new Parser;*/
 }
 
 Logic::~Logic(void) {
 }
 
-void Logic::initializeVector() {
+/*void Logic::initializeVector() {
 	//_myVector=_myStorage->getAllTask();
 }
 
@@ -84,6 +84,4 @@ void Logic::deleteTask(){
 	deleteTaskObject->execute(_myVector);
 
 	//_myStorage->writeToFile(_myVector);
-}
-
-
+}*/
