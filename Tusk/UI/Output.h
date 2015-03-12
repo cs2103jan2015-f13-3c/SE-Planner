@@ -1,8 +1,7 @@
 #pragma once
 
 #include <string>
-#include "Command.h"
-#include "Task.h"
+#include <vector>
 
 class Output {
 private:
@@ -11,4 +10,6 @@ private:
 public:
 	Output(void);
 	~Output(void);
+
+	//void outputMessage(Command, std::vector<Task>);
 };

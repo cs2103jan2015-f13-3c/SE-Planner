@@ -1,30 +1,30 @@
 #pragma once
 
-#include <iostream>
+/*#include <iostream>
 #include <vector>
 #include "Task.h"
 #include "Command.h"
 #include "Parser.h"
 #include "Storage.h"
 
-using namespace std;
+using namespace std;*/
 
 class Logic {
 private:
-	vector<Task> _myVector;
+	/*vector<Task> _myVector;
 	Storage *_myStorage;
 	Parser *_myParser;
 
 	CommandType _commandType;
 	string _taskTitle;
-	TaskType _taskType;
+	TaskType _taskType;*/
 	
 public:
 	Logic(void);
 	~Logic(void);
 
 	//Temp function to create placeholder
-	Task getTask();
+	/*Task getTask();
 	
 	void initializeVector();
 
@@ -38,5 +38,5 @@ public:
 
 	void createTask();
 
-	void deleteTask();
+	void deleteTask();*/
 };
