@@ -13,5 +13,5 @@ public:
 	Output(void);
 	~Output(void);
 
-	void printMessage(Command, std::vector<Task>);
+	void printMessage(Command, Task, std::vector<Task>);
 };

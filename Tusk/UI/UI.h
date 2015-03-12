@@ -15,5 +15,5 @@ public:
 	void setInputedMessage(std::string);
 	std::string getInputedMessage();
 
-	void printMessage(Command, std::vector<Task>);
+	void printMessage(Command, Task, std::vector<Task>);
 };

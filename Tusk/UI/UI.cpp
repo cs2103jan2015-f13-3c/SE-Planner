@@ -14,6 +14,6 @@ std::string UI::getInputedMessage() {
 	return _input.getMessage();
 }
 
-void UI::printMessage(Command command, std::vector<Task> taskList) {
-	_output.printMessage(command, taskList);
+void UI::printMessage(Command command, Task task, std::vector<Task> taskList) {
+	_output.printMessage(command, task, taskList);
 }

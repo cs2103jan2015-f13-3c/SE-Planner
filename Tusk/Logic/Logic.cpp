@@ -26,8 +26,12 @@ Task Logic::getTask() {
 	return _task;
 }
 
-void Logic::executeCommand(Command command, std::vector<Task> mainTaskList) {
-	switch (command.getCommandType()) {
+std::vector<Task> Logic::getDisplayedTaskList() {
+	return _displayedTaskList;
+}
+
+void Logic::executeCommand(std::vector<Task> mainTaskList) {
+	switch (_command.getCommandType()) {
 	case CREATE:
 		_create.execute(mainTaskList, _task);
 		break;

@@ -7,10 +7,10 @@ Output::Output(void) {
 Output::~Output(void) {
 }
 
-void Output::printMessage(Command command, std::vector<Task> taskList) {
+void Output::printMessage(Command command, Task task, std::vector<Task> taskList) {
 	switch (command.getCommandType()) {
 	case CREATE:
-		_message = "[Created]" + taskList[0].getTitle() + "\n";
+		_message = "[Created]" + task.getTitle() + "\n";
 		break;
 	case READ:
 		_message = "[Display]\n";
@@ -19,10 +19,10 @@ void Output::printMessage(Command command, std::vector<Task> taskList) {
 		}
 		break;
 	case UPDATE:
-		_message = "[Updated]" + taskList[0].getTitle() + "\n";
+		_message = "[Updated]" + task.getTitle() + "\n";
 		break;
 	case DELETE:
-		_message = "[Deleted]" + taskList[0].getTitle() + "\n";
+		_message = "[Deleted]" + task.getTitle() + "\n";
 		break;
 	}
 	std::cout << _message;
