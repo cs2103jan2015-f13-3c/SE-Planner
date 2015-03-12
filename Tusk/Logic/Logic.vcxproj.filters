@@ -27,6 +27,9 @@
     <ClInclude Include="Delete.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Update.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logic.cpp">
@@ -39,6 +42,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Delete.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Update.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -74,12 +74,14 @@
     <ClInclude Include="Delete.h" />
     <ClInclude Include="Logic.h" />
     <ClInclude Include="Read.h" />
+    <ClInclude Include="Update.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Create.cpp" />
     <ClCompile Include="Delete.cpp" />
     <ClCompile Include="Logic.cpp" />
     <ClCompile Include="Read.cpp" />
+    <ClCompile Include="Update.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
