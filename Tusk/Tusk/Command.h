@@ -11,6 +11,5 @@ private:
 public:
 	Command(CommandType);
 	~Command(void);
-
 	CommandType getCommandType();
 };
