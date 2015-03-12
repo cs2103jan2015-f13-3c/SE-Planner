@@ -12,8 +12,8 @@ public:
 	UI(void);
 	~UI(void);
 
-	void inputMessage();
+	void setInputedMessage(std::string);
 	std::string getInputedMessage();
 
-	void outputMessage(Command, std::vector<Task>);
+	void printMessage(Command, std::vector<Task>);
 };

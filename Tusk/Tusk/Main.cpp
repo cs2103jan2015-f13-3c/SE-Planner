@@ -4,8 +4,5 @@
 #include "Storage.h"
 
 int main(void) {
-	UI ui;
-	ui.inputMessage();
-	//ui.outputMessage();
 	return 0;
 }

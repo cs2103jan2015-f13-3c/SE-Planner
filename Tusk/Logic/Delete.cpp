@@ -8,7 +8,7 @@ Delete::~Delete(void) {
 
 void Delete::execute(std::vector<Task>& taskList, Task& task) {
 	int index;
-	index = (int)task.getTitle()[0];
+	index = std::stoi(task.getTitle(), nullptr, 10);
 	task = taskList[index - 1];
 	taskList.erase(taskList.begin() + index - 1);
 }
