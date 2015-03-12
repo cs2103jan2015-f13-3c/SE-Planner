@@ -23,6 +23,10 @@ Task Parser::createNewTask(TaskType task, std::string extractedTaskInfo){
 }
 	
 
+std::string removeFirstWord(string sentence){
+	return sentence.substr(0, s.find(" "));
+}
+
 
 
 std::string Parser::processString(std::string s){
@@ -30,6 +34,9 @@ std::string Parser::processString(std::string s){
 	size_t pos = 0;
 	std::string delimiter = "/";
 	std::string token;
+
+	s = removeFirstWord(s);
+
 
 	while ((pos = s.find(delimiter)) != std::string::npos) {
     token = s.substr(0, pos);
@@ -51,7 +58,7 @@ TaskType Parser::findTaskType(std::string input){
 		userTaskType = Deadline;
 	} else if(input.find("/t") != std::string::npos){
 		userTaskType = TimedTask;
-	} else if(input.find("/re") != std::string::npos){
+	} else if(input.find("/r") != std::string::npos){
 		userTaskType = RecurringTask;
 	}
 

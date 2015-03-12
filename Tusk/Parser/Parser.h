@@ -6,10 +6,10 @@
 #include <vector>
 #include <string>
 
-const std::string CREATE_COMMAND = "/c ";
-const std::string UPDATE_COMMAND = "/u ";
-const std::string READ_COMMAND = "/v ";
-const std::string DELETE_COMMAND = "/r ";
+const std::string CREATE_COMMAND = "create";
+const std::string UPDATE_COMMAND = "update";
+const std::string READ_COMMAND = "read";
+const std::string DELETE_COMMAND = "delete";
 
 class Parser {
 	private:
@@ -25,7 +25,7 @@ class Parser {
 	Command createNewCommand(CommandType);
 	Task createNewTask(TaskType, std::string);
 	std::pair <Command, Task> parseUserInput(std::string);
-
+	std::string removeFirstWord(std::string);
 	std::string processString(std::string);
 
 	TaskType findTaskType(std::string);
