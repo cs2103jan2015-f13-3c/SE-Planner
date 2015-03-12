@@ -1,16 +1,16 @@
 #pragma once
 
-#include <string>
+enum CommandType {
+	Create, Read, Update, Delete
+};
 
 class Command {
 private:
-	std::string _command;
+	CommandType _commandType;
 
 public:
-	Command(void);
+	Command(CommandType);
 	~Command(void);
 
-	void inputCommand(std::string);
-
-	std::string getCommand();
+	CommandType getCommandType();
 };
