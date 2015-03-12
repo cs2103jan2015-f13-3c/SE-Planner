@@ -6,7 +6,7 @@ Command::Command(void) {
 Command::~Command(void) {
 }
 
-void Command::inputCommandType(CommandType commandType) {
+void Command::setCommandType(CommandType commandType) {
 	_commandType = commandType;
 }
 

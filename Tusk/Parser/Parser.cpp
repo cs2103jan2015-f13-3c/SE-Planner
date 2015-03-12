@@ -11,14 +11,14 @@ Parser::~Parser(void) {
 
 Command Parser::createNewCommand(CommandType extractedCommand){
 	Command newCommand;
-	newCommand.inputCommandType(extractedCommand);
+	newCommand.setCommandType(extractedCommand);
 	return newCommand;
 }
 
 Task Parser::createNewTask(TaskType task, std::string extractedTaskInfo){
 	Task newTask;
-	newTask.inputTaskType(task);
-	newTask.inputTitle(extractedTaskInfo);
+	newTask.setTaskType(task);
+	newTask.setTitle(extractedTaskInfo);
 	return newTask;
 }
 	

@@ -6,11 +6,11 @@ Task::Task(void) {
 Task::~Task(void) {
 }
 
-void Task::inputTaskType(TaskType taskType) {
+void Task::setTaskType(TaskType taskType) {
 	_taskType = taskType;
 }
 
-void Task::inputTitle(std::string title) {
+void Task::setTitle(std::string title) {
 	_title = title;
 }
 
