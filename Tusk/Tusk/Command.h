@@ -9,7 +9,10 @@ private:
 	CommandType _commandType;
 
 public:
-	Command(CommandType);
+	Command(void);
 	~Command(void);
+
+	void inputCommandType(CommandType);
+
 	CommandType getCommandType();
 };

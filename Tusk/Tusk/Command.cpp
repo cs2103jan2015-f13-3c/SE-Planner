@@ -1,10 +1,13 @@
 #include "Command.h"
 
-Command::Command(CommandType commandType) {
-	_commandType = commandType;
+Command::Command(void) {
 }
 
 Command::~Command(void) {
+}
+
+void Command::inputCommandType(CommandType commandType) {
+	_commandType = commandType;
 }
 
 CommandType Command::getCommandType() {
