@@ -1,8 +1,7 @@
 #pragma once
-class Command
-{
+
+class Command {
 public:
 	Command(void);
 	~Command(void);
 };
-
