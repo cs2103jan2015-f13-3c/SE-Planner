@@ -6,10 +6,10 @@ Input::Input(void) {
 Input::~Input(void) {
 }
 
-void Input::inputCommand(std::string command) {
-	_command = command;
+void Input::inputMessage(std::string message) {
+	_message = message;
 }
 
-std::string Input::getCommand() {
-	return _command;
+std::string Input::getMessage() {
+	return _message;
 }
