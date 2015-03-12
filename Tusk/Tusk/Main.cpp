@@ -4,5 +4,13 @@
 #include "Storage.h"
 
 int main(void) {
+	Logic *newLogic = new Logic;
+
+	newLogic->createTask();
+
+	string temp;
+	
+	cin >> temp;  
+
 	return 0;
 }
