@@ -15,8 +15,8 @@ public:
 	Task(void);
 	~Task(void);
 	
-	void inputTaskType(TaskType);
-	void inputTitle(std::string);
+	void setTaskType(TaskType);
+	void setTitle(std::string);
 
 	TaskType getTaskType();
 	std::string getTitle();
