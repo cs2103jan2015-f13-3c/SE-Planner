@@ -6,6 +6,18 @@ Logic::Logic(void) {
 Logic::~Logic(void) {
 }
 
+void Logic::setInpuedMessage(std::string inputedMessage) {
+	_inputedMessage = inputedMessage;
+}
+
+void Logic::setCommand(Command command) {
+	_command = command;
+}
+
+void Logic::setTask(Task task) {
+	_task = task;
+}
+
 void Logic::executeCommand(Command command, std::vector<Task> mainTaskList) {
 	switch (command.getCommandType()) {
 	case CREATE:

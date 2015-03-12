@@ -25,5 +25,9 @@ public:
 	Logic(void);
 	~Logic(void);
 
+	void setInpuedMessage(std::string);
+	void setCommand(Command);
+	void setTask(Task);
+
 	void executeCommand(Command, std::vector<Task>);
 };
