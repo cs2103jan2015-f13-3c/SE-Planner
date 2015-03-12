@@ -23,19 +23,15 @@ Task Parser::createNewTask(TaskType task, std::string extractedTaskInfo){
 }
 	
 
-std::string removeFirstWord(string sentence){
-	return sentence.substr(0, s.find(" "));
+std::string removeFirstWord(std::string sentence){
+	return sentence.substr(sentence.find(" "), sentence.length());
 }
 
-
-
-std::string Parser::processString(std::string s){
-	std::string processedString = "";
+std::string removeKeyword(std::string s){
 	size_t pos = 0;
 	std::string delimiter = "/";
 	std::string token;
-
-	s = removeFirstWord(s);
+	std::string processedString;
 
 
 	while ((pos = s.find(delimiter)) != std::string::npos) {
@@ -46,6 +42,26 @@ std::string Parser::processString(std::string s){
 	pos = s.find(" ");
 	s.erase(0, pos + delimiter.length());
 	}
+
+	return processedString;
+}
+
+std::string getKeyword(std::string s){
+	return s.substr(s.find("/"), s.find(" "));
+
+}
+
+std::string Parser::processString(std::string s){
+	std::string processedString = "";
+	std::string keyword;
+	
+	s = removeFirstWord(s);
+
+	keyword = getKeyword(s);
+	
+	s = removeKeyword(s);
+
+	processedString = s;
 
 	return processedString;
 }
