@@ -6,8 +6,8 @@ UI::UI(void) {
 UI::~UI(void) {
 }
 
-void UI::inputMessage(std::string message) {
-	_input.inputMessage(message);
+void UI::inputMessage() {
+	_input.inputMessage();
 }
 
 std::string UI::getInputedMessage() {

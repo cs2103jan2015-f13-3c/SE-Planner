@@ -12,6 +12,6 @@ public:
 	UI(void);
 	~UI(void);
 
-	void inputMessage(std::string);
+	void inputMessage();
 	std::string getInputedMessage();
 };

@@ -10,6 +10,6 @@ public:
 	Input(void);
 	~Input(void);
 
-	void inputMessage(std::string);
+	void inputMessage();
 	std::string getMessage();
 };
