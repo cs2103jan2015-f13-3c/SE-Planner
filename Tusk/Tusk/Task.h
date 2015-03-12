@@ -1,8 +1,7 @@
 #pragma once
-class Task
-{
+
+class Task {
 public:
 	Task(void);
 	~Task(void);
 };
-
