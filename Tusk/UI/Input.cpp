@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Input.h"
 
 Input::Input(void) {
@@ -6,10 +7,10 @@ Input::Input(void) {
 Input::~Input(void) {
 }
 
-void Input::inputCommand(std::string command) {
-	_command = command;
+void Input::inputMessage() {
+	std::cin >> _message;
 }
 
-std::string Input::getCommand() {
-	return _command;
+std::string Input::getMessage() {
+	return _message;
 }

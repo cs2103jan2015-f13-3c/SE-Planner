@@ -4,13 +4,12 @@
 
 class Input {
 private:
-	std::string _command;
+	std::string _message;
 
 public:
 	Input(void);
 	~Input(void);
 
-	void inputCommand(std::string);
-
-	std::string getCommand();
+	void inputMessage();
+	std::string getMessage();
 };

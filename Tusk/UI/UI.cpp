@@ -6,10 +6,10 @@ UI::UI(void) {
 UI::~UI(void) {
 }
 
-void UI::inputCommand(std::string command) {
-	_input.inputCommand(command);
+void UI::inputMessage() {
+	_input.inputMessage();
 }
 
-std::string UI::getCommand() {
-	return _input.getCommand();
+std::string UI::getInputedMessage() {
+	return _input.getMessage();
 }

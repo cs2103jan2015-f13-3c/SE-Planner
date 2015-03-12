@@ -19,7 +19,6 @@ public:
 	~Command(void);
 
 	void inputCommandType(CommandType);
-
 	CommandType getCommandType();
 
 	void execute(vector<Task> &);
