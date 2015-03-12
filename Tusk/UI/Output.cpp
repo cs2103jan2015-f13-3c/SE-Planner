@@ -14,7 +14,7 @@ void Output::outputMessage(Command command, std::vector<Task> taskList) {
 		break;
 	case Read:
 		_message = "[Display]\n";
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < taskList.size(); i++) {
 			_message = taskList[i].getTitle() + "\n";
 		}
 		break;

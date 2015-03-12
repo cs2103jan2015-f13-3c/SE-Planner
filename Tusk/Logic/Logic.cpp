@@ -1,21 +1,21 @@
 #include "Logic.h"
 
 Logic::Logic(void) {
-	/*_myStorage = new Storage;
-	_myParser = new Parser;*/
+	_myStorage = new Storage;
+	_myParser = new Parser;
 }
 
 Logic::~Logic(void) {
 }
 
-/*void Logic::initializeVector() {
-	//_myVector=_myStorage->getAllTask();
+void Logic::initializeVector() {
+	_myVector=_myStorage->getAllTask();
 }
 
 void Logic::getCommandData(const string input) {
-	//_commandType = _myParser->getCommandType();
-	//_taskTitle = _myParser->getTaskTitle();
-	//_taskType = _myParser->getTaskType();
+	_commandType = _myParser->getCommand().getCommandType();
+	_taskTitle = _myParser->getTask().getTitle();
+	_taskType = _myParser->getTask().getTaskType();
 }
 
 void Logic::executeCommand() {
@@ -35,22 +35,22 @@ void Logic::executeCommand() {
 }
 
 //Later remove this method!!!
-Task Logic::getTask() {
+/*(Task Logic::getTask() {
 	Task newTask;
 
-	newTask.inputTaskType(Deadline);
-	newTask.inputTitle("testTask");
+	newTask.getTaskType(Deadline);
+	newTask.getTitle("testTask");
 
 	return newTask;
 }
 
 Task Logic::generateTask() {
 	Task newTask;
-	newTask.inputTaskType(_taskType);
-	newTask.inputTitle(_taskTitle);
+	newTask.getTaskType(_taskType);
+	newTask.getTitle(_taskTitle);
 
 	return newTask;
-}
+}*/
 
 int Logic::convertToInteger(const string input) {
 	int output=0;
@@ -84,4 +84,4 @@ void Logic::deleteTask(){
 	deleteTaskObject->execute(_myVector);
 
 	//_myStorage->writeToFile(_myVector);
-}*/
+}

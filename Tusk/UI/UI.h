@@ -14,4 +14,6 @@ public:
 
 	void inputMessage();
 	std::string getInputedMessage();
+
+	void outputMessage(Command, std::vector<Task>);
 };
