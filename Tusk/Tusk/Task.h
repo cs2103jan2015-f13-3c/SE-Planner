@@ -4,13 +4,13 @@
 
 class Task {
 private:
-	std::string _task;
+	std::string _title;
 
 public:
 	Task(void);
 	~Task(void);
 
-	void inputTask(std::string);
+	void inputTitle(std::string);
 
-	std::string getTask();
+	std::string getTitle();
 };

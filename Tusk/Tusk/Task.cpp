@@ -6,10 +6,10 @@ Task::Task(void) {
 Task::~Task(void) {
 }
 
-void Task::inputTask(std::string task) {
-	_task = task;
+void Task::inputTitle(std::string title) {
+	_title = title;
 }
 
-std::string Task::getTask() {
-	return _task;
+std::string Task::getTitle() {
+	return _title;
 }
