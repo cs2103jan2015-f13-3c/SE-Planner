@@ -4,7 +4,7 @@
 #include "Storage.h"
 
 int main(void) {
-	UI ui;
+	/*UI ui;
 	Logic logic;
 	Parser paser;
 	Storage storage;
@@ -21,7 +21,7 @@ int main(void) {
 		//logic.executeCommand(storage.getAllTask());
 		//storage.writeToFile(storage.getAllTask());
 		//ui.printMessage(logic.getCommand(), logic.getTask(), logic.getDisplayedTaskList());
-	}
+	}*/
 
 	return 0;
 }
