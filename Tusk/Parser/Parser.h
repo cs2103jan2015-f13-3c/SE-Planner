@@ -1,8 +1,7 @@
 #pragma once
-class Parser
-{
+
+class Parser {
 public:
 	Parser(void);
 	~Parser(void);
 };
-

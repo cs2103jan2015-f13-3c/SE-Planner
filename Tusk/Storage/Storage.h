@@ -1,8 +1,7 @@
 #pragma once
-class Storage
-{
+
+class Storage {
 public:
 	Storage(void);
 	~Storage(void);
 };
-

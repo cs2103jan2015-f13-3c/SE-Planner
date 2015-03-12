@@ -1,8 +1,7 @@
 #pragma once
-class UI
-{
+
+class UI {
 public:
 	UI(void);
 	~UI(void);
 };
-

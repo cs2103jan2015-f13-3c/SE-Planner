@@ -1,8 +1,7 @@
 #pragma once
-class Logic
-{
+
+class Logic {
 public:
 	Logic(void);
 	~Logic(void);
 };
-
