@@ -56,13 +56,14 @@ std::string Parser::processString(std::string s){
 	std::string keyword;
 	
 	s = removeFirstWord(s);
-
+	s = s.substr(1);
+	/*
 	keyword = getKeyword(s);
 	
 	s = removeKeyword(s);
-
+	*/
 	processedString = s;
-
+	
 	return processedString;
 }
 

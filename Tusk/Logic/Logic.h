@@ -31,6 +31,7 @@ public:
 	Command getCommand();
 	Task getTask();
 	std::vector<Task> getDisplayedTaskList();
+	std::vector<Task> getMainTaskList();
 
 	void executeCommand();
 };

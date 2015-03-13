@@ -21,7 +21,7 @@ using namespace std;
 const int MAX_TITLE_SIZE = 100;
 
 string outputFile = "output.txt";
-string inputFile = "input.txt";
+string inputFile = "output.txt";
 
 Storage::Storage(void) {
 }
@@ -29,7 +29,7 @@ Storage::Storage(void) {
 Storage::~Storage(void) {
 }
 
-vector<Task> getAllTask() {
+vector<Task> Storage::getAllTask() {
 
 	FILE* in = fopen(inputFile.c_str(),"r");
 
@@ -41,17 +41,27 @@ vector<Task> getAllTask() {
 
 	fclose(in);
 
+	//cout<<"Finshed Read file"<<endl;
+
 	const Value& TaskArray = d["data"];
+
+	//cout<<"Get data Array done"<<endl;
 
 	vector<Task> newVector;
 	newVector.clear();
 
+	//cout<<"Size of input = "<<TaskArray.Size()<<endl;
+
 	for (SizeType i = 0; i < TaskArray.Size(); i++)
 	{
 		const Value& TaskObject = TaskArray[i];
+		//cout<<"Input index = "<<i<<" | TaskType = "<<TaskObject["TaskType"].GetString()<<" "<<endl;
 
-		if (TaskObject["TaskType"].GetString() == "FloatingTask")
+		string inputTaskType = TaskObject["TaskType"].GetString();
+
+		if (inputTaskType == "FloatingTask")
 		{
+			//cout<<"Added 1 task"<<endl;
 			Task newFloatTask;
 
 			newFloatTask.setTaskType(FLOATINGTASK);
@@ -62,16 +72,19 @@ vector<Task> getAllTask() {
 		}
 	}
 
+	//cout<<"Input size = "<<newVector.size()<<endl;
+
 	return newVector;
 }
 
-void writeToFile(vector<Task> TaskVector) {
+void Storage::writeToFile(vector<Task> TaskVector) {
 
 	Document d;
 	d.SetObject();
 
 	Value myArray(kArrayType);
 
+	//cout<<"Output size = "<<TaskVector.size()<<endl;
 	for (int i = 0; i < TaskVector.size(); i++)
 	{
 		Value obj(kObjectType);

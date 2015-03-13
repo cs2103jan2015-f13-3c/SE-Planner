@@ -1,4 +1,6 @@
 #include "Output.h"
+#include <sstream>
+
 
 Output::Output(void) {
 }
@@ -7,6 +9,8 @@ Output::~Output(void) {
 }
 
 void Output::setMessage(Command command, Task task, std::vector<Task> taskList) {
+	//std::ostringstream message;
+
 	switch (command.getCommandType()) {
 	case CREATE:
 		_message =  MESSAGE_CREATED + task.getTitle() + "\n";
@@ -14,7 +18,7 @@ void Output::setMessage(Command command, Task task, std::vector<Task> taskList) 
 	case READ:
 		_message = MESSAGE_DISPLAY;
 		for (int i = 0; i < taskList.size(); i++) {
-			_message = _message + (char)i + ". " + taskList[i].getTitle() + "\n";
+			_message = _message + (char)(i+49) + ". " + taskList[i].getTitle() + "\n";
 		}
 		break;
 	case UPDATE:
