@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Output.h"
 
 Output::Output(void) {
@@ -7,23 +6,26 @@ Output::Output(void) {
 Output::~Output(void) {
 }
 
-void Output::printMessage(Command command, Task task, std::vector<Task> taskList) {
+void Output::setMessage(Command command, Task task, std::vector<Task> taskList) {
 	switch (command.getCommandType()) {
 	case CREATE:
-		_message = "[Created]" + task.getTitle() + "\n";
+		_message =  MESSAGE_CREATED + task.getTitle() + "\n";
 		break;
 	case READ:
-		_message = "[Display]\n";
+		_message = MESSAGE_DISPLAY;
 		for (int i = 0; i < taskList.size(); i++) {
-			_message = i + ". " + taskList[i].getTitle() + "\n";
+			_message = _message + (char)i + ". " + taskList[i].getTitle() + "\n";
 		}
 		break;
 	case UPDATE:
-		_message = "[Updated]" + task.getTitle() + "\n";
+		_message = MESSAGE_UPDATED + task.getTitle() + "\n";
 		break;
 	case DELETE:
-		_message = "[Deleted]" + task.getTitle() + "\n";
+		_message = MESSAGE_DELETED + task.getTitle() + "\n";
 		break;
 	}
-	std::cout << _message;
+}
+
+std::string Output::getMessage() {
+	return _message;
 }

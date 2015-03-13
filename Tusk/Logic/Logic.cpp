@@ -33,14 +33,14 @@ std::vector<Task> Logic::getDisplayedTaskList() {
 void Logic::executeCommand(std::vector<Task> mainTaskList) {
 	switch (_command.getCommandType()) {
 	case CREATE:
-		_create.execute(mainTaskList, _task);
+		_create.executeCommand(mainTaskList, _task);
 		break;
 	case READ:
 		break;
 	case UPDATE:
 		break;
 	case DELETE:
-		_delete.execute(mainTaskList, _task, _displayedTaskList);
+		_delete.executeCommand(mainTaskList, _task, _displayedTaskList);
 		break;
 	}
 }

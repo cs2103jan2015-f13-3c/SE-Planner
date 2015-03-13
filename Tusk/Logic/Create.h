@@ -8,5 +8,5 @@ public:
 	Create(void);
 	~Create(void);
 
-	void execute(std::vector<Task>&, Task);
+	void executeCommand(std::vector<Task>&, Task);
 };
