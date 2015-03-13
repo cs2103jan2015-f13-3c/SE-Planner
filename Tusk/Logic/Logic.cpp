@@ -18,6 +18,10 @@ void Logic::setTask(Task task) {
 	_task = task;
 }
 
+void Logic::setMainTaskList(std::vector<Task> mainTaskList) {
+	_mainTaskList = mainTaskList;
+}
+
 Command Logic::getCommand() {
 	return _command;
 }
@@ -30,17 +34,17 @@ std::vector<Task> Logic::getDisplayedTaskList() {
 	return _displayedTaskList;
 }
 
-void Logic::executeCommand(std::vector<Task> mainTaskList) {
+void Logic::executeCommand() {
 	switch (_command.getCommandType()) {
 	case CREATE:
-		_create.executeCommand(mainTaskList, _task);
+		_create.executeCommand(_mainTaskList, _task);
 		break;
 	case READ:
 		break;
 	case UPDATE:
 		break;
 	case DELETE:
-		_delete.executeCommand(mainTaskList, _task, _displayedTaskList);
+		_delete.executeCommand(_mainTaskList, _task, _displayedTaskList);
 		break;
 	}
 }

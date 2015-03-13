@@ -11,6 +11,7 @@ private:
 	std::string _inputedMessage;
 	Command _command;
 	Task _task;
+	std::vector<Task> _mainTaskList;
 	std::vector<Task> _displayedTaskList;
 
 	Create _create;
@@ -25,10 +26,11 @@ public:
 	void setInpuedMessage(std::string);
 	void setCommand(Command);
 	void setTask(Task);
+	void setMainTaskList(std::vector<Task>);
 
 	Command getCommand();
 	Task getTask();
 	std::vector<Task> getDisplayedTaskList();
 
-	void executeCommand(std::vector<Task>);
+	void executeCommand();
 };
