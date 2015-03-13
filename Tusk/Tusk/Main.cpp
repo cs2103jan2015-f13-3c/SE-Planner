@@ -4,5 +4,6 @@
 #include "Storage.h"
 
 int main(void) {
+	UI ui;
 	return 0;
 }
