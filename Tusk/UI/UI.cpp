@@ -9,7 +9,7 @@ UI::~UI(void) {
 
 void UI::setInputedMessage() {
 	std::string message;
-	std::cin >> message;
+	getline(std::cin, message);
 	_input.setMessage(message);
 }
 

@@ -23,11 +23,11 @@ Task Parser::createNewTask(TaskType task, std::string extractedTaskInfo){
 }
 	
 
-std::string removeFirstWord(std::string sentence){
+std::string Parser::removeFirstWord(std::string sentence){
 	return sentence.substr(sentence.find(" "), sentence.length());
 }
 
-std::string removeKeyword(std::string s){
+std::string Parser::removeKeyword(std::string s){
 	size_t pos = 0;
 	std::string delimiter = "/";
 	std::string token;
@@ -46,7 +46,7 @@ std::string removeKeyword(std::string s){
 	return processedString;
 }
 
-std::string getKeyword(std::string s){
+std::string Parser::getKeyword(std::string s){
 	return s.substr(s.find("/"), s.find(" "));
 
 }
@@ -92,28 +92,28 @@ std::pair <TaskType, std::string> Parser::extractTaskFromInput(std::string userI
 }
 
 
-bool searchForCreateCommand(std::string input){
+bool Parser::searchForCreateCommand(std::string input){
 	if(input.find(CREATE_COMMAND) != std::string::npos){
 		return true;
 	}
 	return false;
 }
 
-bool searchForUpdateCommand(std::string input){
+bool Parser::searchForUpdateCommand(std::string input){
 	if(input.find(UPDATE_COMMAND) != std::string::npos){
 		return true;
 	}
 	return false;
 }
 
-bool searchForReadCommand(std::string input){
+bool Parser::searchForReadCommand(std::string input){
 	if(input.find(READ_COMMAND) != std::string::npos){
 		return true;
 	}
 	return false;
 }
 
-bool searchForDeleteCommand(std::string input){
+bool Parser::searchForDeleteCommand(std::string input){
 	if(input.find(DELETE_COMMAND) != std::string::npos){
 		return true;
 	}

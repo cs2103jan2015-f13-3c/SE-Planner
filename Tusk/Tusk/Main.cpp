@@ -5,5 +5,8 @@
 
 int main(void) {
 	UI ui;
+	Logic logic;
+	Parser parser;
+	Storage storage;
 	return 0;
 }
