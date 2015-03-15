@@ -8,5 +8,5 @@ public:
 	Delete(void);
 	~Delete(void);
 
-	void executeCommand(std::vector<Task>&, Task&, std::vector<Task>);
+	void executeDelete(std::vector<Task>&, Task&, std::vector<Task>);
 };

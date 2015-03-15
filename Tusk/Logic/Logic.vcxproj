@@ -70,14 +70,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Create.h" />
+    <ClInclude Include="Add.h" />
     <ClInclude Include="Delete.h" />
     <ClInclude Include="Logic.h" />
     <ClInclude Include="Read.h" />
     <ClInclude Include="Update.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Create.cpp" />
+    <ClCompile Include="Add.cpp" />
     <ClCompile Include="Delete.cpp" />
     <ClCompile Include="Logic.cpp" />
     <ClCompile Include="Read.cpp" />

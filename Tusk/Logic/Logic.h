@@ -1,23 +1,18 @@
 #pragma once
 
 #include "Command.h"
-#include "Create.h"
+#include "Add.h"
 #include "Read.h"
 #include "Update.h"
 #include "Delete.h"
 
-class Logic {
+class Logic: public Add, public Delete{
 private:
-	std::string _inputedMessage;
+	std::string _inputedCommand;
 	Command _command;
 	Task _task;
-	std::vector<Task> _mainTaskList;
+	std::vector<Task> _storedTaskList;
 	std::vector<Task> _displayedTaskList;
-
-	Create _create;
-	Read _read;
-	Update _update;
-	Delete _delete;
 
 public:
 	Logic(void);
