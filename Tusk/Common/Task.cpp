@@ -14,10 +14,26 @@ void Task::setTitle(std::string title) {
 	_title = title;
 }
 
-TaskType Task::getTaskType() {
+void Task::setStartingTime(std::string startingTime) {
+	_startingTime = startingTime;
+}
+
+void Task::setEndingTime(std::string endingTime) {
+	_endingTime = endingTime;
+}
+
+inline TaskType Task::getTaskType() {
 	return _taskType;
 }
 
-std::string Task::getTitle() {
+inline std::string Task::getTitle() {
 	return _title;
+}
+
+inline std::string Task::getStartingTime() {
+	return _startingTime;
+}
+
+inline std::string Task::getEndingTime() {
+	return _endingTime;
 }
