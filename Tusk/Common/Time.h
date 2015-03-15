@@ -12,7 +12,6 @@ public:
 	void setHours(int);
 	void setMinutes(int);
 
-	inline int getHours();
-	inline int getMinutes();
-
+	int getHours();
+	int getMinutes();
 };

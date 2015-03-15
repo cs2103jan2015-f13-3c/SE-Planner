@@ -30,26 +30,26 @@ void Task::setEndingDate(Date endingDate) {
 	_endingDate = endingDate;
 }
 
-inline TaskType Task::getTaskType() {
+TaskType Task::getTaskType() {
 	return _taskType;
 }
 
-inline std::string Task::getTitle() {
+std::string Task::getTitle() {
 	return _title;
 }
 
-inline Time Task::getStartingTime() {
+Time Task::getStartingTime() {
 	return _startingTime;
 }
 
-inline Time Task::getEndingTime() {
+Time Task::getEndingTime() {
 	return _endingTime;
 }
 
-inline Date Task::getStartingDate() {
+Date Task::getStartingDate() {
 	return _startingDate;
 }
 
-inline Date Task::getEndingDate() {
+Date Task::getEndingDate() {
 	return _endingDate;
 }

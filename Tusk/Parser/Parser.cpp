@@ -133,15 +133,15 @@ CommandType Parser::extractCommandFromInput(std::string input){
 	int numCommands = 0;
 
 	if(searchForCreateCommand(input)){
-	commandType = CREATE;
+	commandType = ADD;
 	numCommands++;
 	
 	} else if(searchForUpdateCommand(input)){
-	commandType = UPDATE;
+	commandType = EDIT;
 	numCommands++;
 	
 	} else if(searchForReadCommand(input)){
-	commandType = READ;
+	commandType = DISPLAY;
 	numCommands++;
 	
 	} else if(searchForDeleteCommand(input)){

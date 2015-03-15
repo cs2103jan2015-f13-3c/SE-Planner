@@ -14,10 +14,10 @@ void Time::setMinutes(int minutes) {
 	_minutes = minutes;
 }
 
-inline int Time::getHours() {
+int Time::getHours() {
 	return _hours;
 }
 
-inline int Time::getMinutes() {
+int Time::getMinutes() {
 	return _minutes;
 }

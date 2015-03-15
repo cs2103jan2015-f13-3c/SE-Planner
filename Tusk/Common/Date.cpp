@@ -18,14 +18,14 @@ void Date::setYear(int year) {
 	_year = year;
 }
 
-inline int Date::getDay() {
+int Date::getDay() {
 	return _day;
 }
 
-inline int Date::getMonth() {
+int Date::getMonth() {
 	return _month;
 }
 
-inline int Date::getYear() {
+int Date::getYear() {
 	return _year;
 }

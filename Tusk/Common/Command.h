@@ -13,5 +13,5 @@ public:
 	~Command(void);
 
 	void setCommandType(CommandType);
-	inline CommandType getCommandType();
+	CommandType getCommandType();
 };
