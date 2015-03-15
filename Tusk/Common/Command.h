@@ -1,7 +1,7 @@
 #pragma once
 
 enum CommandType {
-	CREATE, READ, UPDATE, DELETE
+	ERROR, ADD, DELETE, DISPLAY, EDIT, SEARCH, UNDO, REDO
 };
 
 class Command {
@@ -13,5 +13,5 @@ public:
 	~Command(void);
 
 	void setCommandType(CommandType);
-	CommandType getCommandType();
+	inline CommandType getCommandType();
 };

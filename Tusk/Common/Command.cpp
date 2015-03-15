@@ -10,6 +10,6 @@ void Command::setCommandType(CommandType commandType) {
 	_commandType = commandType;
 }
 
-CommandType Command::getCommandType() {
+inline CommandType Command::getCommandType() {
 	return _commandType;
 }
