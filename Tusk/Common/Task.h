@@ -12,14 +12,13 @@ class Task {
 private:
 	TaskType _taskType;
 	std::string _title;
+	int _numberOfRepeat;
 
 	Time _startingTime;
 	Time _endingTime;
 
 	Date _startingDate;
 	Date _endingDate;
-
-	int _numberOfRepeat;
 
 public:
 	Task(void);
@@ -28,6 +27,7 @@ public:
 
 	void setTaskType(TaskType);
 	void setTitle(std::string);
+	void setNumberOfRepeat(int);
 
 	void setStartingTime(Time);
 	void setEndingTime(Time);
@@ -35,17 +35,14 @@ public:
 	void setStartingDate(Date);
 	void setEndingDate(Date);
 
-	void setNumberOfRepeat(int);
-
 
 	TaskType getTaskType();
 	std::string getTitle();
+	int getNumberOfRepeat();
 
 	Time getStartingTime();
 	Time getEndingTime();
 
 	Date getStartingDate();
 	Date getEndingDate();
-
-	int getNumberOfRepeat();
 };

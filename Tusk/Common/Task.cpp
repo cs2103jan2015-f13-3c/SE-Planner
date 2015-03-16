@@ -14,6 +14,10 @@ void Task::setTitle(std::string title) {
 	_title = title;
 }
 
+void Task::setNumberOfRepeat(int numberOfRepeat) {
+	_numberOfRepeat = numberOfRepeat;
+}
+
 void Task::setStartingTime(Time startingTime) {
 	_startingTime = startingTime;
 }
@@ -30,16 +34,16 @@ void Task::setEndingDate(Date endingDate) {
 	_endingDate = endingDate;
 }
 
-void Task::setNumberOfRepeat(int numberOfRepeat) {
-	_numberOfRepeat = numberOfRepeat;
-}
-
 TaskType Task::getTaskType() {
 	return _taskType;
 }
 
 std::string Task::getTitle() {
 	return _title;
+}
+
+int Task::getNumberOfRepeat() {
+	return _numberOfRepeat;
 }
 
 Time Task::getStartingTime() {
@@ -56,8 +60,4 @@ Date Task::getStartingDate() {
 
 Date Task::getEndingDate() {
 	return _endingDate;
-}
-
-int Task::getNumberOfRepeat() {
-	return _numberOfRepeat;
 }
