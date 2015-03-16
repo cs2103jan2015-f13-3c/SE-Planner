@@ -1,7 +1,7 @@
 #pragma once
 
 enum CommandType {
-	ADD, DISPLAY, EDIT, DELETE, UNDO, REDO, SEARCH, ERROR
+	ADD, DISPLAY, EDIT, DELETE, UNDO, REDO, SEARCH, MARKDONE, ERROR
 };
 
 class Command {
