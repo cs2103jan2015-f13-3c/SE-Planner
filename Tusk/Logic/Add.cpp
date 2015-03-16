@@ -6,6 +6,6 @@ Add::Add(void) {
 Add::~Add(void) {
 }
 
-void Add::executeAdd(std::vector<Task>& taskList, Task task) {
+void Add::executeAddTask(std::vector<Task>& taskList, Task task) {
 	taskList.push_back(task);
 }
