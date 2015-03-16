@@ -19,6 +19,8 @@ private:
 	Date _startingDate;
 	Date _endingDate;
 
+	int _numberOfRepeat;
+
 public:
 	Task(void);
 	~Task(void);
@@ -33,6 +35,8 @@ public:
 	void setStartingDate(Date);
 	void setEndingDate(Date);
 
+	void setNumberOfRepeat(int);
+
 
 	TaskType getTaskType();
 	std::string getTitle();
@@ -42,4 +46,6 @@ public:
 
 	Date getStartingDate();
 	Date getEndingDate();
+
+	int getNumberOfRepeat();
 };
