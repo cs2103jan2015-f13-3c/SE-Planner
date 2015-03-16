@@ -7,11 +7,15 @@ enum CommandType {
 class Command {
 private:
 	CommandType _commandType;
+	int _index;
 
 public:
 	Command(void);
 	~Command(void);
 
 	void setCommandType(CommandType);
+	void setIndex(int);
+
 	CommandType getCommandType();
+	int getIndx();
 };
