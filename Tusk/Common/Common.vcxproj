@@ -11,13 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Command.h" />
+    <ClInclude Include="CommandType.h" />
     <ClInclude Include="Date.h" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="Time.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Command.cpp" />
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="Time.cpp" />
