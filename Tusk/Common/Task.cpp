@@ -30,14 +30,6 @@ void Task::setEndingDate(Date endingDate) {
 	_endingDate = endingDate;
 }
 
-void Task::setNumberOfRepeat(int numberOfRepeat) {
-	_numberOfRepeat = numberOfRepeat;
-}
-
-void Task::setIsDone(bool isDone) {
-	_isDone = isDone;
-}
-
 TaskType Task::getTaskType() {
 	return _taskType;
 }
@@ -60,12 +52,4 @@ Date Task::getStartingDate() {
 
 Date Task::getEndingDate() {
 	return _endingDate;
-}
-
-int Task::getNumberOfRepeat() {
-	return _numberOfRepeat;
-}
-
-bool Task::getIsDone() {
-	return _isDone;
 }

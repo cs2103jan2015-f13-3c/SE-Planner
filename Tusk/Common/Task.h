@@ -5,7 +5,7 @@
 #include "Date.h"
 
 enum TaskType {
-	TIMEDTASK, DEADLINE, FLOATINGTASK, RECURRINGTASK
+	TIMEDTASK, DEADLINE, FLOATINGTASK
 };
 
 class Task {
@@ -19,13 +19,10 @@ private:
 	Date _startingDate;
 	Date _endingDate;
 
-	int _numberOfRepeat;
-	bool _isDone;
-
 public:
 	Task(void);
 	~Task(void);
-	
+
 
 	void setTaskType(TaskType);
 	void setTitle(std::string);
@@ -36,9 +33,6 @@ public:
 	void setStartingDate(Date);
 	void setEndingDate(Date);
 
-	void setNumberOfRepeat(int);
-	void setIsDone(bool);
-
 
 	TaskType getTaskType();
 	std::string getTitle();
@@ -48,7 +42,4 @@ public:
 
 	Date getStartingDate();
 	Date getEndingDate();
-
-	int getNumberOfRepeat();
-	bool getIsDone();
 };
