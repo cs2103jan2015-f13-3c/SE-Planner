@@ -1,20 +1,25 @@
 #pragma once
 
+enum Month {
+	JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY,
+	AUGUST, SEPTEMBER, OCTOBBER, NOVEMBER, DECEMBER
+};
+
 class Date {
 private:
-	int _day;
-	int _month;
 	int _year;
+	Month _month;
+	int _day;
 
 public:
 	Date(void);
 	~Date(void);
 
-	void setDay(int);
-	void setMonth(int);
 	void setYear(int);
+	void setMonth(Month);
+	void setDay(int);
 
-	int getDay();
-	int getMonth();
 	int getYear();
+	Month getMonth();
+	int getDay();
 };

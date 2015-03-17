@@ -6,26 +6,26 @@ Date::Date(void) {
 Date::~Date(void) {
 }
 
-void Date::setDay(int day) {
-	_day = day;
-}
-
-void Date::setMonth(int month) {
-	_month = month;
-}
-
 void Date::setYear(int year) {
 	_year = year;
 }
 
-int Date::getDay() {
-	return _day;
+void Date::setMonth(Month month) {
+	_month = month;
 }
 
-int Date::getMonth() {
-	return _month;
+void Date::setDay(int day) {
+	_day = day;
 }
 
 int Date::getYear() {
 	return _year;
+}
+
+Month Date::getMonth() {
+	return _month;
+}
+
+int Date::getDay() {
+	return _day;
 }
