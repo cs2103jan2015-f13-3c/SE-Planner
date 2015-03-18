@@ -1,7 +1,7 @@
 //Authored by Ang Yoong Zhen
 //
-//Pre-condition: Date's details must be stored in the following order:
-//				 year, month, day
+//Pre-condition: Date's details on year and month must be stored
+//				 before day.
 //
 //Post-condition: Date will be stored in _year, _month and _day variables
 //                which can be retrived and editied individually when needed.

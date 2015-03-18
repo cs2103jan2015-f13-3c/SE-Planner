@@ -29,26 +29,40 @@ class Task {
 private:
 	TaskType _taskType;
 	std::string _title;
+
 	Time _startingTime;
 	Time _endingTime;
+
 	Date _startingDate;
 	Date _endingDate;
+
+	bool _isDone;
 
 public:
 	Task(void);
 	~Task(void);
 
+
 	void setTaskType(TaskType);
 	void setTitle(std::string);
+
 	void setStartingTime(Time);
 	void setEndingTime(Time);
+
 	void setStartingDate(Date);
 	void setEndingDate(Date);
 
+	void setIsDone(bool);
+
+
 	TaskType getTaskType();
 	std::string getTitle();
+
 	Time getStartingTime();
 	Time getEndingTime();
+
 	Date getStartingDate();
 	Date getEndingDate();
+
+	bool getIsDone();
 };

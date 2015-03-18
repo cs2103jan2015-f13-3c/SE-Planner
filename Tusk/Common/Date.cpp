@@ -35,6 +35,7 @@ void Date::setMonth(Month month) {
 	_month = month;
 }
 
+//Precondition: Date's details on year and month must be stored beforehand.
 void Date::setDay(int day) {
 	assert(isDayCorrect(day));
 	_day = day;

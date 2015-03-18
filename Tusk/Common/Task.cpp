@@ -32,6 +32,10 @@ void Task::setEndingDate(Date endingDate) {
 	_endingDate = endingDate;
 }
 
+void Task::setIsDone(bool isDone) {
+	_isDone = isDone;
+}
+
 TaskType Task::getTaskType() {
 	return _taskType;
 }
@@ -54,4 +58,8 @@ Date Task::getStartingDate() {
 
 Date Task::getEndingDate() {
 	return _endingDate;
+}
+
+bool Task::getIsDone() {
+	return _isDone;
 }
