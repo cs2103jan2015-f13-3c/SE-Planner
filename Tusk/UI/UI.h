@@ -1,21 +1,16 @@
 #pragma once
 
-#include "Input.h"
-#include "Output.h"
+#include "ViewUI.h"
+#include "Logic.h"
 
 class UI {
 private:
-	Input _input;
-	Output _output;
+	ViewUI _viewUI;
+	Logic _logic;
 
 public:
 	UI(void);
 	~UI(void);
 
-	void setInputedMessage();
-	void setOutputedMessage(Command, Task, std::vector<Task>);
-
-	std::string getInputedMessage();
-
-	void printOutputedMessage();
+	void run();
 };
