@@ -1,7 +1,7 @@
 #pragma once
 
 enum TimeType {
-	AM, PM
+	AM, NOON, PM, MIDNIGHT
 };
 
 class Time {
