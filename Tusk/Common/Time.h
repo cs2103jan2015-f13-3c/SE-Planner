@@ -1,10 +1,8 @@
-#pragma once
-
-//Time class stores the inputted time.
+//Authored by Ang Yoong Zhen 
 //
-//Pre-condition: Inputted time must be in 12hr format instead of 24hr format.
+//Pre-condition: Time must be in 12hr clock format instead of 24hr format.
 //Sample conversion:
-//	24hr Format:	12hr Format:
+//	24hr format:	12hr format:
 //		00:00			12.00am
 //		00:01			12.01am
 //		01:00			1.00am
@@ -13,13 +11,23 @@
 //		12:01			12.01pm
 //		13:00			1.00pm
 //
-//Post-condition: Inputted time will be stored in _timeType, _hours & _minutes variables.
-//Sample usage:
-//	inputted time = 12.00am
+//Post-condition: Time will be stored in _timeType, _hours & _minutes variables
+//				  which can be retrived and edited individually when needed.
 //
-//	_timeType = AM
-//	_hours = 12
-//	_minutes = 0
+//Sample usage:
+//		Time time;
+//
+//	To store/edit time as 12.00am:
+//		time.setTimeType(AM);
+//		time.setHours(12);
+//		time.setMinutes(0);
+//
+//	To retrieve time's details:
+//		time.getTimeType();
+//		time.getHours();
+//		time.getMinutes();
+
+#pragma once
 
 enum TimeType {
 	AM, PM
@@ -31,6 +39,7 @@ private:
 	int _hours;
 	int _minutes;
 
+	//Supporting functions
 	bool isHoursCorrect(int);
 	bool isMinutesCorrect(int);
 

@@ -11,6 +11,10 @@ private:
 	Month _month;
 	int _day;
 
+	bool isYearPositive(int);
+	bool isDayCorrect(int);
+	bool isLeapYear();
+
 public:
 	Date(void);
 	~Date(void);

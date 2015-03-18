@@ -3,6 +3,7 @@
 
 const int MAXIMUM_HOURS = 12;
 const int MINIMUM_HOURS = 1;
+
 const int MAXIMUM_MINUTES = 59;
 const int MINIMUM_MINUTES = 0;
 
@@ -35,7 +36,7 @@ void Time::setMinutes(int minutes) {
 }
 
 bool Time::isMinutesCorrect(int minutes) {
-	if ((minutes >= MAXIMUM_MINUTES) && (minutes <= MAXIMUM_MINUTES)) {
+	if ((minutes >= MINIMUM_MINUTES) && (minutes <= MAXIMUM_MINUTES)) {
 		return true;
 	} else {
 		return false;
