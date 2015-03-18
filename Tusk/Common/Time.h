@@ -1,8 +1,8 @@
 #pragma once
 
-//Time class stores the inputted time in _timeType, _hours & _minutes variables.
+//Time class stores the inputted time.
 //
-//Precondition: Inputted time must be in 12hr format instead of 24hr format.
+//Pre-condition: Inputted time must be in 12hr format instead of 24hr format.
 //Sample conversion:
 //	24hr Format:	12hr Format:
 //		00:00			12.00am
@@ -13,6 +13,7 @@
 //		12:01			12.01pm
 //		13:00			1.00pm
 //
+//Post-condition: Inputted time will be stored in _timeType, _hours & _minutes variables.
 //Sample usage:
 //	inputted time = 12.00am
 //
