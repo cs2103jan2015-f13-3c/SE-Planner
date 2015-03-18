@@ -7,7 +7,8 @@ UI::~UI(void) {
 }
 
 void UI::run() {
-	while (true) {
-		_viewUI.inputUserCommand();
+	std::string userCommand;
+	while (userCommand != "exit") {
+		userCommand = _viewUI.inputUserCommand();
 	}
 }

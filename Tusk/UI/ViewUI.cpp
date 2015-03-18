@@ -7,6 +7,8 @@ ViewUI::ViewUI(void) {
 ViewUI::~ViewUI(void) {
 }
 
-void ViewUI::inputUserCommand() {
-	getline(std::cin, _userCommand);
+std::string ViewUI::inputUserCommand() {
+	std::string userCommand;
+	getline(std::cin, userCommand);
+	return userCommand;
 }
