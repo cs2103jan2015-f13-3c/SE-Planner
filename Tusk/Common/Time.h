@@ -11,7 +11,7 @@
 //		12:01			12.01pm
 //		13:00			1.00pm
 //
-//Post-condition: Time will be stored in _timeType, _hours & _minutes variables
+//Post-condition: Time will be stored in _timeType, _hours and _minutes variables
 //				  which can be retrived and edited individually when needed.
 //
 //Sample usage:

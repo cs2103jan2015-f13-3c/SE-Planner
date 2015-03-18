@@ -1,3 +1,5 @@
+//Authored by Ang Yoong Zhen
+
 #include <assert.h>
 #include "Time.h"
 
