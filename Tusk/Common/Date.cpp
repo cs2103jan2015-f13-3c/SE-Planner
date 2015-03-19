@@ -62,14 +62,22 @@ bool Date::isMonthFebruary() {
 }
 
 bool Date::isLeapYear() {
-	if (_year%DIVISOR_FOUR != 0) {
+	if (!isYearDivisible(DIVISOR_FOUR)) {
 		return false;
-	} else if (_year%DIVISOR_ONEHUNDRED != 0) {
+	} else if (!isYearDivisible(DIVISOR_ONEHUNDRED)) {
 		return true;
-	} else if (_year%DIVISOR_FOURHUNDRED != 0) {
+	} else if (!isYearDivisible(DIVISOR_FOURHUNDRED)) {
 		return false;
 	} else {
 		return true;
+	}
+}
+
+bool Date::isYearDivisible(int divisor) {
+	if (_year%divisor == 0) {
+		return true;
+	} else {
+		return false;
 	}
 }
 

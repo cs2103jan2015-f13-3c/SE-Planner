@@ -32,11 +32,12 @@ private:
 	Month _month;
 	int _day;
 
-	//Supporting functions 
+	//Supporting functions
 	bool isYearPositive(int);
 	bool isDayCorrect(int);
 	bool isMonthFebruary();
 	bool isLeapYear();
+	bool isYearDivisible(int);
 	bool isDayCorrectForMonth(int);
 
 public:
