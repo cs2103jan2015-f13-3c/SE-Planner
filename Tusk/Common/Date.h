@@ -21,7 +21,10 @@
 
 #pragma once
 
-#include "Definitions.h"
+enum Month {
+	JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY,
+	AUGUST, SEPTEMBER, OCTOBBER, NOVEMBER, DECEMBER
+};
 
 class Date {
 private:
@@ -34,7 +37,7 @@ private:
 	bool isDayCorrect(int);
 	bool isMonthFebruary();
 	bool isLeapYear();
-	bool isDayCorrectForMonth(int, Month);
+	bool isDayCorrectForMonth(int);
 
 public:
 	Date(void);

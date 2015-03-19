@@ -45,9 +45,9 @@ bool Date::isDayCorrect(int day) {
 	bool isCorrect;
 
 	if (isMonthFebruary() && !isLeapYear()) {
-		isCorrect = isDayCorrectForMonth(day+1, _month);
+		isCorrect = isDayCorrectForMonth(day+1);
 	} else {
-		isCorrect = isDayCorrectForMonth(day, _month);
+		isCorrect = isDayCorrectForMonth(day);
 	}
 
 	return isCorrect;
@@ -73,8 +73,8 @@ bool Date::isLeapYear() {
 	}
 }
 
-bool Date::isDayCorrectForMonth(int day, Month month) {
-	if ((day >= MINIMUM_DAY) && (day <= MAXIMUM_DAY_FOR_MONTH[month])) {
+bool Date::isDayCorrectForMonth(int day) {
+	if ((day >= MINIMUM_DAY) && (day <= MAXIMUM_DAY_FOR_MONTH[_month])) {
 		return true;
 	} else {
 		return false;

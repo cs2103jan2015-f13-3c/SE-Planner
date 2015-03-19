@@ -11,7 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Definitions.h" />
     <ClInclude Include="Date.h" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="Time.h" />

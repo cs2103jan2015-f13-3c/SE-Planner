@@ -29,7 +29,9 @@
 
 #pragma once
 
-#include "Definitions.h"
+enum TimeType {
+	AM, PM
+};
 
 class Time {
 private:

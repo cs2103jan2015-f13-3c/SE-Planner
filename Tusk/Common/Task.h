@@ -21,6 +21,10 @@
 #include "Time.h"
 #include "Date.h"
 
+enum TaskType {
+	TIMEDTASK, DEADLINE, FLOATINGTASK
+};
+
 class Task {
 private:
 	TaskType _taskType;
