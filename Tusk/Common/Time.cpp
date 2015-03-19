@@ -1,4 +1,4 @@
-//Authored by Ang Yoong Zhen
+//author A0108417J
 
 #include <assert.h>
 #include "Time.h"

@@ -1,4 +1,4 @@
-//Authored by Ang Yoong Zhen 
+//author A0108417J
 //
 //Pre-condition: Time must be in 12hr clock format instead of 24hr format.
 //Sample conversion:
@@ -29,9 +29,7 @@
 
 #pragma once
 
-enum TimeType {
-	AM, PM
-};
+#include "Definition.h"
 
 class Time {
 private:

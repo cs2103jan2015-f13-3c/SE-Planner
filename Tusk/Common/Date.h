@@ -1,4 +1,4 @@
-//Authored by Ang Yoong Zhen
+//author A0108417J
 //
 //Pre-condition: Date's details on year and month must be stored
 //				 before day.
@@ -21,10 +21,7 @@
 
 #pragma once
 
-enum Month {
-	JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY,
-	AUGUST, SEPTEMBER, OCTOBBER, NOVEMBER, DECEMBER
-};
+#include "Definition.h"
 
 class Date {
 private:

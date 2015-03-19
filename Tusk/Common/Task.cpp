@@ -3,6 +3,7 @@
 #include "Task.h"
 
 Task::Task(void) {
+	_isDone = false;
 }
 
 Task::~Task(void) {
