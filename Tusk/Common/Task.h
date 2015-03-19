@@ -1,4 +1,4 @@
-//Authored by Ang Yoong Zhen
+//author A0108417J
 //
 //Pre-condition: None
 //Post-condition: Task will be stored in various variables which
@@ -18,7 +18,6 @@
 #pragma once
 
 #include <string>
-#include "Definition.h"
 #include "Time.h"
 #include "Date.h"
 
