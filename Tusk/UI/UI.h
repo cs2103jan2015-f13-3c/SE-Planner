@@ -5,12 +5,13 @@
 
 class UI {
 private:
-	ViewUI _viewUI;
-	Logic _logic;
+	ViewUI *_viewUI;
+	Logic *_logic;
 
 public:
 	UI(void);
 	~UI(void);
 
 	void run();
+
 };
