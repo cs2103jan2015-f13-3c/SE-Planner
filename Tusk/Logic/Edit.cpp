@@ -1,16 +1,16 @@
-#include "Update.h"
+#include "Edit.h"
 
 #include <iostream>
 
 using namespace std;
 
-Update::Update(void) {
+Edit::Edit(void) {
 }
 
-Update::~Update(void) {
+Edit::~Edit(void) {
 }
 
-void Update::executeCommand(std::vector<Task>& mainTaskList, Task& task, std::vector<Task>& displayedTaskList)
+void Edit::executeCommand(std::vector<Task>& mainTaskList, Task& task, std::vector<Task>& displayedTaskList)
 {
 	//cout<<"What I get from WM="<<task.getTitle()<<endl;
 	string newTitle = task.getTitle().substr(2);

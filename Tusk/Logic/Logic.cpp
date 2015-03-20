@@ -1,4 +1,5 @@
 #include "Logic.h"
+#include "../Parser/CommandParser.h"
 
 Logic::Logic(void) {
 }

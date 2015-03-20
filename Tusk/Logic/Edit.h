@@ -3,10 +3,10 @@
 #include "Task.h"
 #include <vector>
 
-class Update {
+class Edit {
 public:
-	Update(void);
-	~Update(void);
+	Edit(void);
+	~Edit(void);
 
 	void executeCommand(std::vector<Task>& mainTaskList, Task& task, std::vector<Task>& displayedTaskList);
 };
