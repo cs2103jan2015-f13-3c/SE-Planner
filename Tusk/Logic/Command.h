@@ -1,5 +1,7 @@
 #pragma once
 
+//Abstract Class
+
 #include "Storage.h"
 #include <vector>
 
