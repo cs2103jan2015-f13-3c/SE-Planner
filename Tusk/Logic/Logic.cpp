@@ -45,6 +45,7 @@ Command Logic::createCommand(CommandType commandType) {
 		break;
 
 	case DISPLAY:
+		display.setTask(task);
 		command = display;
 		break;
 

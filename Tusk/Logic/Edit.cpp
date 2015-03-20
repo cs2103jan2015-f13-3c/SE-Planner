@@ -1,5 +1,6 @@
 #include "Edit.h"
 
+#include <assert.h>
 Edit::Edit(void) {
 }
 
@@ -22,12 +23,13 @@ std::vector<Task> Edit::execute() {
 	Task task;
 	task = _displayedTaskList[_index-1];
 
+
 	std::vector<Task> taskList;
 	taskList = _storage.getAllTask();
 
 	for (int i = 0; i < taskList.size(); i++) {
 		if (taskList[i].getTitle() == task.getTitle()) {
-			taskList[i].setTitle(_task.getTitle());
+			taskList[i] = task;
 		}
 	}
 

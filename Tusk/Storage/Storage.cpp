@@ -89,6 +89,8 @@ vector<Task> Storage::getAllTask() {
 	Document d;
 	d.ParseStream(is);
 
+	assert(d != NULL); // make sure the input is read properly
+
 	fclose(in);
 
 	//cout<<"Finshed Read file"<<endl;
