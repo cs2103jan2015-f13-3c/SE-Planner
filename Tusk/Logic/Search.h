@@ -3,10 +3,10 @@
 #include "Task.h"
 #include <vector>
 
-class Read {
+class Search {
 public:
-	Read(void);
-	~Read(void);
+	Search(void);
+	~Search(void);
 
 	std::vector<Task> executeCommand(std::vector<Task>&, Task&);
 };

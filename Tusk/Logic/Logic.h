@@ -1,32 +1,20 @@
 #pragma once
 
-#include "Command.h"
-#include "Add.h"
-#include "Read.h"
-#include "Update.h"
-#include "Delete.h"
+#include "Parser.h"
+#include "CommandExecutor.h"
 
-class Logic: public Add, public Delete{
+class Logic {
 private:
-	std::string _inputedCommand;
-	Command _command;
-	Task _task;
-	std::vector<Task> _storedTaskList;
-	std::vector<Task> _displayedTaskList;
+	Parser _parser;
+	CommandExecutor _commandExecutor;
+
+	std::vector<Task> _displayedTaskList;	//To be implemented in history
+
+	Command createCommand(CommandType);
 
 public:
 	Logic(void);
 	~Logic(void);
 
-	void setInpuedMessage(std::string);
-	void setCommand(Command);
-	void setTask(Task);
-	void setMainTaskList(std::vector<Task>);
-
-	Command getCommand();
-	Task getTask();
-	std::vector<Task> getDisplayedTaskList();
-	std::vector<Task> getMainTaskList();
-
-	void executeCommand();
+	std::vector<Task> executeUserInput(std::string);
 };

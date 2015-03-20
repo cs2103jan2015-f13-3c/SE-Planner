@@ -2,17 +2,19 @@
 
 #include "Command.h"
 
-class Delete: public Command {
+class Edit: public Command{
 private:
 	std::vector<Task> _displayedTaskList;
 	int _index;
+	Task _task;
 
 public:
-	Delete(void);
-	~Delete(void);
+	Edit(void);
+	~Edit(void);
 
 	void setDisplayedTaskList(std::vector<Task>);
 	void setIndex(int);
+	void setTask(Task);
 
 	std::vector<Task> execute();
 };

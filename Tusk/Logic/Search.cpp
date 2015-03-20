@@ -1,17 +1,17 @@
-#include "Read.h"
+#include "Search.h"
 #include <vector>
 #include <string>
 #include <iostream>
 
 using namespace std;
 
-Read::Read(void) {
+Search::Search(void) {
 }
 
-Read::~Read(void) {
+Search::~Search(void) {
 }
 
-std::vector<Task> Read::executeCommand(std::vector<Task>& mainTaskList, Task& task)
+std::vector<Task> Search::executeCommand(std::vector<Task>& mainTaskList, Task& task)
 {
 	vector<Task> displayedTaskList;
 
@@ -34,7 +34,7 @@ std::vector<Task> Read::executeCommand(std::vector<Task>& mainTaskList, Task& ta
 		if (totalDisplay == 9) break;
 	}
 
-	//cout<<"Display Task List after Read Command = "<<displayedTaskList.size()<<endl;
+	//cout<<"Display Task List after Search Command = "<<displayedTaskList.size()<<endl;
 	return displayedTaskList;
 
 }

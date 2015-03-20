@@ -1,3 +1,7 @@
+#include "Add.h"
+#include "Display.h"
+#include "Edit.h"
+#include "Delete.h"
 #include "Logic.h"
 
 Logic::Logic(void) {
@@ -6,50 +10,60 @@ Logic::Logic(void) {
 Logic::~Logic(void) {
 }
 
-void Logic::setInpuedMessage(std::string inputedMessage) {
-	_inputedCommand = inputedMessage;
-}
+std::vector<Task> Logic::executeUserInput(std::string userInput) {
+	_parser.parseUserInput(userInput);
 
-void Logic::setCommand(Command command) {
-	_command = command;
-}
+	CommandType commandType;
+	commandType = _parser.getCommandType();
 
-void Logic::setTask(Task task) {
-	_task = task;
-}
+	Command command;
+	command = createCommand(commandType);
 
-void Logic::setMainTaskList(std::vector<Task> mainTaskList) {
-	_storedTaskList = mainTaskList;
-}
+	_displayedTaskList = _commandExecutor.executeCommand(command);
 
-Command Logic::getCommand() {
-	return _command;
-}
-
-Task Logic::getTask() {
-	return _task;
-}
-
-std::vector<Task> Logic::getDisplayedTaskList() {
 	return _displayedTaskList;
 }
 
-std::vector<Task> Logic::getMainTaskList() {
-	return _storedTaskList;
-}
-void Logic::executeCommand() {
-	switch (_command.getCommandType()) {
+Command Logic::createCommand(CommandType commandType) {
+	Command command;
+
+	Add add;
+	Display display;
+	Edit edit;
+	Delete remove;
+
+	Task task;
+	int index;
+
+	task = _parser.getTask();
+	index = _parser.getIndex();
+
+	switch (commandType) {
 	case ADD:
-		executeAdd(_storedTaskList, _task);
+		add.setTask(task);
+		command = add;
 		break;
+
 	case DISPLAY:
-		_//displayedTaskList = _read.executeCommand(_storedTaskList, _task);
-		;break;
+		command = display;
+		break;
+
 	case EDIT:
-		//_update.executeCommand(_storedTaskList, _task, _displayedTaskList);
+		edit.setIndex(index);
+		edit.setTask(task);
+		edit.setDisplayedTaskList(_displayedTaskList);
+		command = edit;
 		break;
+
 	case DELETE:
-		executeDelete(_storedTaskList, _task, _displayedTaskList);
+		remove.setIndex(index);
+		remove.setDisplayedTaskList(_displayedTaskList);
+		command = remove;
 		break;
-	}
+
+	default:
+		break;
+	};
+
+	return command;
 }
