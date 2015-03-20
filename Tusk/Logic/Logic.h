@@ -7,7 +7,8 @@ class Logic {
 private:
 	Parser _parser;
 	CommandExecutor _commandExecutor;
-	std::vector<Task> _displayedTaskList;
+
+	std::vector<Task> _displayedTaskList;	//To be implemented in history
 
 	Command createCommand(CommandType);
 
