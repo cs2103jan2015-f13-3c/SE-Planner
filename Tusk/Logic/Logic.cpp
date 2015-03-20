@@ -1,4 +1,5 @@
 #include "Add.h"
+#include "Display.h"
 #include "Delete.h"
 #include "Logic.h"
 
@@ -31,9 +32,11 @@ Command Logic::createCommand(CommandType commandType) {
 
 	Task task;
 	int index;
+	std::string description;
 
 	task = _parser.getTask();
 	index = _parser.getIndex();
+	description = _parser.getDescription();
 
 	switch (commandType) {
 	case ADD:
@@ -42,6 +45,7 @@ Command Logic::createCommand(CommandType commandType) {
 		break;
 
 	case DISPLAY:
+		command = display;
 		break;
 
 	case EDIT:
