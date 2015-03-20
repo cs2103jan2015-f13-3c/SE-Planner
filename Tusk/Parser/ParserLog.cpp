@@ -9,7 +9,7 @@ ParserLog::~ParserLog(void){
 }
 
 void ParserLog::start(){
-	_outFile.open("parser_log");
+	_outFile.open("parser_log", std::ios::app);
 	if (_outFile.is_open()) {
 		_outFile << "log started..." << "\n";
 	}

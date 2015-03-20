@@ -17,31 +17,16 @@ TaskParser::TaskParser(std::string input){
 //***2. task processing methods ***
 
 void TaskParser::parse(){
-	_taskType = findTaskType();
-	//	_timeType = findTimeType();
 	//	_dateType = findDateType();
 
-	//	setTime(_taskTime);
 	//	setDate(_taskDate);
+	_taskType = findTaskType();
 
 	_taskTitle = findTaskTitle();
 
 }
 
 
-void TaskParser::setTime(TimeTypes timeType){
-
-	switch(timeType){
-
-	case NO_TIME:
-		break;
-	case DEFAULT_TIME:
-		//		_taskTime = findTaskTime(); break;
-	case TIME_W_RANGE:
-		//		_taskTime = findTaskTime();	break;		// requires addtional processing, format : xxxxam-xxxxpm
-		break;
-	}
-}
 
 void TaskParser::setDate(DateTypes dateType){
 	switch(dateType){
