@@ -1,5 +1,4 @@
 #pragma once
-//#include "Definition.h"
 #include <string>
 
 
@@ -12,11 +11,11 @@ enum CommandType{
 ADD, DISPLAY, EDIT, DELETE, UNDO, SEARCH
 };
 
-std::string _commandInput;
 
-class CommandParser
-{
+class CommandParser{
 public:
+	std::string _commandInput;
+
 	CommandParser(void);
 	CommandParser(std::string);
 	

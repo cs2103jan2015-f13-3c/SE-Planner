@@ -2,11 +2,9 @@
 #include <string>
 #include <fstream>
 
-std::ofstream _outFile ("parser_log", std::ios::app);	
-;
 
-class ParserLog
-{
+
+class ParserLog{
 public:
 	ParserLog(void);
 	~ParserLog(void);
@@ -14,6 +12,10 @@ public:
 	void start();
 	void write(std::string);
 	void end();
+
+private:
+	std::ofstream _outFile;	
+
 
 };
 
