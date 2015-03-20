@@ -18,16 +18,16 @@
     <ClInclude Include="Logic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Delete.h">
+    <ClInclude Include="Command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Read.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Update.h">
+    <ClInclude Include="CommandExecutor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Add.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Delete.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -35,16 +35,16 @@
     <ClCompile Include="Logic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Read.cpp">
+    <ClCompile Include="Command.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Update.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Delete.cpp">
+    <ClCompile Include="CommandExecutor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Add.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Delete.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

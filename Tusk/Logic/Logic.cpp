@@ -1,5 +1,6 @@
+#include "Add.h"
+#include "Delete.h"
 #include "Logic.h"
-#include "../Parser/CommandParser.h"
 
 Logic::Logic(void) {
 }
@@ -7,50 +8,54 @@ Logic::Logic(void) {
 Logic::~Logic(void) {
 }
 
-void Logic::setInpuedMessage(std::string inputedMessage) {
-	_inputedCommand = inputedMessage;
+void Logic::executeUserInput(std::string userInput) {
+	_parser.parseUserInput(userInput);
+
+	CommandType commandType;
+	commandType = _parser.getCommandType();
+
+	Command command;
+	command = createCommand(commandType);
+
+	std::vector<Task> result;
+	result = _commandExecutor.executeCommand(command);
 }
 
-void Logic::setCommand(Command command) {
-	_command = command;
-}
+Command Logic::createCommand(CommandType commandType) {
+	Command command;
 
-void Logic::setTask(Task task) {
-	_task = task;
-}
+	Add add;
+	Display display;
+	Edit edit;
+	Delete remove;
 
-void Logic::setMainTaskList(std::vector<Task> mainTaskList) {
-	_storedTaskList = mainTaskList;
-}
+	Task task;
+	int index;
 
-Command Logic::getCommand() {
-	return _command;
-}
+	task = _parser.getTask();
+	index = _parser.getIndex();
 
-Task Logic::getTask() {
-	return _task;
-}
-
-std::vector<Task> Logic::getDisplayedTaskList() {
-	return _displayedTaskList;
-}
-
-std::vector<Task> Logic::getMainTaskList() {
-	return _storedTaskList;
-}
-void Logic::executeCommand() {
-	switch (_command.getCommandType()) {
+	switch (commandType) {
 	case ADD:
-		executeAdd(_storedTaskList, _task);
+		add.setTask(task);
+		command = add;
 		break;
+
 	case DISPLAY:
-		_//displayedTaskList = _read.executeCommand(_storedTaskList, _task);
-		;break;
+		break;
+
 	case EDIT:
-		//_update.executeCommand(_storedTaskList, _task, _displayedTaskList);
 		break;
+
 	case DELETE:
-		executeDelete(_storedTaskList, _task, _displayedTaskList);
+		remove.setIndex(index);
+		remove.setDisplayedTaskList(_displayedTaskList);
+		command = remove;
 		break;
-	}
+
+	default:
+		break;
+	};
+
+	return command;
 }

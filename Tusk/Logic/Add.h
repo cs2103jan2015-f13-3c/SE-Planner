@@ -1,12 +1,16 @@
 #pragma once
 
-#include <vector>
-#include "Task.h"
+#include "Command.h"
 
-class Add {
+class Add: public Command {
+private:
+	Task _task;
+
 public:
 	Add(void);
 	~Add(void);
 
-	void executeAddTask(std::vector<Task>&, Task);
+	std::vector<Task> execute();
+
+	void setTask(Task);
 };

@@ -6,14 +6,30 @@ Delete::Delete(void) {
 Delete::~Delete(void) {
 }
 
-void Delete::executeDelete(std::vector<Task>& storedTaskList, Task& task, std::vector<Task> displayedTaskList) {
-	int index;
-	index = std::stoi(task.getTitle(), nullptr, 10);
-	task = displayedTaskList[index - 1];
+std::vector<Task> Delete::execute() {
+	Task task;
+	task = _displayedTaskList[_index-1];
 
-	for (int i = 0; i < storedTaskList.size(); i++) {
-		if (storedTaskList[i].getTitle() == task.getTitle()) {
-			storedTaskList.erase(storedTaskList.begin() + i);
+	std::vector<Task> taskList;
+	taskList = _storage.getAllTask();
+
+	for (int i = 0; i < taskList.size(); i++) {
+		if (taskList[i].getTitle() == task.getTitle()) {
+			taskList.erase(taskList.begin() + _index);
 		}
 	}
+
+	_storage.writeToFile(taskList);
+
+
+	_result.push_back(task);
+	return _result;
+}
+
+void Delete::setIndex(int index) {
+	_index = index;
+}
+
+void Delete::setDisplayedTaskList(std::vector<Task> displayTaskList) {
+	_displayedTaskList = displayTaskList;
 }
