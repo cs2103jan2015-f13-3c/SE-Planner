@@ -1,12 +1,20 @@
 #pragma once
 
-#include "Task.h"
-#include <vector>
+#include "Command.h"
 
-class Edit {
+class Edit: public Command{
+private:
+	int _index;
+	Task _task;
+	std::vector<Task> _displayedTaskList;
+
 public:
 	Edit(void);
 	~Edit(void);
 
-	void executeCommand(std::vector<Task>& mainTaskList, Task& task, std::vector<Task>& displayedTaskList);
+	std::vector<Task> execute();
+
+	void setIndex(int);
+	void setTask(Task);
+	void setDisplayedTaskList(std::vector<Task>);
 };

@@ -1,16 +1,34 @@
 #include "Edit.h"
 
-#include <iostream>
-
-using namespace std;
-
 Edit::Edit(void) {
 }
 
 Edit::~Edit(void) {
 }
 
-void Edit::executeCommand(std::vector<Task>& mainTaskList, Task& task, std::vector<Task>& displayedTaskList)
+std::vector<Task> Edit::execute() {
+	std::vector<Task> taskList;
+	taskList = _storage.getAllTask();
+
+	Task task;
+	task = _displayedTaskList[_index-1];
+
+	for (int i = 0; i < taskList.size(); i++) {
+		if (taskList[i].getTitle() == task.getTitle()) {
+			taskList[i] = task;
+		}
+	}
+
+	_storage.writeToFile(taskList);
+
+	_result.push_back(task);
+
+	return _result;
+}
+
+
+
+/*void Edit::executeCommand(std::vector<Task>& mainTaskList, Task& task, std::vector<Task>& displayedTaskList)
 {
 	//cout<<"What I get from WM="<<task.getTitle()<<endl;
 	string newTitle = task.getTitle().substr(2);
@@ -30,4 +48,4 @@ void Edit::executeCommand(std::vector<Task>& mainTaskList, Task& task, std::vect
 			mainTaskList[i].setTitle(newTitle);
 		}
 	}
-}
+}*/

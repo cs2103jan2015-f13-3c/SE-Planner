@@ -1,5 +1,6 @@
 #include "Add.h"
 #include "Display.h"
+#include "Edit.h"
 #include "Delete.h"
 #include "Logic.h"
 
@@ -49,6 +50,10 @@ Command Logic::createCommand(CommandType commandType) {
 		break;
 
 	case EDIT:
+		edit.setIndex(index);
+		edit.setTask(task);
+		edit.setDisplayedTaskList(_displayedTaskList);
+		command = edit;
 		break;
 
 	case DELETE:
