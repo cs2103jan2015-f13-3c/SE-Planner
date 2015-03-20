@@ -4,15 +4,15 @@
 
 class Delete: public Command {
 private:
-	int _index;
 	std::vector<Task> _displayedTaskList;
+	int _index;
 
 public:
 	Delete(void);
 	~Delete(void);
 
-	std::vector<Task> execute();
-
-	void setIndex(int);
 	void setDisplayedTaskList(std::vector<Task>);
+	void setIndex(int);
+
+	std::vector<Task> execute();
 };

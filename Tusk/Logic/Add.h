@@ -10,7 +10,7 @@ public:
 	Add(void);
 	~Add(void);
 
-	std::vector<Task> execute();
-
 	void setTask(Task);
+
+	std::vector<Task> execute();
 };

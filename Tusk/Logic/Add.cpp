@@ -6,6 +6,10 @@ Add::Add(void) {
 Add::~Add(void) {
 }
 
+void Add::setTask(Task task) {
+	_task = task;
+}
+
 std::vector<Task> Add::execute() {
 	std::vector<Task> taskList;
 
@@ -15,8 +19,4 @@ std::vector<Task> Add::execute() {
 
 	_result.push_back(_task);
 	return _result;
-}
-
-void Add::setTask(Task task) {
-	_task = task;
 }

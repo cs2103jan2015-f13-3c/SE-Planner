@@ -6,6 +6,14 @@ Delete::Delete(void) {
 Delete::~Delete(void) {
 }
 
+void Delete::setIndex(int index) {
+	_index = index;
+}
+
+void Delete::setDisplayedTaskList(std::vector<Task> displayTaskList) {
+	_displayedTaskList = displayTaskList;
+}
+
 std::vector<Task> Delete::execute() {
 	Task task;
 	task = _displayedTaskList[_index-1];
@@ -24,12 +32,4 @@ std::vector<Task> Delete::execute() {
 
 	_result.push_back(task);
 	return _result;
-}
-
-void Delete::setIndex(int index) {
-	_index = index;
-}
-
-void Delete::setDisplayedTaskList(std::vector<Task> displayTaskList) {
-	_displayedTaskList = displayTaskList;
 }

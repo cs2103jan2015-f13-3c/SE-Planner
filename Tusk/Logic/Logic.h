@@ -16,5 +16,5 @@ public:
 	Logic(void);
 	~Logic(void);
 
-	void executeUserInput(std::string);
+	std::vector<Task> executeUserInput(std::string);
 };

@@ -4,17 +4,17 @@
 
 class Edit: public Command{
 private:
+	std::vector<Task> _displayedTaskList;
 	int _index;
 	Task _task;
-	std::vector<Task> _displayedTaskList;
 
 public:
 	Edit(void);
 	~Edit(void);
 
-	std::vector<Task> execute();
-
+	void setDisplayedTaskList(std::vector<Task>);
 	void setIndex(int);
 	void setTask(Task);
-	void setDisplayedTaskList(std::vector<Task>);
+
+	std::vector<Task> execute();
 };

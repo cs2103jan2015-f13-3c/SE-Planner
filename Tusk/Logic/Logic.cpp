@@ -10,7 +10,7 @@ Logic::Logic(void) {
 Logic::~Logic(void) {
 }
 
-void Logic::executeUserInput(std::string userInput) {
+std::vector<Task> Logic::executeUserInput(std::string userInput) {
 	_parser.parseUserInput(userInput);
 
 	CommandType commandType;
@@ -19,8 +19,9 @@ void Logic::executeUserInput(std::string userInput) {
 	Command command;
 	command = createCommand(commandType);
 
-	std::vector<Task> result;
-	result = _commandExecutor.executeCommand(command);
+	_displayedTaskList = _commandExecutor.executeCommand(command);
+
+	return _displayedTaskList;
 }
 
 Command Logic::createCommand(CommandType commandType) {
@@ -33,11 +34,9 @@ Command Logic::createCommand(CommandType commandType) {
 
 	Task task;
 	int index;
-	std::string description;
 
 	task = _parser.getTask();
 	index = _parser.getIndex();
-	description = _parser.getDescription();
 
 	switch (commandType) {
 	case ADD:
