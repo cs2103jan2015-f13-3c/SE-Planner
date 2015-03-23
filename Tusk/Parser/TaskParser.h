@@ -7,6 +7,15 @@ class TaskParser{
 public:
 	TaskParser(std::string);
 	void parse();	
+	Date getDate();
+	Date getDateStart();
+	Date getDateEnd();
+	Time getTimeStart();
+	Time getTimeEnd();
+	Time getTime();
+	Task getTask();
+
+
 
 private:
 	TaskDateParser _dateParser;
@@ -24,11 +33,4 @@ private:
 	std::string removeDate(std::string);
 	std::string removeTime(std::string);
 	
-	Date getDate();
-	Date getDateStart();
-	Date getDateEnd();
-	Time getTimeStart();
-	Time getTimeEnd();
-	Time getTime();
-	Task getTask();
 };

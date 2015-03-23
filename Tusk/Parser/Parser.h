@@ -38,11 +38,16 @@ class Parser {
 
 private:
 	void createNewCommand(CommandType);
+	Task _task;
+	CommandType _command;
 
 public:
 	Parser(void);
 	~Parser(void);
 
 	void parseUserInput(std::string);
+
+	Task getTask();
+	CommandType getCommandType();
 
 };

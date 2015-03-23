@@ -20,6 +20,8 @@ void Parser::parseUserInput(std::string userInput){
 
 	std::string newUserInput = cmdParser.getProcessedString();
 	
+	_command = cmdParser.getCommandType();
+
 	log.write("commandParser ended");
 
 	log.write("taskParser started with input:"+newUserInput);
@@ -28,9 +30,17 @@ void Parser::parseUserInput(std::string userInput){
 	taskParser.parse();
 	//createNewTask(taskParser.getTaskType());
 	log.write("taskParser ended");
-
+	_task = taskParser.getTask();
 
 	log.end();
+}
+
+Task Parser::getTask(){
+	return _task;
+}
+
+CommandType Parser::getCommandType(){
+	return _command;
 }
 
 
