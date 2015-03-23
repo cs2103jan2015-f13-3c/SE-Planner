@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "Time.h"
 
 // special keywords
 const std::string TIME_KEYWORD = "time:";
@@ -9,23 +10,27 @@ enum TimeTypes{
 	NO_TIME, DEFAULT_TIME, TIME_W_RANGE
 };
 
-
 class TaskTimeParser{
 public:
 	TaskTimeParser(std::string);
+	TaskTimeParser(void);
 
 	void parse();
+	void setInput(std::string);
+
+	Time getTime();
+	Time getTimeStart();
+	Time getTimeEnd();
 
 private:
-
+	
+	int getNumber(std::string&);
 	TimeTypes _containsTimeType;
 	std::string _timeParserInput;
 	std::string _timeStart;
 	std::string _timeStart_AM_PM;
 	std::string _timeEnd;
 	std::string _timeEnd_AM_PM;
-
-
 
 	bool isFound(std::string, std::string);
 	std::string getKeywordAfter(std::string, std::string);
@@ -34,7 +39,10 @@ private:
 
 	std::string getTimeStr();
 
+	TimeType getTimeType(std::string);
+
 	void setTimeType(std::string);
 	void setTime(std::string);
+
 
 };

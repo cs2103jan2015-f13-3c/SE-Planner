@@ -1,7 +1,13 @@
 #include "TaskTimeParser.h"
 
+TaskTimeParser::TaskTimeParser(void){
+}
 
 TaskTimeParser::TaskTimeParser(std::string input){
+	_timeParserInput = input;
+}
+
+void TaskTimeParser::setInput(std::string input){
 	_timeParserInput = input;
 }
 
@@ -56,3 +62,43 @@ sentence = sentence.substr(sentence.find(keyword));
 return sentence.substr(0,sentence.find(" "));
 }
 
+Time TaskTimeParser::getTime(){
+	return getTimeStart();
+}
+
+
+//TODO:
+Time TaskTimeParser::getTimeStart(){
+	std::string timeStr = _timeStart;
+
+	Time newTime;
+	newTime.setHours(getNumber(timeStr));
+	newTime.setMinutes(getNumber(timeStr));
+	newTime.setTimeType(getTimeType(_timeStart));
+	return newTime;
+}
+
+Time TaskTimeParser::getTimeEnd(){
+		if(_containsTimeType = DEFAULT_TIME){
+		return getTimeStart();
+	}
+	std::string timeStr = _timeEnd;
+	Time newTime;
+	newTime.setHours(getNumber(timeStr));
+	newTime.setMinutes(getNumber(timeStr));
+	newTime.setTimeType(getTimeType(_timeEnd));
+	return newTime;
+}
+
+TimeType TaskTimeParser::getTimeType(std::string time){
+	if(getNumber(time)>12){
+	return PM;
+	}
+	return AM;
+}
+
+int TaskTimeParser::getNumber(std::string& time){
+	std::string numberStr = time.substr(0, 2); 
+	time.erase(0, numberStr.length());
+	return atoi(numberStr.c_str());
+}
