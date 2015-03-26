@@ -64,3 +64,14 @@ Date Task::getEndingDate() {
 bool Task::getIsDone() {
 	return _isDone;
 }
+
+bool Task::isTaskSame(Task task) {
+	if ((_taskType == task.getTaskType()) && (_title == task.getTitle()) &&
+	    (_startingTime.isTimeSame(task.getStartingTime())) && (_endingTime.isTimeSame(task.getEndingTime())) &&
+	    (_startingDate.isDateSame(task.getStartingDate())) && (_endingDate.isDateSame(task.getEndingDate()))) {
+		return true;
+	} else {
+		return false;
+	}
+
+}

@@ -1,14 +1,17 @@
 #pragma once
 
-#include "Parser.h"
+#include <string>
+#include <vector>
 #include "Command.h"
+#include "CommandType.h"
+#include "Task.h"
+#include "Parser.h"
 
 class Logic {
 private:
-	Parser _parser;
 	Command _command;
+	Parser _parser;
 
-	std::vector<Task> _displayTaskList;
 	std::vector<Task> _result;
 
 	void createCommand(CommandType);
@@ -23,4 +26,5 @@ public:
 	~Logic(void);
 
 	CommandType executeUserInput(std::string);
+	std::vector<Task> getResult();
 };

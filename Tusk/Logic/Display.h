@@ -1,11 +1,11 @@
 #pragma once
 
-#include "command.h"
+#include "Command.h"
 
 class Display: public Command {
 public:
 	Display(void);
 	~Display(void);
 
-	std::vector<Task> execute();
+	void execute();
 };

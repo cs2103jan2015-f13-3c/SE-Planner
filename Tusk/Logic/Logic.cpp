@@ -13,9 +13,12 @@ Logic::~Logic(void) {
 
 CommandType Logic::executeUserInput(std::string userInput) {
 	CommandType commandType;
-	commandType = _parser.parseUserInput(userInput);
+	_parser.parseUserInput(userInput);
+
+	commandType = _parser.getCommandType();
+
 	createCommand(commandType);
-	_result = _command.execute();
+	//_command.execute();
 
 	return commandType;
 }
@@ -36,58 +39,54 @@ void Logic::createCommand(CommandType commandType) {
 		break;
 	case SEARCH:
 		createSearchCommand();
-	default:
 		break;
-	};
+	}
 }
 
 void Logic::createAddCommand() {
-	Task task;
-	task = _parser.getTask();
-
 	Add add;
-	add.setTask(task);
+	add.setTask(_parser.getTask());
 
-	_command = add;
+	add.execute();
+	_result = add.getResult();
 }
 
 void Logic::createDeleteCommand() {
-	std::string information;
-	information = _parser.getInformation();
-
 	Delete remove;
-	remove.setInformation(information);
-	remove.setDisplayedTaskList(_displayTaskList);
+	remove.setInformation(_parser.getInformation());
+	remove.setDisplayedTaskList(_result);
 
-	_command = remove;
+	remove.execute();
+	_result = remove.getResult();
 }
 
 void Logic::createEditCommand() {
-	std::string information;
-	information = _parser.getInformation();
-
-	Task task;
-	task = _parser.getTask();
-
 	Edit edit;
-	edit.setInformation(information);
-	edit.setTask(task);
-	edit.setDisplayedTaskList(_displayTaskList);
+	edit.setTask(_parser.getTask());
+	edit.setInformation(_parser.getInformation());
+	edit.setDisplayedTaskList(_result);
 
-	_command = edit;
+	edit.execute();
+	_result = edit.getResult();
 }
 
 void Logic::createDisplayCommand() {
 	Display display;
-	_command = display;
+	
+	display.execute();
+	_result = display.getResult();
 }
 
 void Logic::createSearchCommand() {
-	std::string information;
-	information = _parser.getInformation;
-
 	Search search;
-	search.setInformation(information);
+	search.setInformation(_parser.getInformation());
 
-	_command = search;
+	search.execute();
+	_result = search.getResult();
+}
+
+
+std::vector<Task> Logic::getResult() {
+	//return _command.getResult();
+	return _result;
 }

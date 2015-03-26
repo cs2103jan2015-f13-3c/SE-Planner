@@ -6,7 +6,6 @@ Display::Display(void) {
 Display::~Display(void) {
 }
 
-std::vector<Task> Display::execute() {
+void Display::execute() {
 	_result = _storage.getAllTask();
-	return _result;
 }

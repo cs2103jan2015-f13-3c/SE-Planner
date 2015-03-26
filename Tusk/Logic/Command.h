@@ -1,9 +1,16 @@
 #pragma once
 
+#include <string>
+#include <vector>
+#include "Task.h"
 #include "Storage.h"
 
 class Command {
 protected:
+	Task _task;
+	std::string _information;
+	std::vector<Task> _displayedTaskList;
+	
 	Storage _storage;
 	std::vector<Task> _result;
 
@@ -11,5 +18,11 @@ public:
 	Command(void);
 	~Command(void);
 
-	virtual std::vector<Task> execute();
+	void setTask(Task);
+	void setInformation(std::string);
+	void setDisplayedTaskList(std::vector<Task>);
+
+	std::vector<Task> getResult();
+
+	virtual void execute();
 };

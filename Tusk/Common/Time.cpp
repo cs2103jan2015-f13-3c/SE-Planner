@@ -1,13 +1,7 @@
 //author A0108417J
 
-#include <assert.h>
+#include <iostream>
 #include "Time.h"
-
-const int MAXIMUM_HOURS = 12;
-const int MINIMUM_HOURS = 1;
-
-const int MAXIMUM_MINUTES = 59;
-const int MINIMUM_MINUTES = 0;
 
 Time::Time(void) {
 }
@@ -20,29 +14,11 @@ void Time::setTimeType(TimeType timeType) {
 }
 
 void Time::setHours(int hours) {
-//	assert(isHoursCorrect(hours));
 	_hours = hours;
 }
 
-bool Time::isHoursCorrect(int hours) {
-	if ((hours >= MINIMUM_HOURS) && (hours <= MAXIMUM_HOURS)) {
-		return true;
-	} else {
-		return false;
-	}
-}
-
 void Time::setMinutes(int minutes) {
-//	assert(isMinutesCorrect(minutes));
 	_minutes = minutes;
-}
-
-bool Time::isMinutesCorrect(int minutes) {
-	if ((minutes >= MINIMUM_MINUTES) && (minutes <= MAXIMUM_MINUTES)) {
-		return true;
-	} else {
-		return false;
-	}
 }
 
 TimeType Time::getTimeType() {
@@ -55,4 +31,20 @@ int Time::getHours() {
 
 int Time::getMinutes() {
 	return _minutes;
+}
+
+bool Time::isTimeNull() {
+	if ((_timeType == NULLTIMETYPE) && (_hours == NULL) && (_minutes == NULL)) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool Time::isTimeSame(Time time) {
+	if ((_timeType == time.getTimeType()) && (_hours == time.getHours()) && (_minutes == time.getMinutes())) {
+		return true;
+	} else {
+		return false;
+	}
 }

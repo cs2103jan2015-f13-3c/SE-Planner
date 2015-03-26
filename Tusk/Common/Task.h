@@ -1,19 +1,4 @@
 //author A0108417J
-//
-//Pre-condition: None
-//Post-condition: Task will be stored in various variables which
-//                can be retrived and editied individually when needed.
-//
-//Sample usage:
-//	Task task;
-//
-//	To store/edit task as abctask:
-//	task.setTaskType(FLOATINGTASK);
-//	task.setTitle("abctask");
-//
-//	To retrive task's details:
-//	task.getTaskType();
-//	task.getTitle();
 
 #pragma once
 
@@ -22,7 +7,7 @@
 #include "Date.h"
 
 enum TaskType {
-	TIMEDTASK, DEADLINE, FLOATINGTASK
+	NULLTASKTYPE, TIMEDTASK, DEADLINE, FLOATINGTASK
 };
 
 class Task {
@@ -42,7 +27,7 @@ public:
 	Task(void);
 	~Task(void);
 
-
+	//
 	void setTaskType(TaskType);
 	void setTitle(std::string);
 
@@ -54,7 +39,7 @@ public:
 
 	void setIsDone(bool);
 
-
+	//
 	TaskType getTaskType();
 	std::string getTitle();
 
@@ -65,4 +50,7 @@ public:
 	Date getEndingDate();
 
 	bool getIsDone();
+
+	//
+	bool isTaskSame(Task);
 };
