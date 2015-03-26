@@ -1,7 +1,5 @@
 #include "Command.h"
 
-#include <iostream>
-
 Command::Command(void) {
 }
 
