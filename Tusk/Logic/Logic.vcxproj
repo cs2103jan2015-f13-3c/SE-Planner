@@ -78,7 +78,6 @@
   <ItemGroup>
     <ClInclude Include="Add.h" />
     <ClInclude Include="Command.h" />
-    <ClInclude Include="CommandExecutor.h" />
     <ClInclude Include="Delete.h" />
     <ClInclude Include="Display.h" />
     <ClInclude Include="Edit.h" />
@@ -87,7 +86,6 @@
   <ItemGroup>
     <ClCompile Include="Add.cpp" />
     <ClCompile Include="Command.cpp" />
-    <ClCompile Include="CommandExecutor.cpp" />
     <ClCompile Include="Delete.cpp" />
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="Edit.cpp" />
