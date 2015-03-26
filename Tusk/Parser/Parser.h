@@ -40,7 +40,7 @@ private:
 	void createNewCommand(CommandType);
 	Task _task;
 	CommandType _command;
-
+	std::string _index;
 public:
 	Parser(void);
 	~Parser(void);
@@ -49,5 +49,5 @@ public:
 
 	Task getTask();
 	CommandType getCommandType();
-
+	std::string getInformation();
 };

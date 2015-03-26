@@ -1,4 +1,5 @@
 #include "TaskTimeParser.h"
+#include <iostream>
 
 TaskTimeParser::TaskTimeParser(void){
 }
@@ -9,15 +10,16 @@ TaskTimeParser::TaskTimeParser(std::string input){
 
 void TaskTimeParser::setInput(std::string input){
 	_timeParserInput = input;
-}
+	}
 
 void TaskTimeParser::parse(){
 	std::string timeStr;
-
+	
 	if(isTimeInput()){
-		timeStr = getTimeStr();
+		timeStr = getTimeStr();	
 		setTimeType(timeStr);	
 		setTime(timeStr);
+	
 
 	}
 }
@@ -36,15 +38,14 @@ void TaskTimeParser::setTimeType(std::string timeStr){
 
 void TaskTimeParser::setTime(std::string timeStr){
 	switch(_containsTimeType){	
-	
 	case DEFAULT_TIME:
 		_timeStart = timeStr.substr(0,4);
-		_timeStart_AM_PM = timeStr.substr(4,6);
-			
+		_timeEnd = _timeStart;
+		break;	
 	case TIME_W_RANGE:
-		_timeEnd = timeStr.substr(6,10);
-		_timeEnd_AM_PM = timeStr.substr(10,12);
-
+		_timeStart = timeStr.substr(0,4);
+		_timeEnd = timeStr.substr(5,9);
+		break;
 	}
 
 }
@@ -58,40 +59,75 @@ bool TaskTimeParser::isFound(std::string keyword,std::string sentence){
 }	
 
 std::string TaskTimeParser::getKeywordAfter(std::string keyword, std::string sentence){
-sentence = sentence.substr(sentence.find(keyword));
-return sentence.substr(0,sentence.find(" "));
+sentence = sentence.substr(sentence.find(keyword)+keyword.length()+1);
+std::string timeRangeStr=sentence.substr(0,9);
+if(isFound("-",timeRangeStr)==false){
+	return timeRangeStr.substr(0,4);
+}
+return timeRangeStr;
 }
 
 Time TaskTimeParser::getTime(){
 	return getTimeStart();
 }
 
+std::string TaskTimeParser::trimLeadingSpaces(std::string sentence){
+      size_t pos = sentence.find_first_not_of(" \t");
+      sentence.erase(0, pos);
+	  return sentence;
+}
+
 
 //TODO:
 Time TaskTimeParser::getTimeStart(){
 	std::string timeStr = _timeStart;
-
+	std::string timeTypeStr = _timeStart;
 	Time newTime;
-	newTime.setHours(getNumber(timeStr));
+	_timeStart_AM_PM = getTimeType(timeTypeStr);	
+	newTime.setTimeType(_timeStart_AM_PM);
+	int hours = getNumber(timeStr);
+	if(_timeStart_AM_PM==PM){   //1200-2359h
+		hours%=12;
+	}else{						//0000-1159
+		if(hours==0){
+			hours=12;
+		}
+	}		
+
+	newTime.setHours(hours);
 	newTime.setMinutes(getNumber(timeStr));
-	newTime.setTimeType(getTimeType(_timeStart));
 	return newTime;
 }
 
-Time TaskTimeParser::getTimeEnd(){
-		if(_containsTimeType = DEFAULT_TIME){
+Time TaskTimeParser::getTimeEnd(){	
+	
+	if(_containsTimeType == DEFAULT_TIME){
 		return getTimeStart();
 	}
 	std::string timeStr = _timeEnd;
+	std::string timeTypeStr = _timeEnd;
+	
 	Time newTime;
-	newTime.setHours(getNumber(timeStr));
+	_timeEnd_AM_PM = getTimeType(timeTypeStr);	
+	newTime.setTimeType(_timeEnd_AM_PM);
+	int hours = getNumber(timeStr);
+	
+	if(_timeEnd_AM_PM==PM){   //1200-2359h
+		hours%=12;
+	}else{						//0000-1159
+		if(hours==0){
+			hours=12;
+		}
+	}
+	
+	newTime.setHours(hours);
 	newTime.setMinutes(getNumber(timeStr));
 	newTime.setTimeType(getTimeType(_timeEnd));
 	return newTime;
 }
 
 TimeType TaskTimeParser::getTimeType(std::string time){
-	if(getNumber(time)>12){
+	if(getNumber(time)>=12){
 	return PM;
 	}
 	return AM;

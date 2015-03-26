@@ -16,22 +16,25 @@ void Parser::parseUserInput(std::string userInput){
 
 	CommandParser cmdParser (userInput);
 	cmdParser.parse();
-	//createNewCommand(cmdParser.getCommandType());
 
 	std::string newUserInput = cmdParser.getProcessedString();
 	
 	_command = cmdParser.getCommandType();
-
+	bool hasIndex=false;
+	if(_command == EDIT ||_command == SEARCH){
+	hasIndex = true;
+	}
 	log.write("commandParser ended");
 
 	log.write("taskParser started with input:"+newUserInput);
 
-	TaskParser taskParser (newUserInput);
+	TaskParser taskParser (newUserInput,hasIndex);
 	taskParser.parse();
-	//createNewTask(taskParser.getTaskType());
+	
 	log.write("taskParser ended");
+	
 	_task = taskParser.getTask();
-
+	_index = taskParser.getTaskIndex();
 	log.end();
 }
 
@@ -43,20 +46,6 @@ CommandType Parser::getCommandType(){
 	return _command;
 }
 
-
-/*
-void Parser::createNewCommand(CommandType extractedCommand){
-	Command newCommand;
-	newCommand.setCommandType(extractedCommand);
-	return newCommand;
+std::string Parser::getInformation(){
+	return _index;
 }
-*/
-
-/*
-Task Parser::createNewTask(TaskType task, std::string extractedTaskInfo){
-	Task newTask;
-	newTask.setTaskType(task);
-	newTask.setTitle(extractedTaskInfo);
-	return newTask;
-}
-*/

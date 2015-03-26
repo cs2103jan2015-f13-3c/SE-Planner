@@ -8,16 +8,20 @@
 //getTime : swtich timeType set am/pm set range
 //getDate : switch dateType set d/m/y set range
 
-TaskParser::TaskParser(std::string input){
+TaskParser::TaskParser(std::string input, bool hasIndex){
 	_taskInput = input;
+	_hasIndex = hasIndex;
 }
 
 //***2. task processing methods ***
 
 void TaskParser::parse(){
-	_taskType = findTaskType();
-	_taskTitle = findTaskTitle();
 
+	_taskType = findTaskType();
+	if(_hasIndex){
+		_taskIndex = findTaskIndex();
+	}
+	_taskTitle = findTaskTitle();
 	_timeParser.setInput(_taskInput);
 	_timeParser.parse();
 	
@@ -26,8 +30,9 @@ void TaskParser::parse(){
 
 }
 
+
 TaskType TaskParser::findTaskType(){
-	TaskType taskType = FLOATINGTASK;
+	TaskType taskType = FLOATINGTASK;//default taskType
 
 	if( isFound(DATE_KEYWORD, _taskInput) ){
 		taskType = DEADLINE;
@@ -43,12 +48,19 @@ TaskType TaskParser::findTaskType(){
 	return taskType;
 }
 
+std::string TaskParser::findTaskIndex(){
+	_taskInput = trimLeadingSpaces(_taskInput);
+	std::string index = _taskInput.substr(0, _taskInput.find(" "));
+	_taskInput.erase(0, _taskInput.find(" "));
+	return index;
+}
+
+
 bool TaskParser::isFound(std::string keyword,std::string sentence){
 	return sentence.find(keyword) != std::string::npos;
 }	
 
 std::string TaskParser::findTaskTitle(){
-	// commandType already removed from _taskInput in Parser
 	std::string processedString = _taskInput;
 
 	if( isFound(DATE_KEYWORD, _taskInput) ){
@@ -66,12 +78,14 @@ std::string TaskParser::findTaskTitle(){
 std::string TaskParser::removeDate(std::string sentence){
 	std::string sentenceBeforeDate = sentence.substr(0, sentence.find("date:"));
 	std::string sentenceAfterDate = sentence.substr(sentence.find("date: "));
+	sentenceAfterDate = sentenceAfterDate.substr(sentenceAfterDate.find(" ")+1);
 	return sentenceBeforeDate + sentenceAfterDate.substr(sentenceAfterDate.find(" "));
 }
 
 std::string TaskParser::removeTime(std::string sentence){
 	std::string sentenceBeforeTime = sentence.substr(0, sentence.find("time:"));
 	std::string sentenceAfterTime = sentence.substr(sentence.find("time: "));
+	sentenceAfterTime = sentenceAfterTime.substr(sentenceAfterTime.find(" ")+1);
 	return sentenceBeforeTime + sentenceAfterTime.substr(sentenceAfterTime.find(" "));
 }
 
@@ -106,11 +120,22 @@ Task TaskParser::getTask(){
 	newTask.setStartingDate(getDateStart());
 	newTask.setEndingDate(getDateEnd());
 	newTask.setStartingTime(getTimeStart());
-	newTask.setEndingTime(getTimeStart());
+	newTask.setEndingTime(getTimeEnd());
 	newTask.setTaskType(_taskType);
 	newTask.setTitle(_taskTitle);
 	return newTask;
 }
+
+std::string TaskParser::getTaskIndex(){
+	return _taskIndex;
+}
+
+std::string TaskParser::trimLeadingSpaces(std::string sentence){
+      size_t pos = sentence.find_first_not_of(" \t");
+      sentence.erase(0, pos);
+	  return sentence;
+}
+
 
 //***INCOMPLETE METHODS:
 /*

@@ -20,7 +20,7 @@ void Time::setTimeType(TimeType timeType) {
 }
 
 void Time::setHours(int hours) {
-	assert(isHoursCorrect(hours));
+//	assert(isHoursCorrect(hours));
 	_hours = hours;
 }
 
@@ -33,7 +33,7 @@ bool Time::isHoursCorrect(int hours) {
 }
 
 void Time::setMinutes(int minutes) {
-	assert(isMinutesCorrect(minutes));
+//	assert(isMinutesCorrect(minutes));
 	_minutes = minutes;
 }
 

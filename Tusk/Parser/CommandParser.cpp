@@ -15,16 +15,16 @@ CommandType CommandParser::parse(std::string input){
 	return parse();
 }
 
-//ADD, DISPLAY, EDIT, DELETE, UNDO, SEARCH
+//ADD, DISPLAY, EDIT, DELETE, SEARCH, UNDO
 CommandType CommandParser::parse(){
-	CommandType commandType;
+	CommandType commandType = DISPLAY;//default cmd
 	int numCommands = 0;
 
 	if(searchForCreateCommand(_commandInput)){
 	commandType = ADD;
 	numCommands++;
 	
-	} else if(searchForUpdateCommand(_commandInput)){
+	} else if(searchForEditCommand(_commandInput)){
 	commandType = EDIT;
 	numCommands++;
 	
@@ -34,6 +34,10 @@ CommandType CommandParser::parse(){
 	
 	} else if(searchForDeleteCommand(_commandInput)){
 	commandType = DELETE;
+	numCommands++;
+	
+	} else if(searchForSearchCommand(_commandInput)){
+		commandType = SEARCH;
 	numCommands++;
 	
 	}
@@ -50,7 +54,14 @@ bool CommandParser::searchForCreateCommand(std::string sentence){
 	return false;
 }
 
-bool CommandParser::searchForUpdateCommand(std::string sentence){
+bool CommandParser::searchForSearchCommand(std::string sentence){
+	if(sentence.find(SEARCH_COMMAND) != std::string::npos){
+		return true;
+	}
+	return false;
+}
+
+bool CommandParser::searchForEditCommand(std::string sentence){
 	if(sentence.find(UPDATE_COMMAND) != std::string::npos){
 		return true;
 	}

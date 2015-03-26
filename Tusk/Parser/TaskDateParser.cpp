@@ -1,4 +1,5 @@
 #include "TaskDateParser.h"
+#include <iostream>
 
 
 TaskDateParser::TaskDateParser(std::string input){
@@ -15,7 +16,9 @@ void TaskDateParser::setInput(std::string input){
 void TaskDateParser::parse(){
 	std::string dateStr;
 
+	
 	if(isDateInput()){
+		
 		dateStr = getDateStr();
 		setDateType(dateStr);	
 		setDate(dateStr);
@@ -59,8 +62,12 @@ bool TaskDateParser::isFound(std::string keyword,std::string sentence){
 }	
 
 std::string TaskDateParser::getKeywordAfter(std::string keyword, std::string sentence){
-sentence = sentence.substr(sentence.find(keyword));
-return sentence.substr(0,sentence.find(" "));
+sentence = sentence.substr(sentence.find(keyword)+keyword.length()+1);
+std::string dateRangeStr=sentence.substr(0,21);
+if(isFound("-",dateRangeStr)==false){
+	return dateRangeStr.substr(0,10);
+}
+return dateRangeStr;
 }
 
 Date TaskDateParser::getDate(){
@@ -79,10 +86,12 @@ Date TaskDateParser::getDateStart(){
 }
 
 Date TaskDateParser::getDateEnd(){
-	if(_containsDateType = DEFAULT_DATE){
+	if(_containsDateType == DEFAULT_DATE){
 		return getDateStart();
 	}
+
 	std::string dateStr = _dateEnd;
+	
 	Date newDate;
 	newDate.setDay(getNumber(dateStr));
 	newDate.setMonth( getMonth(getNumber(dateStr)) );

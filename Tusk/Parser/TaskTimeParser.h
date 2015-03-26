@@ -28,10 +28,11 @@ private:
 	TimeTypes _containsTimeType;
 	std::string _timeParserInput;
 	std::string _timeStart;
-	std::string _timeStart_AM_PM;
+	TimeType _timeStart_AM_PM;
 	std::string _timeEnd;
-	std::string _timeEnd_AM_PM;
-
+	TimeType _timeEnd_AM_PM;
+	
+	std::string trimLeadingSpaces(std::string);
 	bool isFound(std::string, std::string);
 	std::string getKeywordAfter(std::string, std::string);
 

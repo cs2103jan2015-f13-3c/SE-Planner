@@ -19,7 +19,7 @@ Date::~Date(void) {
 }
 
 void Date::setYear(int year) {
-	assert(isYearPositive(year));
+//	assert(isYearPositive(year));
 	_year = year;
 }
 
@@ -37,7 +37,7 @@ void Date::setMonth(Month month) {
 
 //Precondition: Date's details on year and month must be stored beforehand.
 void Date::setDay(int day) {
-	assert(isDayCorrect(day));
+//	assert(isDayCorrect(day));
 	_day = day;
 }
 

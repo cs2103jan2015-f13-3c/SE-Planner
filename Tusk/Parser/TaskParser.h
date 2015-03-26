@@ -5,7 +5,7 @@
 
 class TaskParser{
 public:
-	TaskParser(std::string);
+	TaskParser(std::string,bool);
 	void parse();	
 	Date getDate();
 	Date getDateStart();
@@ -14,6 +14,7 @@ public:
 	Time getTimeEnd();
 	Time getTime();
 	Task getTask();
+	std::string getTaskIndex();
 
 
 
@@ -21,11 +22,14 @@ private:
 	TaskDateParser _dateParser;
 	TaskTimeParser _timeParser;
 	std::string _taskInput;
-
+	std::string _taskIndex;
+	bool _hasIndex;
+	std::string trimLeadingSpaces(std::string);
 	TaskType _taskType;
 	std::string _taskTitle;
 
 	TaskType findTaskType();
+	std::string findTaskIndex();
 
 	bool isFound(std::string, std::string);
 	std::string findTaskTitle();
