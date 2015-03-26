@@ -13,8 +13,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Storage", "Storage\Storage.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Common\Common.vcxproj", "{72856830-0B2B-459D-ABCF-9D3289508C99}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TuskTest", "TuskTest\TuskTest.vcxproj", "{6495C426-5757-49D1-A708-A8524A71BC97}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -45,10 +43,6 @@ Global
 		{72856830-0B2B-459D-ABCF-9D3289508C99}.Debug|Win32.Build.0 = Debug|Win32
 		{72856830-0B2B-459D-ABCF-9D3289508C99}.Release|Win32.ActiveCfg = Release|Win32
 		{72856830-0B2B-459D-ABCF-9D3289508C99}.Release|Win32.Build.0 = Release|Win32
-		{6495C426-5757-49D1-A708-A8524A71BC97}.Debug|Win32.ActiveCfg = Debug|Win32
-		{6495C426-5757-49D1-A708-A8524A71BC97}.Debug|Win32.Build.0 = Debug|Win32
-		{6495C426-5757-49D1-A708-A8524A71BC97}.Release|Win32.ActiveCfg = Release|Win32
-		{6495C426-5757-49D1-A708-A8524A71BC97}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

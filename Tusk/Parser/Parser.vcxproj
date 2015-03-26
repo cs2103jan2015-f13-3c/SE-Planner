@@ -65,10 +65,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CommandParser.h" />
     <ClInclude Include="Parser.h" />
+    <ClInclude Include="ParserLog.h" />
+    <ClInclude Include="TaskDateParser.h" />
+    <ClInclude Include="TaskParser.h" />
+    <ClInclude Include="TaskTimeParser.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CommandParser.cpp" />
     <ClCompile Include="Parser.cpp" />
+    <ClCompile Include="ParserLog.cpp" />
+    <ClCompile Include="TaskDateParser.cpp" />
+    <ClCompile Include="TaskParser.cpp" />
+    <ClCompile Include="TaskTimeParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">
