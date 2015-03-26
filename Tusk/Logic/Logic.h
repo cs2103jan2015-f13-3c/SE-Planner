@@ -1,42 +1,20 @@
 #pragma once
 
-#include <iostream>
-#include <vector>
-#include "Task.h"
-#include "Command.h"
 #include "Parser.h"
-#include "Storage.h"
-
-using namespace std;
+#include "CommandExecutor.h"
 
 class Logic {
 private:
-	vector<Task> _myVector;
-	Storage *_myStorage;
-	Parser *_myParser;
+	Parser _parser;
+	CommandExecutor _commandExecutor;
 
-	CommandType _commandType;
-	string _taskTitle;
-	TaskType _taskType;
-	
+	std::vector<Task> _displayedTaskList;	//To be implemented in history
+
+	Command createCommand(CommandType);
+
 public:
 	Logic(void);
 	~Logic(void);
 
-	//Temp function to create placeholder
-	Task getTask();
-	
-	void initializeVector();
-
-	void getCommandData(string);
-
-	void executeCommand();
-
-	Task generateTask();
-
-	int convertToInteger(const string);
-
-	void createTask();
-
-	void deleteTask();
+	std::vector<Task> executeUserInput(std::string);
 };

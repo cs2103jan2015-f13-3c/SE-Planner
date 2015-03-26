@@ -1,89 +1,70 @@
+#include "Add.h"
+#include "Display.h"
+#include "Edit.h"
+#include "Delete.h"
 #include "Logic.h"
 
 Logic::Logic(void) {
-	_myStorage = new Storage;
-	_myParser = new Parser;
 }
 
 Logic::~Logic(void) {
 }
 
-void Logic::initializeVector() {
-	//_myVector=_myStorage->getAllTask();
+std::vector<Task> Logic::executeUserInput(std::string userInput) {
+	_parser.parseUserInput(userInput);
+
+	CommandType commandType;
+	commandType = _parser.getCommandType();
+
+	Command command;
+	command = createCommand(commandType);
+
+	_displayedTaskList = _commandExecutor.executeCommand(command);
+
+	return _displayedTaskList;
 }
 
-void Logic::getCommandData(const string input) {
-	//_commandType = _myParser->getCommandType();
-	//_taskTitle = _myParser->getTaskTitle();
-	//_taskType = _myParser->getTaskType();
-}
+Command Logic::createCommand(CommandType commandType) {
+	Command command;
 
-void Logic::executeCommand() {
-	switch(_commandType) {
-	case Create:
-		createTask();
+	Add add;
+	Display display;
+	Edit edit;
+	Delete remove;
+
+	Task task;
+	int index;
+
+	task = _parser.getTask();
+	index = _parser.getIndex();
+
+	switch (commandType) {
+	case ADD:
+		add.setTask(task);
+		command = add;
 		break;
-	case Read:
+
+	case DISPLAY:
+		display.setTask(task);
+		command = display;
 		break;
-	case Update:
+
+	case EDIT:
+		edit.setIndex(index);
+		edit.setTask(task);
+		edit.setDisplayedTaskList(_displayedTaskList);
+		command = edit;
 		break;
-	case Delete:
-		deleteTask();
+
+	case DELETE:
+		remove.setIndex(index);
+		remove.setDisplayedTaskList(_displayedTaskList);
+		command = remove;
 		break;
-	}
 
+	default:
+		break;
+	};
+
+	return command;
 }
-
-//Later remove this method!!!
-Task Logic::getTask() {
-	Task newTask;
-
-	newTask.inputTaskType(Deadline);
-	newTask.inputTitle("testTask");
-
-	return newTask;
-}
-
-Task Logic::generateTask() {
-	Task newTask;
-	newTask.inputTaskType(_taskType);
-	newTask.inputTitle(_taskTitle);
-
-	return newTask;
-}
-
-int Logic::convertToInteger(const string input) {
-	int output=0;
-	for(int i=0;i<input.size();i++) {
-		if(isdigit(input[i])) {
-			output*=10;
-			output+=(input[i]-'0');
-		}
-		else {
-			return 0;
-		}
-	}
-
-	return output;
-}
-
-void Logic::createTask() {
-	//Remove this line as well!!!
-	Task newTask = getTask();
-
-	CreateTask *createTaskObject = new CreateTask(generateTask());
-
-	createTaskObject->execute(_myVector);
-
-	//_myStorage->writeToFile(_myVector);
-
-}
-void Logic::deleteTask(){
-	DeleteTask *deleteTaskObject = new DeleteTask(convertToInteger(_taskTitle));
-
-	deleteTaskObject->execute(_myVector);
-
-	//_myStorage->writeToFile(_myVector);
-}
-
-

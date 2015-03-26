@@ -44,7 +44,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Dan\Desktop\Tusk\Tusk\Tusk\Storage;C:\Users\Dan\Desktop\Tusk\Tusk\Tusk\Parser;C:\Users\Dan\Desktop\Tusk\Tusk\Tusk\Tusk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Parser;..\Storage;..\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -65,9 +65,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.vcxproj">
+      <Project>{72856830-0b2b-459d-abcf-9d3289508c99}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Parser\Parser.vcxproj">
+      <Project>{346e4fe7-48b3-4594-933d-a29f3fb3860d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Storage\Storage.vcxproj">
+      <Project>{b5589058-8896-4cd2-893f-05057499e3a8}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Add.h" />
+    <ClInclude Include="Command.h" />
+    <ClInclude Include="CommandExecutor.h" />
+    <ClInclude Include="Delete.h" />
+    <ClInclude Include="Display.h" />
+    <ClInclude Include="Edit.h" />
     <ClInclude Include="Logic.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Add.cpp" />
+    <ClCompile Include="Command.cpp" />
+    <ClCompile Include="CommandExecutor.cpp" />
+    <ClCompile Include="Delete.cpp" />
+    <ClCompile Include="Display.cpp" />
+    <ClCompile Include="Edit.cpp" />
     <ClCompile Include="Logic.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
