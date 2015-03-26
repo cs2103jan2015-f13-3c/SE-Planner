@@ -44,7 +44,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\Logic;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\easyloggingpp;..\Logic;..\Common;..\Parser;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -66,11 +66,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="UI.h" />
-    <ClInclude Include="ViewUI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="UI.cpp" />
-    <ClCompile Include="ViewUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logic\Logic.vcxproj">
