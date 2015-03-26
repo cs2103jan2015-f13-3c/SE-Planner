@@ -40,6 +40,10 @@ CommandType CommandParser::parse(){
 		commandType = SEARCH;
 	numCommands++;
 	
+	}else if(searchForSearchCommand(_commandInput)){
+		commandType = EXIT_COMMAND;
+	numCommands++;
+	
 	}
 		
 	//TODO: check that numCommands should be == 1
@@ -49,6 +53,12 @@ CommandType CommandParser::parse(){
 
 bool CommandParser::searchForCreateCommand(std::string sentence){
 	if(sentence.find(CREATE_COMMAND) != std::string::npos){
+		return true;
+	}
+	return false;
+}
+bool CommandParser::searchForExitCommand(std::string sentence){
+	if(sentence.find(EXIT_CMD) != std::string::npos){
 		return true;
 	}
 	return false;
