@@ -82,6 +82,7 @@
     <ClInclude Include="Display.h" />
     <ClInclude Include="Edit.h" />
     <ClInclude Include="Logic.h" />
+    <ClInclude Include="Search.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Add.cpp" />
@@ -90,6 +91,7 @@
     <ClCompile Include="Display.cpp" />
     <ClCompile Include="Edit.cpp" />
     <ClCompile Include="Logic.cpp" />
+    <ClCompile Include="Search.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -9,12 +9,14 @@ private:
 	Command _command;
 
 	std::vector<Task> _displayTaskList;
+	std::vector<Task> _result;
 
 	void createCommand(CommandType);
 	void createAddCommand();
 	void createDeleteCommand();
 	void createEditCommand();
 	void createDisplayCommand();
+	void createSearchCommand();
 
 public:
 	Logic(void);

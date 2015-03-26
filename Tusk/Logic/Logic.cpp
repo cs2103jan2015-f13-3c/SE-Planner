@@ -2,6 +2,7 @@
 #include "Delete.h"
 #include "Edit.h"
 #include "Display.h"
+#include "Search.h"
 #include "Logic.h"
 
 Logic::Logic(void) {
@@ -14,7 +15,7 @@ CommandType Logic::executeUserInput(std::string userInput) {
 	CommandType commandType;
 	commandType = _parser.parseUserInput(userInput);
 	createCommand(commandType);
-	_command.execute();
+	_result = _command.execute();
 
 	return commandType;
 }
@@ -33,6 +34,8 @@ void Logic::createCommand(CommandType commandType) {
 	case DISPLAY:
 		createDisplayCommand();
 		break;
+	case SEARCH:
+		createSearchCommand();
 	default:
 		break;
 	};
@@ -77,4 +80,14 @@ void Logic::createEditCommand() {
 void Logic::createDisplayCommand() {
 	Display display;
 	_command = display;
+}
+
+void Logic::createSearchCommand() {
+	std::string information;
+	information = _parser.getInformation;
+
+	Search search;
+	search.setInformation(information);
+
+	_command = search;
 }
