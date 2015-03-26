@@ -1,7 +1,5 @@
 #pragma once
 
-//Abstract Class
-
 #include "Storage.h"
 
 class Command {

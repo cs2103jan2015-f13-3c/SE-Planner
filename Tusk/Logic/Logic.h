@@ -1,20 +1,26 @@
 #pragma once
 
 #include "Parser.h"
-#include "CommandExecutor.h"
+#include "Command.h"
 
 class Logic {
 private:
 	Parser _parser;
-	CommandExecutor _commandExecutor;
+	Command _command;
 
-	std::vector<Task> _displayedTaskList;	//To be implemented in history
+	std::vector<Task> _displayTaskList;
+	std::vector<Task> _result;
 
-	Command createCommand(CommandType);
+	void createCommand(CommandType);
+	void createAddCommand();
+	void createDeleteCommand();
+	void createEditCommand();
+	void createDisplayCommand();
+	void createSearchCommand();
 
 public:
 	Logic(void);
 	~Logic(void);
 
-	std::vector<Task> executeUserInput(std::string);
+	CommandType executeUserInput(std::string);
 };

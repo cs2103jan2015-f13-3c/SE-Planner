@@ -1,34 +1,23 @@
 #include "Edit.h"
 
-#include <assert.h>
 Edit::Edit(void) {
 }
 
 Edit::~Edit(void) {
 }
 
-void Edit::setDisplayedTaskList(std::vector<Task> displayedTaskList) {
-	_displayedTaskList = displayedTaskList;
-}
-
-void Edit::setIndex(int index) {
-	_index = index;
-}
-
-void Edit::setTask(Task task) {
-	_task = task;
-}
-
 std::vector<Task> Edit::execute() {
-	Task task;
-	task = _displayedTaskList[_index-1];
+	int index;
+	index = stoi(_information);
 
+	Task task;
+	task = _displayedTaskList[index-1];
 
 	std::vector<Task> taskList;
 	taskList = _storage.getAllTask();
 
 	for (int i = 0; i < taskList.size(); i++) {
-		if (taskList[i].getTitle() == task.getTitle()) {
+		if (task.getTitle() == taskList[i].getTitle()) {
 			taskList[i] = task;
 		}
 	}
@@ -37,4 +26,16 @@ std::vector<Task> Edit::execute() {
 
 	_result.push_back(task);
 	return _result;
+}
+
+void Edit::setTask(Task task) {
+	_task = task;
+}
+
+void Edit::setDisplayedTaskList(std::vector<Task> displayedTaskList) {
+	_displayedTaskList = displayedTaskList;
+}
+
+void Edit::setInformation(std::string information) {
+	_information = information;
 }

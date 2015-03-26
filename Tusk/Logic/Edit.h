@@ -2,19 +2,18 @@
 
 #include "Command.h"
 
-class Edit: public Command{
+class Edit: public Command {
 private:
 	std::vector<Task> _displayedTaskList;
-	int _index;
+	std::string _information;
 	Task _task;
 
 public:
 	Edit(void);
 	~Edit(void);
 
-	void setDisplayedTaskList(std::vector<Task>);
-	void setIndex(int);
-	void setTask(Task);
-
 	std::vector<Task> execute();
+	void setTask(Task);
+	void setInformation(std::string);
+	void setDisplayedTaskList(std::vector<Task>);
 };

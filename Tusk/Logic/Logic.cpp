@@ -1,7 +1,8 @@
 #include "Add.h"
-#include "Display.h"
-#include "Edit.h"
 #include "Delete.h"
+#include "Edit.h"
+#include "Display.h"
+#include "Search.h"
 #include "Logic.h"
 
 Logic::Logic(void) {
@@ -10,61 +11,83 @@ Logic::Logic(void) {
 Logic::~Logic(void) {
 }
 
-std::vector<Task> Logic::executeUserInput(std::string userInput) {
-	_parser.parseUserInput(userInput);
-
+CommandType Logic::executeUserInput(std::string userInput) {
 	CommandType commandType;
-	commandType = _parser.getCommandType();
+	commandType = _parser.parseUserInput(userInput);
+	createCommand(commandType);
+	_result = _command.execute();
 
-	Command command;
-	command = createCommand(commandType);
-
-	_displayedTaskList = _commandExecutor.executeCommand(command);
-
-	return _displayedTaskList;
+	return commandType;
 }
 
-Command Logic::createCommand(CommandType commandType) {
-	Command command;
-
-	Add add;
-	Display display;
-	Edit edit;
-	Delete remove;
-
-	Task task;
-	int index;
-
-	task = _parser.getTask();
-	index = _parser.getIndex();
-
+void Logic::createCommand(CommandType commandType) {
 	switch (commandType) {
 	case ADD:
-		add.setTask(task);
-		command = add;
+		createAddCommand();
 		break;
-
-	case DISPLAY:
-		display.setTask(task);
-		command = display;
-		break;
-
-	case EDIT:
-		edit.setIndex(index);
-		edit.setTask(task);
-		edit.setDisplayedTaskList(_displayedTaskList);
-		command = edit;
-		break;
-
 	case DELETE:
-		remove.setIndex(index);
-		remove.setDisplayedTaskList(_displayedTaskList);
-		command = remove;
+		createDeleteCommand();
 		break;
-
+	case EDIT:
+		createEditCommand();
+		break;
+	case DISPLAY:
+		createDisplayCommand();
+		break;
+	case SEARCH:
+		createSearchCommand();
 	default:
 		break;
 	};
+}
 
-	return command;
+void Logic::createAddCommand() {
+	Task task;
+	task = _parser.getTask();
+
+	Add add;
+	add.setTask(task);
+
+	_command = add;
+}
+
+void Logic::createDeleteCommand() {
+	std::string information;
+	information = _parser.getInformation();
+
+	Delete remove;
+	remove.setInformation(information);
+	remove.setDisplayedTaskList(_displayTaskList);
+
+	_command = remove;
+}
+
+void Logic::createEditCommand() {
+	std::string information;
+	information = _parser.getInformation();
+
+	Task task;
+	task = _parser.getTask();
+
+	Edit edit;
+	edit.setInformation(information);
+	edit.setTask(task);
+	edit.setDisplayedTaskList(_displayTaskList);
+
+	_command = edit;
+}
+
+void Logic::createDisplayCommand() {
+	Display display;
+	_command = display;
+}
+
+void Logic::createSearchCommand() {
+	std::string information;
+	information = _parser.getInformation;
+
+	Search search;
+	search.setInformation(information);
+
+	_command = search;
 }

@@ -1,9 +1,5 @@
+#include <algorithm>
 #include "Search.h"
-#include <vector>
-#include <string>
-#include <iostream>
-
-using namespace std;
 
 Search::Search(void) {
 }
@@ -11,30 +7,21 @@ Search::Search(void) {
 Search::~Search(void) {
 }
 
-std::vector<Task> Search::executeCommand(std::vector<Task>& mainTaskList, Task& task)
-{
-	vector<Task> displayedTaskList;
+std::vector<Task> Search::execute() {
+	std::vector<Task> taskList;
+	taskList = _storage.getAllTask();
 
-	string keyword = task.getTitle();
-
-	int totalDisplay = 0;
-
-	for (int i = 0; i < mainTaskList.size(); i++)
-	{
-		//cout<<"Current Title = "<<mainTaskList[i].getTitle()<<endl;
-		//cout<<"Check keyword = "<<keyword<<endl;
-
-		if (mainTaskList[i].getTitle().find(keyword) != string::npos)
-		{
-			//cout<<"Matched"<<endl;
-			displayedTaskList.push_back(mainTaskList[i]);
-			totalDisplay++;
+	for (int i = 0; i < taskList.size(); i++) {
+		string::iterator iter;
+		iter = search(taskList[i].getTitle().begin(), taskList[i].getTitle().end(), _information.begin(), _information.end());
+		if (iter != taskList[i].getTitle().end()) {
+			_result.push_back(taskList[i]);
 		}
-
-		if (totalDisplay == 9) break;
 	}
 
-	//cout<<"Display Task List after Search Command = "<<displayedTaskList.size()<<endl;
-	return displayedTaskList;
+	return _result;
+}
 
+void Search::setInformation(std::string information) {
+	_information = information;
 }
