@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include "CommandType.h"
 
 
 const std::string CREATE_COMMAND = "add";
@@ -9,6 +8,11 @@ const std::string READ_COMMAND = "display";
 const std::string DELETE_COMMAND = "delete";
 const std::string SEARCH_COMMAND = "search";
 const std::string EXIT_CMD = "exit";
+
+
+enum CommandType{
+ADD, DISPLAY, EDIT, DELETE, UNDO, SEARCH, EXIT_COMMAND
+};
 
 
 class CommandParser{

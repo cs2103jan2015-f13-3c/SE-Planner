@@ -41,7 +41,7 @@ CommandType CommandParser::parse(){
 	numCommands++;
 	
 	}else if(searchForSearchCommand(_commandInput)){
-		commandType = EXIT;
+		commandType = EXIT_COMMAND;
 	numCommands++;
 	
 	}
