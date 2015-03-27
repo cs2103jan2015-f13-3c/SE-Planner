@@ -102,3 +102,47 @@ commandParser ended
 taskParser started with input:7
 taskParser ended
 log end
+log started...
+commandParser started with input:add stuff
+commandParser ended
+taskParser started with input:stuff
+taskParser ended
+log end
+log started...
+commandParser started with input:add more stuff
+commandParser ended
+taskParser started with input:more stuff
+taskParser ended
+log end
+log started...
+commandParser started with input:display
+log started...
+commandParser started with input:display
+log started...
+commandParser started with input:display
+log started...
+commandParser started with input:exit
+commandParser ended
+taskParser started with input: 
+taskParser ended
+log end
+log started...
+commandParser started with input:
+commandParser ended
+taskParser started with input: 
+taskParser ended
+log end
+log started...
+commandParser started with input:exit
+commandParser ended
+taskParser started with input: 
+taskParser ended
+log end
+log started...
+commandParser started with input:display
+log started...
+commandParser started with input:exit
+commandParser ended
+taskParser started with input: 
+taskParser ended
+log end

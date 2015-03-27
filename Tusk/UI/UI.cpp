@@ -68,13 +68,13 @@ void UI::printResult(const vector<Task> vectorTask, const CommandType commandTyp
 		cout << SUCCESS_DELETE << endl << endl;
 		break;
 	case DISPLAY_CMD:
-		cout << vectorToString(vectorTask);
+		vectorToString(vectorTask);
 		break;
 	case EDIT_CMD:
 		cout << SUCCESS_EDIT << endl << endl;
 		break;
 	case SEARCH_CMD:
-		cout << vectorToString(vectorTask);
+		vectorToString(vectorTask);
 		break;
 	case EXIT_CMD:
 		cout << SUCCESS_EXIT << endl << endl;
@@ -84,44 +84,43 @@ void UI::printResult(const vector<Task> vectorTask, const CommandType commandTyp
 	}
 }
 
-string UI::vectorToString(vector<Task> vectorTask) {
+void UI::vectorToString(vector<Task> vectorTask) {
 	ostringstream oss;
 	vector<Task>::iterator iter;
 
 	int i = 1;
 	for (iter = vectorTask.begin(); iter != vectorTask.end(); iter++, i++) {
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-		oss << i << ". ";
+		cout << i << ". ";
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
-		oss << iter->getTitle();
-		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-		oss << ", ";
+		cout << iter->getTitle();
 
 		if (iter->getTaskType() == TIMEDTASK || iter->getTaskType() == DEADLINE) {
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
+			cout << ", ";
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
-			oss << iter->getStartingDate().getDay() << "/";
-			oss << iter->getStartingDate().getMonth() << "/";
-			oss << iter->getStartingDate().getYear();
+			cout << iter->getStartingDate().getDay() << "/";
+			cout << iter->getStartingDate().getMonth() << "/";
+			cout << iter->getStartingDate().getYear();
 
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
-			oss << " [" << iter->getStartingTime().getHours() << ":";
-			oss << iter->getStartingTime().getMinutes() << "]";
+			cout << " [" << iter->getStartingTime().getHours() << ":";
+			cout << iter->getStartingTime().getMinutes() << "]";
 		}
 		if (iter->getTaskType() == TIMEDTASK) {
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-			oss << " - ";
+			cout << " - ";
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
-			oss << iter->getEndingDate().getDay() << "/";
-			oss << iter->getEndingDate().getMonth() << "/";
-			oss << iter->getEndingDate().getYear();
+			cout << iter->getEndingDate().getDay() << "/";
+			cout << iter->getEndingDate().getMonth() << "/";
+			cout << iter->getEndingDate().getYear();
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
-			oss << " [" << iter->getEndingTime().getHours() << ":";
-			oss << iter->getEndingTime().getMinutes() << "]";
+			cout << " [" << iter->getEndingTime().getHours() << ":";
+			cout << iter->getEndingTime().getMinutes() << "]";
 		}
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
 		iter->getIsDone() ? oss << " DONE" : oss << " NOT DONE";
-		oss << endl << endl;
+		cout << endl << endl;
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
 	}
-	return oss.str();
 }

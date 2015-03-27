@@ -31,5 +31,5 @@ public:
 	*/
 	std::string inputUserCommand();
 	void printResult(const vector<Task>, const CommandType);
-	string vectorToString(vector<Task>);
+	void vectorToString(vector<Task>);
 };

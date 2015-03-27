@@ -27,6 +27,14 @@
         {
             "TaskType": "FloatingTask",
             "TaskTitle": "green"
+        },
+        {
+            "TaskType": "FloatingTask",
+            "TaskTitle": "stuff"
+        },
+        {
+            "TaskType": "FloatingTask",
+            "TaskTitle": "more stuff"
         }
     ]
 }
