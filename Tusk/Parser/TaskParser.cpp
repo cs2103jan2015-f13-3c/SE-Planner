@@ -1,13 +1,5 @@
 #include "TaskParser.h"
 
-//TODO: methods to be completed
-//findTimeType 
-//findTaskTime 
-//findDateType 
-//findTaskDate 
-//getTime : swtich timeType set am/pm set range
-//getDate : switch dateType set d/m/y set range
-
 TaskParser::TaskParser(std::string input, bool hasIndex){
 	_taskInput = input;
 	_hasIndex = hasIndex;
@@ -24,7 +16,7 @@ void TaskParser::parse(){
 	_taskTitle = findTaskTitle();
 	_timeParser.setInput(_taskInput);
 	_timeParser.parse();
-	
+
 	_dateParser.setInput(_taskInput);
 	_dateParser.parse();
 
@@ -55,7 +47,6 @@ std::string TaskParser::findTaskIndex(){
 	return index;
 }
 
-
 bool TaskParser::isFound(std::string keyword,std::string sentence){
 	return sentence.find(keyword) != std::string::npos;
 }	
@@ -64,11 +55,11 @@ std::string TaskParser::findTaskTitle(){
 	std::string processedString = _taskInput;
 
 	if( isFound(DATE_KEYWORD, _taskInput) ){
-			processedString = removeDate(processedString);
+		processedString = removeDate(processedString);
 	}
 
 	if( isFound(TIME_KEYWORD, _taskInput) ){
-			processedString = removeTime(processedString);
+		processedString = removeTime(processedString);
 	}
 
 	return processedString;
@@ -89,15 +80,20 @@ std::string TaskParser::removeTime(std::string sentence){
 	return sentenceBeforeTime + sentenceAfterTime.substr(sentenceAfterTime.find(" "));
 }
 
+std::string TaskParser::trimLeadingSpaces(std::string sentence){
+	size_t pos = sentence.find_first_not_of(" \t");
+	sentence.erase(0, pos);
+	return sentence;
+}
+
+//*** Accessors
 Date TaskParser::getDateStart(){
 	return _dateParser.getDateStart();
 }
 
-
 Date TaskParser::getDateEnd(){
 	return _dateParser.getDateEnd();
 }
-
 
 Time TaskParser::getTimeStart(){
 	return _timeParser.getTimeStart();
@@ -130,14 +126,7 @@ std::string TaskParser::getTaskIndex(){
 	return _taskIndex;
 }
 
-std::string TaskParser::trimLeadingSpaces(std::string sentence){
-      size_t pos = sentence.find_first_not_of(" \t");
-      sentence.erase(0, pos);
-	  return sentence;
-}
-
-
-//***INCOMPLETE METHODS:
+//*** INCOMPLETE METHODS:
 /*
 std::string TaskParser::extractKeyword(std::string keyword,std::string sentence){
 std::string timeStr;
