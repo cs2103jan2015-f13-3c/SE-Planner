@@ -37,7 +37,7 @@ UI::~UI(void) {
 void UI::run() {
 	std::string input = inputUserCommand();
 	CommandType commandType = _logic->executeUserInput(input);
-	while (commandType != EXIT) {
+	while (commandType != EXIT_CMD) {
 		printResult(_logic->getResult(), commandType);
 		input = inputUserCommand();
 		commandType = _logic->executeUserInput(input);
@@ -61,22 +61,22 @@ std::string UI::inputUserCommand() {
 
 void UI::printResult(const vector<Task> vectorTask, const CommandType commandType){
 	switch(commandType) {
-	case ADD:
+	case ADD_CMD:
 		cout << SUCCESS_ADD << endl << endl;
 		break;
-	case DELETE;
+	case DELETE_CMD:
 		cout << SUCCESS_DELETE << endl << endl;
 		break;
-	case DISPLAY:
+	case DISPLAY_CMD:
 		cout << vectorToString(vectorTask);
 		break;
-	case EDIT:
+	case EDIT_CMD:
 		cout << SUCCESS_EDIT << endl << endl;
 		break;
-	case SEARCH:
+	case SEARCH_CMD:
 		cout << vectorToString(vectorTask);
 		break;
-	case EXIT:
+	case EXIT_CMD:
 		cout << SUCCESS_EXIT << endl << endl;
 	default:
 		cout << ERROR_GENERAL << endl << endl;
@@ -97,26 +97,26 @@ string UI::vectorToString(vector<Task> vectorTask) {
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 		oss << ", ";
 
-		if (iter->getTaskType() == TIMEDTASK || iter->getTaskType == DEADLINE) {
+		if (iter->getTaskType() == TIMEDTASK || iter->getTaskType() == DEADLINE) {
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
-			oss << iter->getStartingDate.getDay() << "/";
-			oss << iter->getStartingDate.getMonth() << "/";
-			oss << iter->getStartingDate.getYear();
+			oss << iter->getStartingDate().getDay() << "/";
+			oss << iter->getStartingDate().getMonth() << "/";
+			oss << iter->getStartingDate().getYear();
 
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
-			oss << " [" << iter->getStartingTime.getHours() << ":";
-			oss << iter->getStartingTime.getMinutes() << "]";
+			oss << " [" << iter->getStartingTime().getHours() << ":";
+			oss << iter->getStartingTime().getMinutes() << "]";
 		}
 		if (iter->getTaskType() == TIMEDTASK) {
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
 			oss << " - ";
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
-			oss << iter->getEndingDate.getDay() << "/";
-			oss << iter->getEndingDate.getMonth() << "/";
-			oss << iter->getEndingDate.getYear();
+			oss << iter->getEndingDate().getDay() << "/";
+			oss << iter->getEndingDate().getMonth() << "/";
+			oss << iter->getEndingDate().getYear();
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
-			oss << " [" << iter->getEndingTime.getHours() << ":";
-			oss << iter->getEndingTime.getMinutes() << "]";
+			oss << " [" << iter->getEndingTime().getHours() << ":";
+			oss << iter->getEndingTime().getMinutes() << "]";
 		}
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
 		iter->getIsDone() ? oss << " DONE" : oss << " NOT DONE";

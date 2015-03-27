@@ -7,11 +7,11 @@ const std::string UPDATE_COMMAND = "edit";
 const std::string READ_COMMAND = "display";
 const std::string DELETE_COMMAND = "delete";
 const std::string SEARCH_COMMAND = "search";
-const std::string EXIT_CMD = "exit";
+const std::string EXIT_COMMAND = "exit";
 
 
 enum CommandType{
-ADD, DISPLAY, EDIT, DELETE, UNDO, SEARCH, EXIT_COMMAND
+ADD_CMD, DISPLAY_CMD, EDIT_CMD, DELETE_CMD, UNDO_CMD, SEARCH_CMD, EXIT_CMD
 };
 
 

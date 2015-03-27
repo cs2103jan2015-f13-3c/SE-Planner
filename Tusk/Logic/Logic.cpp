@@ -25,19 +25,19 @@ CommandType Logic::executeUserInput(std::string userInput) {
 
 void Logic::createCommand(CommandType commandType) {
 	switch (commandType) {
-	case ADD:
+	case ADD_CMD:
 		createAddCommand();
 		break;
-	case DELETE:
+	case DELETE_CMD:
 		createDeleteCommand();
 		break;
-	case EDIT:
+	case EDIT_CMD:
 		createEditCommand();
 		break;
-	case DISPLAY:
+	case DISPLAY_CMD:
 		createDisplayCommand();
 		break;
-	case SEARCH:
+	case SEARCH_CMD:
 		createSearchCommand();
 		break;
 	}

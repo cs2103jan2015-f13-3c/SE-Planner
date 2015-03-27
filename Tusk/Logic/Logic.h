@@ -4,8 +4,8 @@
 #include <vector>
 #include "Command.h"
 //#include "CommandType.h"
-#include "Task.h"
-#include "Parser.h"
+#include "../Common/Task.h"
+#include "../Parser/Parser.h"
 
 class Logic {
 private:

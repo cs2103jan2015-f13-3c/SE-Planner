@@ -3,9 +3,9 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-#include "Logic.h"
-#include "Task.h"
-#include "Parser.h"
+#include "../Logic/Logic.h"
+#include "../Common/Task.h"
+#include "../Parser/Parser.h"
 
 using namespace std;
 

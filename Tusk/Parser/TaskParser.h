@@ -1,7 +1,7 @@
 #pragma once
-#include "Task.h"
-#include "TaskTimeParser.h"
-#include "TaskDateParser.h"
+#include "../Common/Task.h"
+#include "../Parser/TaskTimeParser.h"
+#include "../Parser/TaskDateParser.h"
 
 class TaskParser{
 public:

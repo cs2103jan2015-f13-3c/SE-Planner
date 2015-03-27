@@ -19,7 +19,7 @@ void Parser::parseUserInput(std::string userInput){
 	_command = cmdParser.getCommandType();
 	bool hasIndex=false;
 
-	if(_command == EDIT ||_command == SEARCH){
+	if(_command == EDIT_CMD ||_command == SEARCH_CMD){
 		hasIndex = true;
 	}
 

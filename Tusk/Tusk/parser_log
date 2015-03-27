@@ -1,0 +1,12 @@
+log started...
+commandParser started with input:add task floating
+commandParser ended
+taskParser started with input:task floating
+taskParser ended
+log end
+log started...
+commandParser started with input:add blue task
+commandParser ended
+taskParser started with input:blue task
+taskParser ended
+log end

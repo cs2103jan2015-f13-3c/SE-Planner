@@ -16,31 +16,31 @@ CommandType CommandParser::parse(std::string input){
 
 //available enum commandTypes: ADD, DISPLAY, EDIT, DELETE, SEARCH, UNDO
 CommandType CommandParser::parse(){
-	CommandType commandType = DISPLAY;//default cmdType
+	CommandType commandType = DISPLAY_CMD;//default cmdType
 	int numCommands = 0;
 
 	if(searchForCreateCommand(_commandInput)){
-		commandType = ADD;
+		commandType = ADD_CMD;
 		numCommands++;
 
 	} else if(searchForEditCommand(_commandInput)){
-		commandType = EDIT;
+		commandType = EDIT_CMD;
 		numCommands++;
 
 	} else if(searchForReadCommand(_commandInput)){
-		commandType = DISPLAY;
+		commandType = DISPLAY_CMD;
 		numCommands++;
 
 	} else if(searchForDeleteCommand(_commandInput)){
-		commandType = DELETE;
+		commandType = DELETE_CMD;
 		numCommands++;
 
 	} else if(searchForSearchCommand(_commandInput)){
-		commandType = SEARCH;
+		commandType = SEARCH_CMD;
 		numCommands++;
 
 	}else if(searchForSearchCommand(_commandInput)){
-		commandType = EXIT_COMMAND;
+		commandType = EXIT_CMD;
 		numCommands++;
 
 	}
@@ -54,7 +54,7 @@ bool CommandParser::searchForCreateCommand(std::string sentence){
 }
 
 bool CommandParser::searchForExitCommand(std::string sentence){
-	return (sentence.find(EXIT_CMD) != std::string::npos);
+	return (sentence.find(EXIT_COMMAND) != std::string::npos);
 }
 
 bool CommandParser::searchForSearchCommand(std::string sentence){

@@ -108,29 +108,29 @@ int TaskDateParser::getNumber(std::string& date){
 
 Month TaskDateParser::getMonth(int month){
 	switch(month){
-	case 0:
-		return JANUARY;
 	case 1:
-		return FEBRUARY;
+		return JANUARY;
 	case 2:
-		return MARCH;
+		return FEBRUARY;
 	case 3:
-		return APRIL;
+		return MARCH;
 	case 4:
-		return MAY;
+		return APRIL;
 	case 5:
-		return JUNE;
+		return MAY;
 	case 6:
-		return JULY;
+		return JUNE;
 	case 7:
-		return AUGUST;
+		return JULY;
 	case 8:
-		return SEPTEMBER;
+		return AUGUST;
 	case 9:
-		return OCTOBER;
+		return SEPTEMBER;
 	case 10:
-		return NOVEMBER;
+		return OCTOBER;
 	case 11:
+		return NOVEMBER;
+	case 12:
 		return DECEMBER;
 	}
 

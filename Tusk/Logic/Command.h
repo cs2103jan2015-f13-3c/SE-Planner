@@ -2,8 +2,8 @@
 
 #include <string>
 #include <vector>
-#include "Storage.h"
-#include "Task.h"
+#include "../Storage/Storage.h"
+#include "../Common/Task.h"
 
 class Command {
 protected:
