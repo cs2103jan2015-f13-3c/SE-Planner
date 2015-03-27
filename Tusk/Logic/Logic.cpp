@@ -13,10 +13,11 @@ Logic::~Logic(void) {
 
 CommandType Logic::executeUserInput(std::string userInput) {
 	CommandType commandType;
+	
 	_parser.parseUserInput(userInput);
-
+	
 	commandType = _parser.getCommandType();
-
+	
 	createCommand(commandType);
 	//_command.execute();
 

@@ -85,6 +85,9 @@ std::string CommandParser::trimLeadingSpaces(std::string sentence){
 
 //*** Accessors
 std::string CommandParser::getProcessedString(){
+	if(getCommandType() == DISPLAY_CMD){
+		return " ";
+	}
 	return trimLeadingSpaces(removeFirstWord(_commandInput));
 }
 

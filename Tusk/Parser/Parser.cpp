@@ -1,5 +1,5 @@
 #include "Parser.h"
-
+#include <iostream>
 Parser::Parser(void) {
 }
 
@@ -15,10 +15,16 @@ void Parser::parseUserInput(std::string userInput){
 	CommandParser cmdParser (userInput);
 	cmdParser.parse();
 
+	if(userInput.find("display") != std::string::npos){
+		_command=DISPLAY_CMD;
+		return;
+	}
+
 	std::string newUserInput = cmdParser.getProcessedString();
 	_command = cmdParser.getCommandType();
 	bool hasIndex=false;
-
+	
+	
 	if(_command == EDIT_CMD ||_command == SEARCH_CMD){
 		hasIndex = true;
 	}

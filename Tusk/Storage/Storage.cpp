@@ -82,7 +82,10 @@ Storage::~Storage(void) {
 vector<Task> Storage::getAllTask() {
 
 	FILE* in = fopen(inputFile.c_str(),"r");
-
+	if(in==NULL){
+		vector<Task> newVector;
+		return newVector;
+	}
 	char readBuffer[65536];
 	FileReadStream is(in,readBuffer,sizeof(readBuffer));
 
