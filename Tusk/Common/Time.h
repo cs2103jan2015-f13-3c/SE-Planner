@@ -3,7 +3,7 @@
 #pragma once
 
 enum TimeType {
-	NULLTIMETYPE, AM, PM
+	AM, PM, NULLTIMETYPE
 };
 
 class Time {
