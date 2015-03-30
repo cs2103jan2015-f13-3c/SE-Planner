@@ -1,14 +1,12 @@
 #include "TaskParser.h"
-
+#include <iostream>
 TaskParser::TaskParser(std::string input, bool hasIndex){
 	_taskInput = input;
 	_hasIndex = hasIndex;
 }
 
-//***2. task processing methods ***
-
 void TaskParser::parse(){
-
+	
 	_taskType = findTaskType();
 	if(_hasIndex){
 		_taskIndex = findTaskIndex();
@@ -16,10 +14,9 @@ void TaskParser::parse(){
 	_taskTitle = findTaskTitle();
 	_timeParser.setInput(_taskInput);
 	_timeParser.parse();
-
 	_dateParser.setInput(_taskInput);
 	_dateParser.parse();
-
+	
 }
 
 
@@ -53,7 +50,7 @@ bool TaskParser::isFound(std::string keyword,std::string sentence){
 
 std::string TaskParser::findTaskTitle(){
 	std::string processedString = _taskInput;
-
+	
 	if( isFound(DATE_KEYWORD, _taskInput) ){
 		processedString = removeDate(processedString);
 	}
@@ -68,16 +65,24 @@ std::string TaskParser::findTaskTitle(){
 
 std::string TaskParser::removeDate(std::string sentence){
 	std::string sentenceBeforeDate = sentence.substr(0, sentence.find("date:"));
-	std::string sentenceAfterDate = sentence.substr(sentence.find("date: "));
-	sentenceAfterDate = sentenceAfterDate.substr(sentenceAfterDate.find(" ")+1);
-	return sentenceBeforeDate + sentenceAfterDate.substr(sentenceAfterDate.find(" "));
+	std::string sentenceAfterDate = sentence.substr(sentence.find("date: ")+6);
+	sentenceAfterDate = sentenceAfterDate.substr(sentenceAfterDate.find(" "));
+	if(sentenceAfterDate.length()>1){
+		sentenceAfterDate.erase(0,1);
+	}
+	return sentenceBeforeDate + sentenceAfterDate;
 }
 
 std::string TaskParser::removeTime(std::string sentence){
 	std::string sentenceBeforeTime = sentence.substr(0, sentence.find("time:"));
-	std::string sentenceAfterTime = sentence.substr(sentence.find("time: "));
-	sentenceAfterTime = sentenceAfterTime.substr(sentenceAfterTime.find(" ")+1);
-	return sentenceBeforeTime + sentenceAfterTime.substr(sentenceAfterTime.find(" "));
+	std::string sentenceAfterTime = sentence.substr(sentence.find("time: ")+6);
+	sentenceAfterTime = sentenceAfterTime.substr(sentenceAfterTime.find(" "));
+	
+	if(sentenceAfterTime.length()>1){
+		sentenceAfterTime.erase(0,1);
+	}
+	
+	return sentenceBeforeTime + sentenceAfterTime;
 }
 
 std::string TaskParser::trimLeadingSpaces(std::string sentence){
@@ -125,38 +130,3 @@ Task TaskParser::getTask(){
 std::string TaskParser::getTaskIndex(){
 	return _taskIndex;
 }
-
-//*** INCOMPLETE METHODS:
-/*
-std::string TaskParser::extractKeyword(std::string keyword,std::string sentence){
-std::string timeStr;
-timeStr = getKeywordAfter(keyword,sentence);
-
-_task.setStartTime(getStartTimeString(timeStr));
-_task.setEndTime(getEndTimeString(timeStr));
-
-return removeKeyword("time: ", sentence);
-}
-
-std::string TaskParser::getKeywordAfter(std::string keyword, std::string sentence){
-sentence = sentence.substr(sentence.find(keyword));
-return sentence.substr(0,sentence.find(" "));
-}
-
-std::string TaskParser::removeKeyword(std::string delimiter, std::string s){
-size_t pos = 0;
-//std::string delimiter = "time: ";
-std::string token;
-std::string processedString;
-
-while ((pos = s.find(delimiter)) != std::string::npos) {
-token = s.substr(0, pos);
-
-processedString += token;
-s.erase(0, pos + delimiter.length());
-s = s.substr(1);
-}
-
-return processedString;
-}
-*/

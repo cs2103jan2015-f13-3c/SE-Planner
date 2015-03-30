@@ -1,5 +1,5 @@
 #include "CommandParser.h"
-
+#include <iostream>
 CommandParser::CommandParser(std::string input){
 	_commandInput = input;
 }
@@ -74,12 +74,19 @@ bool CommandParser::searchForDeleteCommand(std::string sentence){
 }
 
 std::string CommandParser::removeFirstWord(std::string sentence){
+	if(sentence.find(" ") != std::string::npos){
 	return sentence.substr(sentence.find(" "), sentence.length());
+	}
+	else{
+	return "";
+	}
 }
 
 std::string CommandParser::trimLeadingSpaces(std::string sentence){
+	if(sentence.length()>1){
 	size_t pos = sentence.find_first_not_of(" \t");
 	sentence.erase(0, pos);
+	}
 	return sentence;
 }
 

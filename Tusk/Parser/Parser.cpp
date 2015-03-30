@@ -6,7 +6,6 @@ Parser::Parser(void) {
 Parser::~Parser(void) {
 }
 
-//std::pair <Command, Task> Parser::parseUserInput(std::string userInput){
 void Parser::parseUserInput(std::string userInput){
 	ParserLog log;
 	log.start();
@@ -21,11 +20,12 @@ void Parser::parseUserInput(std::string userInput){
 	}
 
 	std::string newUserInput = cmdParser.getProcessedString();
+	
 	_command = cmdParser.getCommandType();
 	bool hasIndex=false;
 	
 	
-	if(_command == EDIT_CMD ||_command == SEARCH_CMD){
+	if(_command == EDIT_CMD || _command == SEARCH_CMD || _command == DELETE_CMD){
 		hasIndex = true;
 	}
 
@@ -39,7 +39,6 @@ void Parser::parseUserInput(std::string userInput){
 
 	_task = taskParser.getTask();
 	_index = taskParser.getTaskIndex();
-
 	log.end();
 }
 

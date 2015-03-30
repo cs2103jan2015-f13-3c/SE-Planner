@@ -15,7 +15,6 @@ void TaskDateParser::setInput(std::string input){
 void TaskDateParser::parse(){
 	std::string dateStr;
 
-
 	if(isDateInput()){
 
 		dateStr = getDateStr();

@@ -14,12 +14,12 @@ void TaskTimeParser::setInput(std::string input){
 
 void TaskTimeParser::parse(){
 	std::string timeStr;
-
 	if(isTimeInput()){
 		timeStr = getTimeStr();	
 		setTimeType(timeStr);	
 		setTime(timeStr);
 	}
+	
 }
 
 void TaskTimeParser::setTimeType(std::string timeStr){
