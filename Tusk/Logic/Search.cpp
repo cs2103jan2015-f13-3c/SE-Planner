@@ -12,6 +12,7 @@ void Search::execute() {
 	taskList = _storage.getAllTask();
 
 	for (int i = 0; i < taskList.size(); i++) {
+		/*
 		std::string::iterator iter;
 		iter = search(taskList[i].getTitle().begin(), taskList[i].getTitle().end(),
 					  _information.begin(), _information.end());
@@ -19,5 +20,7 @@ void Search::execute() {
 		if (iter != taskList[i].getTitle().end()) {
 			_result.push_back(taskList[i]);
 		}
+		*/
+		if (taskList[i].getTitle().find(_information) != string::npos) _result.push_back(taskList[i]);
 	}
 }
