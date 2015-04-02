@@ -30,7 +30,7 @@ CommandType Parser::parseUserInput(std::string userInput) {
 		//Obtain index and put into instructionParser;
 		firstSpacePos = remainingUserInput.find(" ");
 		std::string index = remainingUserInput.substr(0, firstSpacePos);
-		_instructionParser.parseInstruction(remainingUserInput.substr(0, firstSpacePos));
+		_instructionParser.parseInstruction(index);
 		
 		//Obtain updated task and put into taskParser;
 		remainingUserInput = remainingUserInput.substr(firstSpacePos+1,remainingUserInput.size() - index.size());
