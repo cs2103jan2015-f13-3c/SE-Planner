@@ -1,34 +1,43 @@
 #include "CommandTypeParser.h"
 
+const std::string COMMAND_ADD = "add";
+const std::string COMMAND_DELETE = "delete";
+const std::string COMMAND_EDIT = "edit";
+const std::string COMMAND_DISPLAY = "display";
+const std::string COMMAND_SEARCH = "search";
+const std::string COMMAND_MARK = "mark";
+const std::string COMMAND_UNDO = "undo";
+
 CommandTypeParser::CommandTypeParser(void) {
 }
 
 CommandTypeParser::~CommandTypeParser(void) {
 }
 
-//Take in a string of one word and convert it to commandType
-void CommandTypeParser::parseCommandType(std::string commandType) {
-	if (commandType == "add") {
-		_commandType = ADD;
-	} else if (commandType == "remove") {
-		_commandType = REMOVE;
-	} else if (commandType == "edit") {
-		_commandType = EDIT;
-	} else if (commandType == "display") {
-		_commandType = DISPLAY;
-	} else if (commandType == "search") {
-		_commandType = SEARCH;
-	} else if (commandType == "undo") {
-		_commandType = UNDO;
-	} else if (commandType == "done") {
-		_commandType = DONE;
-	} else if (commandType == "exit") {
-		_commandType = EXIT;
-	} else {
-		_commandType = INVALID;
-	}
+void CommandTypeParser::setCommandType(CommandType commandType) {
+	_commandType = commandType;
 }
 
 CommandType CommandTypeParser::getCommandType() {
 	return _commandType;
+}
+
+void CommandTypeParser::parseCommandType(std::string commandInput) {
+	if (commandInput == COMMAND_ADD) {
+		_commandType = ADD;
+	} else if (commandInput == COMMAND_DELETE) {
+		_commandType = DELETE;
+	} else if (commandInput == COMMAND_EDIT) {
+		_commandType = EDIT;
+	} else if (commandInput == COMMAND_DISPLAY) {
+		_commandType = DISPLAY;
+	} else if (commandInput == COMMAND_SEARCH) {
+		_commandType = SEARCH;
+	} else if (commandInput == COMMAND_MARK) {
+		_commandType = MARK;
+	} else if (commandInput == COMMAND_UNDO) {
+		_commandType = UNDO;
+	} else {
+		_commandType = ERROR;
+	}
 }
