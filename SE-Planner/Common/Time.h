@@ -18,5 +18,5 @@ public:
 	int getMinutes();
 	bool getIsEmpty();
 
-	bool isSame(Time);
+	bool isSameAs(Time);
 };

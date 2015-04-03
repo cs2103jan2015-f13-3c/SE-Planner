@@ -1,7 +1,6 @@
 #include "Time.h"
 
 Time::Time(void) {
-	_isEmpty = true;
 }
 
 Time::~Time(void) {
@@ -31,7 +30,7 @@ bool Time::getIsEmpty() {
 	return _isEmpty;
 }
 
-bool Time::isSame(Time time) {
+bool Time::isSameAs(Time time) {
 	if ((_hours == time.getHours()) &&
 		(_minutes == time.getMinutes()) &&
 		(_isEmpty == time.getIsEmpty())) {

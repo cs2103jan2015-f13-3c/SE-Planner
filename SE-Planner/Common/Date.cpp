@@ -38,7 +38,7 @@ bool Date::getIsEmpty() {
 	return _isEmpty;
 }
 
-bool Date::isSame(Date date) {
+bool Date::isSameAs(Date date) {
 	if ((_year == date.getYear()) &&
 		(_month == date.getMonth()) &&
 		(_day == date.getDay()) &&
