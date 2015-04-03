@@ -7,12 +7,16 @@ class TimeParser {
 private:
 	Time _startingTime;
 	Time _endingTime;
+	std::string _decodeTime;
+
+	bool decode(std::string);
 
 public:
 	TimeParser(void);
 	~TimeParser(void);
 
-	void parseTime(std::string);
 	Time getStartingTime();
 	Time getEndingTime();
+
+	bool parseTime(std::string);
 };

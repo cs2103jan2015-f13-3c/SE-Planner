@@ -1,13 +1,5 @@
 #include "CommandTypeParser.h"
 
-const std::string COMMAND_ADD = "add";
-const std::string COMMAND_DELETE = "delete";
-const std::string COMMAND_EDIT = "edit";
-const std::string COMMAND_DISPLAY = "display";
-const std::string COMMAND_SEARCH = "search";
-const std::string COMMAND_MARK = "mark";
-const std::string COMMAND_UNDO = "undo";
-
 CommandTypeParser::CommandTypeParser(void) {
 }
 
@@ -23,19 +15,19 @@ CommandType CommandTypeParser::getCommandType() {
 }
 
 void CommandTypeParser::parseCommandType(std::string commandInput) {
-	if (commandInput == COMMAND_ADD) {
+	if (commandInput == "add") {
 		_commandType = ADD;
-	} else if (commandInput == COMMAND_DELETE) {
+	} else if (commandInput == "delete") {
 		_commandType = DELETE;
-	} else if (commandInput == COMMAND_EDIT) {
+	} else if (commandInput == "edit") {
 		_commandType = EDIT;
-	} else if (commandInput == COMMAND_DISPLAY) {
+	} else if (commandInput == "display") {
 		_commandType = DISPLAY;
-	} else if (commandInput == COMMAND_SEARCH) {
+	} else if (commandInput == "search") {
 		_commandType = SEARCH;
-	} else if (commandInput == COMMAND_MARK) {
+	} else if (commandInput == "mark") {
 		_commandType = MARK;
-	} else if (commandInput == COMMAND_UNDO) {
+	} else if (commandInput == "undo") {
 		_commandType = UNDO;
 	} else {
 		_commandType = ERROR;

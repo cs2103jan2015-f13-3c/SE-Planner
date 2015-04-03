@@ -71,11 +71,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommandTypeParser.h" />
+    <ClInclude Include="DateParser.h" />
     <ClInclude Include="Parser.h" />
+    <ClInclude Include="TimeParser.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CommandTypeParser.cpp" />
+    <ClCompile Include="DateParser.cpp" />
     <ClCompile Include="Parser.cpp" />
+    <ClCompile Include="TimeParser.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
