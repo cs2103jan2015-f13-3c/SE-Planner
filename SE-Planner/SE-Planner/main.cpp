@@ -2,20 +2,31 @@
 using namespace std;
 
 #include "TimeParser.h"
+#include "DateParser.h"
 
 int main() {
 	bool result;
-	TimeParser tp;
-	result = tp.parseTime("");
+	TimeParser p;
+	result = p.parseTime("0800-1000");
 	cout << result << endl;
 
-	cout << tp.getStartingTime().getHours() << endl
-		 << tp.getStartingTime().getMinutes() << endl
-		 << tp.getStartingTime().getIsEmpty() << endl
+	/*cout << p.getStartingDate().getDay() << endl
+		 << p.getStartingDate().getMonth() << endl
+		 << p.getStartingDate().getYear() << endl
+		 << p.getStartingDate().getIsEmpty() << endl
 
-		 << tp.getEndingTime().getHours() << endl
-		 << tp.getEndingTime().getMinutes() << endl
-		 << tp.getEndingTime().getIsEmpty() << endl;
+		 << p.getEndingDate().getDay() << endl
+		 << p.getEndingDate().getMonth() << endl
+		 << p.getEndingDate().getYear() << endl
+		 << p.getEndingDate().getIsEmpty() << endl;*/
+
+	cout << p.getStartingTime().getHours() << endl
+		 << p.getStartingTime().getMinutes() << endl
+		 << p.getStartingTime().getIsEmpty() << endl
+
+		 << p.getEndingTime().getHours() << endl
+		 << p.getEndingTime().getMinutes() << endl
+		 << p.getEndingTime().getIsEmpty() << endl;
 
 	int z;
 	cin >> z;

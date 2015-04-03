@@ -38,12 +38,13 @@ bool TimeParser::parseTime(std::string timeInput) {
 	return false;
 }
 
-//Decode timeInput into XXXXXXXX format
+//Decode timeInput into 8 characters string format
 //which the first 4 characters represents the starting time
 //and the last 4 characters represents the ending time
 bool TimeParser::decode(std::string timeInput) {
 	int size = timeInput.size();
 
+	//Check if timeInput is in XXXX format
 	if (size == 4) {
 		int hours = stoi(timeInput.substr(0, 2));
 		int minutes = stoi(timeInput.substr(2, 2));
@@ -52,6 +53,8 @@ bool TimeParser::decode(std::string timeInput) {
 				_decodeTime = timeInput + timeInput;
 				return true;
 		}
+
+	//Check if timeInput is in XXXX-XXXX format
 	} else if (size == 9) {
 		int startingHours = stoi(timeInput.substr(0, 2));
 		int startingMinutes = stoi(timeInput.substr(2, 2));
