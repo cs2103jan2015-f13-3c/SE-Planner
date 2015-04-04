@@ -120,6 +120,12 @@ bool TaskParser::parseTask(std::string taskInput) {
 			std::string description = taskInput.substr(0, taskInput.size() - date.size() - time.size());
 			_task.setDescription(description);
 
+			_task.setStartingTime(_timeParser.getStartingTime());
+			_task.setEndingTime(_timeParser.getEndingTime());
+			_task.setStartingDate(_dateParser.getStartingDate());
+			_task.setEndingDate(_dateParser.getEndingDate());
+			_task.setIsDone(false);
+
 		//When date is input before time
 		} else {
 			//Obtain time data to be input into timeParser first
@@ -162,6 +168,12 @@ bool TaskParser::parseTask(std::string taskInput) {
 			//Input description of task
 			std::string description = taskInput.substr(0, taskInput.size() - date.size() - time.size());
 			_task.setDescription(description);
+
+			_task.setStartingTime(_timeParser.getStartingTime());
+			_task.setEndingTime(_timeParser.getEndingTime());
+			_task.setStartingDate(_dateParser.getStartingDate());
+			_task.setEndingDate(_dateParser.getEndingDate());
+			_task.setIsDone(false);
 		}
 
 		//Determine if task is a deadline or timed task
@@ -170,7 +182,6 @@ bool TaskParser::parseTask(std::string taskInput) {
 		} else {
 			_task.setTaskType(TIMEDTASK);
 		}
-
 	}
 
 	_task.setStartingTime(_timeParser.getStartingTime());
