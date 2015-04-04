@@ -3,7 +3,7 @@
 #include <string>
 
 enum CommandType {
-	ADD, DELETE, EDIT, DISPLAY, SEARCH, MARK, UNDO, ERROR
+	ADD, REMOVE, EDIT, DISPLAY, SEARCH, MARK, UNDO, ERROR, EXIT
 };
 
 class CommandTypeParser {

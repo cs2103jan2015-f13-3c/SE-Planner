@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Storage", "Storage\Storage.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Control", "Control\Control.vcxproj", "{EC0B0497-08D6-46F6-A339-DD623D1DB4D6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UI", "UI\UI.vcxproj", "{5016FCC6-EC83-47C0-843D-9609AD25B221}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -37,6 +39,10 @@ Global
 		{EC0B0497-08D6-46F6-A339-DD623D1DB4D6}.Debug|Win32.Build.0 = Debug|Win32
 		{EC0B0497-08D6-46F6-A339-DD623D1DB4D6}.Release|Win32.ActiveCfg = Release|Win32
 		{EC0B0497-08D6-46F6-A339-DD623D1DB4D6}.Release|Win32.Build.0 = Release|Win32
+		{5016FCC6-EC83-47C0-843D-9609AD25B221}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5016FCC6-EC83-47C0-843D-9609AD25B221}.Debug|Win32.Build.0 = Debug|Win32
+		{5016FCC6-EC83-47C0-843D-9609AD25B221}.Release|Win32.ActiveCfg = Release|Win32
+		{5016FCC6-EC83-47C0-843D-9609AD25B221}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

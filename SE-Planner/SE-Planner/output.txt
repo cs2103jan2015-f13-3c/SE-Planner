@@ -1,0 +1,40 @@
+{
+    "data": [
+        {
+            "TaskType": "FloatingTask",
+            "TaskTitle": "task"
+        },
+        {
+            "TaskType": "Deadline",
+            "TaskTitle": "task ",
+            "TaskDay": 12,
+            "TaskMonth": 12,
+            "TaskYear": 12,
+            "TaskHour": 23,
+            "TaskMinute": 59
+        },
+        {
+            "TaskType": "Deadline",
+            "TaskTitle": "task ",
+            "TaskDay": 12,
+            "TaskMonth": 12,
+            "TaskYear": 12,
+            "TaskHour": 8,
+            "TaskMinute": 0
+        },
+        {
+            "TaskType": "TimedTask",
+            "TaskTitle": "task ",
+            "TaskStartDay": 12,
+            "TaskStartMonth": 12,
+            "TaskStartYear": 12,
+            "TaskStartHour": 8,
+            "TaskStartMinute": 0,
+            "TaskEndDay": 12,
+            "TaskEndMonth": 12,
+            "TaskEndYear": 12,
+            "TaskEndHour": 10,
+            "TaskEndMinute": 0
+        }
+    ]
+}

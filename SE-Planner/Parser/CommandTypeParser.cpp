@@ -18,7 +18,7 @@ void CommandTypeParser::parseCommandType(std::string commandInput) {
 	if (commandInput == "add") {
 		_commandType = ADD;
 	} else if (commandInput == "delete") {
-		_commandType = DELETE;
+		_commandType = REMOVE;
 	} else if (commandInput == "edit") {
 		_commandType = EDIT;
 	} else if (commandInput == "display") {
@@ -29,6 +29,8 @@ void CommandTypeParser::parseCommandType(std::string commandInput) {
 		_commandType = MARK;
 	} else if (commandInput == "undo") {
 		_commandType = UNDO;
+	} else if (commandInput == "exit") {
+		_commandType = EXIT;
 	} else {
 		_commandType = ERROR;
 	}
