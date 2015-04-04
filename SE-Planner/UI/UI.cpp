@@ -1,126 +1,94 @@
-//#include "windows.h"
+#include <sstream>
 #include "UI.h"
 
-//#include "easylogging++.h"
-
-//INITIALIZE_EASYLOGGINGPP
-
-/*
-double PCFreq = 0.0;
-__int64 CounterStart = 0;
-
-void UI::startCounter() {
-    LARGE_INTEGER li;
-    if(!QueryPerformanceFrequency(&li))
-	cout << "QueryPerformanceFrequency failed!\n";
-
-    PCFreq = double(li.QuadPart)/1000.0;
-
-    QueryPerformanceCounter(&li);
-    CounterStart = li.QuadPart;
-}
-
-double UI::getCounter() {
-    LARGE_INTEGER li;
-    QueryPerformanceCounter(&li);
-    return double(li.QuadPart-CounterStart)/PCFreq;
-}
-*/
-
 UI::UI(void) {
-	_logic = new Logic;
 }
 
 UI::~UI(void) {
 }
 
 void UI::run() {
-	std::string input = inputUserCommand();
-	CommandType commandType = _logic->executeUserInput(input);
+	std::string userInput = inputUserCommand();
+	CommandType commandType = _logic.executeUserInput(userInput);
 	while (commandType != EXIT) {
-		printResult(_logic->getResult(), commandType);
-		input = inputUserCommand();
-		commandType = _logic->executeUserInput(input);
+		printResult(commandType, _logic.getResult());
+		userInput = inputUserCommand();
+		commandType = _logic.executeUserInput(userInput);
 	}
-
-
-		/*
-		double operationTime = getCounter();
-
-		LOG(INFO) << "COMMAND: ";
-		LOG(INFO) << userCommand;
-		LOG(INFO) << operationTime;
-		*/
 }
 
 std::string UI::inputUserCommand() {
-	string input = "";
-	getline(std::cin, input);
-	return input;
+	std::string userCommand;
+	getline(cin, userCommand);
+	return userCommand;
 }
 
-void UI::printResult(const vector<Task> vectorTask, const CommandType commandType){
-	switch(commandType) {
+void UI::printResult(CommandType commandType, std::vector<Task> result) {
+	switch (commandType) {
 	case ADD:
-		cout << SUCCESS_ADD << endl << endl;
+		std::cout << "Added: " << taskToString(result[0]) << endl;
 		break;
 	case REMOVE:
-		cout << SUCCESS_DELETE << endl << endl;
-		break;
-	case DISPLAY:
-		vectorToString(vectorTask);
+		std::cout << "Deleted: " << taskToString(result[0]) << endl;
 		break;
 	case EDIT:
-		cout << SUCCESS_EDIT << endl << endl;
+		std::cout << "Edited: " << taskToString(result[0]) << endl;
+		break;
+	case DISPLAY:
+		std::cout << "Display:\n" << vectorTaskToString(result) << endl;
 		break;
 	case SEARCH:
-		vectorToString(vectorTask);
+		std::cout << "Search:\n" << vectorTaskToString(result) << endl;
 		break;
-	case EXIT:
-		cout << SUCCESS_EXIT << endl << endl;
-	default:
-		cout << ERROR_GENERAL << endl << endl;
+	case MARK:
+		std::cout << "Edited: " << taskToString(result[0]) << endl;
 		break;
-	}
+	case UNDO:
+		std::cout << "Undo last action" << endl;
+		break;
+	case ERROR:
+		std::cout << "ERROR ENCOUNTERED" << endl;
+		break;
+	};
 }
 
-void UI::vectorToString(vector<Task> vectorTask) {
+std::string UI::taskToString(Task task) {
 	ostringstream oss;
-	vector<Task>::iterator iter;
 
-	int i = 1;
-	for (iter = vectorTask.begin(); iter != vectorTask.end(); iter++, i++) {
-		//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-		cout << i << ". ";
-		//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 10);
-		cout << iter->getDescription();
+	oss << task.getDescription();
 
-		if (iter->getTaskType() == TIMEDTASK || iter->getTaskType() == DEADLINE) {
-			//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-			cout << ", ";
-			//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
-			cout << iter->getStartingDate().getDay() << "/";
-			cout << iter->getStartingDate().getMonth() << "/";
-			cout << iter->getStartingDate().getYear();
+	if (task.getTaskType() != FLOATINGTASK) {
+		oss << ", " 
+			<< task.getStartingDate().getDay() << "/"
+			<<  task.getStartingDate().getMonth() << "/"
+			<<  task.getStartingDate().getYear() << "-"
 
-			//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
-			cout << " [" << iter->getStartingTime().getHours() << ":";
-			cout << iter->getStartingTime().getMinutes() << "]";
-		}
-		if (iter->getTaskType() == TIMEDTASK) {
-			//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 15);
-			cout << " - ";
-			//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14);
-			cout << iter->getEndingDate().getDay() << "/";
-			cout << iter->getEndingDate().getMonth() << "/";
-			cout << iter->getEndingDate().getYear();
-			//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 11);
-			cout << " [" << iter->getEndingTime().getHours() << ":";
-			cout << iter->getEndingTime().getMinutes() << "]";
-		}
-		//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 12);
-		iter->getIsDone() ? oss << " DONE" : oss << " NOT DONE";
-		cout << endl << endl;
-		//SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 7);
+			<< task.getEndingDate().getDay() << "/"
+			<< task.getEndingDate().getMonth() << "/"
+			<< task.getEndingDate().getYear() << ", "
+
+			<< task.getStartingTime().getHours() << ":"
+			<< task.getStartingTime().getMinutes() << "-"
+
+			<< task.getEndingTime().getHours() << ":"
+			<< task.getEndingTime().getMinutes();
 	}
+
+	if (task.getIsDone()) {
+		oss << "\tDONE" << endl;
+	} else {
+		oss << "\tNOT DONE" << endl;
+	}
+
+	return oss.str();
+}
+
+std::string UI::vectorTaskToString(std::vector<Task> vectorTask) {
+	ostringstream oss;
+
+	for (int i = 0; i < vectorTask.size(); i++) {
+		oss << i << ". " << taskToString(vectorTask[i]);
+	}
+
+	return oss.str();
 }
