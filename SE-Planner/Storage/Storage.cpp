@@ -61,18 +61,6 @@ int convertMonthToInt(Month x)
 	if (x == DECEMBER) return 12;
 }
 
-TimeType convertToTimeType(int timeType)
-{
-	if (timeType == 0) return AM;
-	if (timeType == 1) return PM;
-}
-
-int convertTimeTypeToInt(TimeType x)
-{
-	if (x == AM) return 0;
-	if (x == PM) return 1;
-}
-
 Storage::Storage(void) {
 }
 
@@ -120,7 +108,7 @@ vector<Task> Storage::getAllTask() {
 			Task newFloatTask;
 
 			newFloatTask.setTaskType(FLOATINGTASK);
-			newFloatTask.setTitle(TaskObject["TaskTitle"].GetString());
+			newFloatTask.setDescription(TaskObject["TaskTitle"].GetString());
 
 			newVector.push_back(newFloatTask);
 
@@ -131,17 +119,16 @@ vector<Task> Storage::getAllTask() {
 			Task newDeadline;
 
 			newDeadline.setTaskType(DEADLINE);
-			newDeadline.setTitle(TaskObject["TaskTitle"].GetString());
+			newDeadline.setDescription(TaskObject["TaskTitle"].GetString());
 			
 			Date TaskDate;
 			TaskDate.setDay(TaskObject["TaskDay"].GetInt());
 			TaskDate.setMonth(convertToMonth(TaskObject["TaskMonth"].GetInt()));
 			TaskDate.setYear(TaskObject["TaskYear"].GetInt());
 
-			Time TaskTime;
+			MyTime TaskTime;
 			TaskTime.setHours(TaskObject["TaskHour"].GetInt());
 			TaskTime.setMinutes(TaskObject["TaskMinute"].GetInt());
-			TaskTime.setTimeType(convertToTimeType(TaskObject["TaskTimeType"].GetInt()));
 
 			newDeadline.setStartingDate(TaskDate);
 			newDeadline.setEndingDate(TaskDate);
@@ -157,17 +144,16 @@ vector<Task> Storage::getAllTask() {
 			Task newTimedTask;
 
 			newTimedTask.setTaskType(TIMEDTASK);
-			newTimedTask.setTitle(TaskObject["TaskTitle"].GetString());
+			newTimedTask.setDescription(TaskObject["TaskTitle"].GetString());
 			
 			Date TaskDate;
 			TaskDate.setDay(TaskObject["TaskStartDay"].GetInt());
 			TaskDate.setMonth(convertToMonth(TaskObject["TaskStartMonth"].GetInt()));
 			TaskDate.setYear(TaskObject["TaskStartYear"].GetInt());
 
-			Time TaskTime;
+			MyTime TaskTime;
 			TaskTime.setHours(TaskObject["TaskStartHour"].GetInt());
 			TaskTime.setMinutes(TaskObject["TaskStartMinute"].GetInt());
-			TaskTime.setTimeType(convertToTimeType(TaskObject["TaskStartTimeType"].GetInt()));
 
 			newTimedTask.setStartingDate(TaskDate);
 			newTimedTask.setStartingTime(TaskTime);
@@ -178,7 +164,6 @@ vector<Task> Storage::getAllTask() {
 
 			TaskTime.setHours(TaskObject["TaskEndHour"].GetInt());
 			TaskTime.setMinutes(TaskObject["TaskEndMinute"].GetInt());
-			TaskTime.setTimeType(convertToTimeType(TaskObject["TaskEndTimeType"].GetInt()));
 
 			newTimedTask.setEndingTime(TaskTime);
 			newTimedTask.setEndingDate(TaskDate);
@@ -208,7 +193,7 @@ void Storage::writeToFile(vector<Task> TaskVector) {
 		if (TaskVector[i].getTaskType() == FLOATINGTASK)
 		{
 			char title[MAX_TITLE_SIZE];
-			sprintf(title, "%s", TaskVector[i].getTitle().c_str());
+			sprintf(title, "%s", TaskVector[i].getDescription().c_str());
 
 			Value taskTitle(kStringType);
 			taskTitle.SetString(title,strlen(title),d.GetAllocator());
@@ -219,7 +204,7 @@ void Storage::writeToFile(vector<Task> TaskVector) {
 		if (TaskVector[i].getTaskType() == DEADLINE)
 		{
 			char title[MAX_TITLE_SIZE];
-			sprintf(title, "%s", TaskVector[i].getTitle().c_str());
+			sprintf(title, "%s", TaskVector[i].getDescription().c_str());
 
 			Value taskTitle(kStringType);
 			taskTitle.SetString(title,strlen(title),d.GetAllocator());
@@ -232,13 +217,12 @@ void Storage::writeToFile(vector<Task> TaskVector) {
 
 			obj.AddMember("TaskHour",TaskVector[i].getStartingTime().getHours(),d.GetAllocator());
 			obj.AddMember("TaskMinute",TaskVector[i].getStartingTime().getMinutes(),d.GetAllocator());
-			obj.AddMember("TaskTimeType",convertTimeTypeToInt(TaskVector[i].getStartingTime().getTimeType()),d.GetAllocator());
 		}
 
 		if (TaskVector[i].getTaskType() == TIMEDTASK)
 		{
 			char title[MAX_TITLE_SIZE];
-			sprintf(title, "%s", TaskVector[i].getTitle().c_str());
+			sprintf(title, "%s", TaskVector[i].getDescription().c_str());
 
 			Value taskTitle(kStringType);
 			taskTitle.SetString(title,strlen(title),d.GetAllocator());
@@ -251,7 +235,6 @@ void Storage::writeToFile(vector<Task> TaskVector) {
 
 			obj.AddMember("TaskStartHour",TaskVector[i].getStartingTime().getHours(),d.GetAllocator());
 			obj.AddMember("TaskStartMinute",TaskVector[i].getStartingTime().getMinutes(),d.GetAllocator());
-			obj.AddMember("TaskStartTimeType",convertTimeTypeToInt(TaskVector[i].getStartingTime().getTimeType()),d.GetAllocator());
 
 			obj.AddMember("TaskEndDay",TaskVector[i].getEndingDate().getDay(),d.GetAllocator());
 			obj.AddMember("TaskEndMonth",convertMonthToInt(TaskVector[i].getEndingDate().getMonth()),d.GetAllocator());
@@ -259,7 +242,6 @@ void Storage::writeToFile(vector<Task> TaskVector) {
 
 			obj.AddMember("TaskEndHour",TaskVector[i].getEndingTime().getHours(),d.GetAllocator());
 			obj.AddMember("TaskEndMinute",TaskVector[i].getEndingTime().getMinutes(),d.GetAllocator());
-			obj.AddMember("TaskEndTimeType",convertTimeTypeToInt(TaskVector[i].getEndingTime().getTimeType()),d.GetAllocator());
 		}
 
 		myArray.PushBack(obj,d.GetAllocator());
@@ -276,6 +258,4 @@ void Storage::writeToFile(vector<Task> TaskVector) {
 	PrettyWriter<FileWriteStream> out_writer(os);
 	d.Accept(out_writer);
 	fclose(out);
-		
-
 }
