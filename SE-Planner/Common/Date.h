@@ -27,4 +27,5 @@ public:
 	bool getIsEmpty();
 
 	bool isSameAs(Date);
+	bool isLaterThan(Date);
 };

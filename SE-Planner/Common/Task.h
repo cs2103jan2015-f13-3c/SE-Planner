@@ -24,7 +24,6 @@ public:
 	Task(void);
 	~Task(void);
 
-	//
 	void setTaskType(TaskType);
 	void setDescription(std::string);
 	void setIsDone(bool);
@@ -35,7 +34,6 @@ public:
 	void setStartingDate(Date);
 	void setEndingDate(Date);
 
-	//
 	TaskType getTaskType();
 	std::string getDescription();
 	bool getIsDone();
@@ -46,6 +44,5 @@ public:
 	Date getStartingDate();
 	Date getEndingDate();
 
-	//
 	bool isSameAs(Task);
 };
