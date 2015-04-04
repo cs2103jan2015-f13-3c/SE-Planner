@@ -11,12 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{4856D71A-1772-4FDE-8A9B-61379C7073C8}</ProjectGuid>
-    <RootNamespace>SEPlanner</RootNamespace>
+    <ProjectGuid>{EC0B0497-08D6-46F6-A339-DD623D1DB4D6}</ProjectGuid>
+    <RootNamespace>Control</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -44,7 +44,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\Control;..\Storage;..\Parser;..\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Storage;..\Parser;..\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -65,14 +65,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">
       <Project>{780082cd-ecab-47dd-a4e0-f0416e560db3}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Control\Control.vcxproj">
-      <Project>{ec0b0497-08d6-46f6-a339-dd623d1db4d6}</Project>
     </ProjectReference>
     <ProjectReference Include="..\Parser\Parser.vcxproj">
       <Project>{e3ead5a3-c103-4f8e-b822-8dda6d22b5ca}</Project>
@@ -80,6 +74,14 @@
     <ProjectReference Include="..\Storage\Storage.vcxproj">
       <Project>{5070fe92-f48f-4342-bcee-103e67aa4a2d}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Command.h" />
+    <ClInclude Include="Control.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Command.cpp" />
+    <ClCompile Include="Control.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
