@@ -6,11 +6,11 @@ TimeParser::TimeParser(void) {
 TimeParser::~TimeParser(void) {
 }
 
-Time TimeParser::getStartingTime() {
+MyTime TimeParser::getStartingTime() {
 	return _startingTime;
 }
 
-Time TimeParser::getEndingTime() {
+MyTime TimeParser::getEndingTime() {
 	return _endingTime;
 }
 

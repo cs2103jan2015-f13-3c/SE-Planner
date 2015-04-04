@@ -18,11 +18,11 @@ void Task::setIsDone(bool isDone) {
 	_isDone = isDone;
 }
 	
-void Task::setStartingTime(Time startingTime) {
+void Task::setStartingTime(MyTime startingTime) {
 	_startingTime = startingTime;
 }
 
-void Task::setEndingTime(Time endingTime) {
+void Task::setEndingTime(MyTime endingTime) {
 	_endingTime = endingTime;
 }
 
@@ -46,11 +46,11 @@ bool Task::getIsDone() {
 	return _isDone;
 }
 
-Time Task::getStartingTime() {
+MyTime Task::getStartingTime() {
 	return _startingTime;
 }
 
-Time Task::getEndingTime() {
+MyTime Task::getEndingTime() {
 	return _endingTime;
 }
 

@@ -15,6 +15,7 @@ public:
 	TaskParser(void);
 	~TaskParser(void);
 
-	void parseTask(std::string);
 	Task getTask();
+
+	bool parseTask(std::string);
 };

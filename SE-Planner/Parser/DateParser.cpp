@@ -1,9 +1,6 @@
 #include "DateParser.h"
 
-#include <iostream>
-using namespace std;
-
-const int MAXIMUM_DAY_FOR_MONTH[12] = {31, 29, 31, 30,
+const int MAXIMUM_DAY_FOR_MONTH[12] = {31, 28, 31, 30,
 									   31, 30, 31, 31,
 									   30, 31, 30, 31};
 
@@ -61,18 +58,20 @@ bool DateParser::decode(std::string dateInput) {
 
 		if ((year >= 0) && (month >= 1) && (month <= 12) &&
 			(dateInput[2] == '/') && (dateInput[5] == '/')) {
-			if ((month == 2) && (!isLeapYear(year))) {
-				if ((day >= 1) && (day <= MAXIMUM_DAY_FOR_MONTH[month - 1] - 1)) {
+
+			//Check for leap year and FEBRUARY month
+			if ((month == 2) && (isLeapYear(year))) {
+				if ((day >= 1) && (day <= MAXIMUM_DAY_FOR_MONTH[month - 1] + 1)) {
 					_decodeDate = dateInput.substr(0, 2) + dateInput.substr(3, 2) + dateInput.substr(6, 4);
 					_decodeDate = _decodeDate + _decodeDate;
 					return true;
 				}
-			} else {
-				if ((day >= 1) && (day <= MAXIMUM_DAY_FOR_MONTH[month - 1])) {
+
+			//When not leap year or FEBRUARY month
+			} else if ((day >= 1) && (day <= MAXIMUM_DAY_FOR_MONTH[month - 1])) {
 					_decodeDate = dateInput.substr(0, 2) + dateInput.substr(3, 2) + dateInput.substr(6, 4);
 					_decodeDate = _decodeDate + _decodeDate;
 					return true;
-				}
 			}
 		}
 
@@ -89,32 +88,43 @@ bool DateParser::decode(std::string dateInput) {
 			(endingYear >= 0) && (endingMonth >= 1) && (endingMonth <= 12) &&
 			(dateInput[2] == '/') && (dateInput[5] == '/') && (dateInput[13] == '/' && (dateInput[16] == '/') &&
 			(dateInput[10] == '-'))) {
-			if ((startingMonth == 2) && (!isLeapYear(startingYear))) {
-				if ((startingDay >= 1) && (startingDay <= MAXIMUM_DAY_FOR_MONTH[startingMonth - 1] - 1)) {
+
+			//Check for leap year and FEBRUARY month for starting date
+			if ((startingMonth == 2) && (isLeapYear(startingYear))) {
+				if ((startingDay >= 1) && (startingDay <= MAXIMUM_DAY_FOR_MONTH[startingMonth - 1] + 1)) {
 					_decodeDate = dateInput.substr(0, 2) + dateInput.substr(3, 2) + dateInput.substr(6, 4);
+
+					//Check for leap year and FEBRUARY month for ending date
+					if ((endingMonth == 2) && (isLeapYear(endingYear))) {
+						if ((endingDay >= 1) && (endingDay <= MAXIMUM_DAY_FOR_MONTH[endingMonth - 1] + 1)) {
+							_decodeDate = _decodeDate + dateInput.substr(11, 2) + dateInput.substr(14, 2) + dateInput.substr(17, 4);
+							return true;
+						}
+
+					//When not leap year or FEBRUARY month for ending date
+					} else if ((endingDay >= 1) && (endingDay <= MAXIMUM_DAY_FOR_MONTH[endingMonth - 1])) {
+						_decodeDate = _decodeDate + dateInput.substr(11, 2) + dateInput.substr(14, 2) + dateInput.substr(17, 4);
+						return true;
+					}
+				}
+
+			//When not leap year or FEBRUARY month for starting date
+			} else if ((startingDay >= 1) && (startingDay <= MAXIMUM_DAY_FOR_MONTH[startingMonth - 1])) {
+					_decodeDate = dateInput.substr(0, 2) + dateInput.substr(3, 2) + dateInput.substr(6, 4);
+
+					//Check for leap year and FEBRUARY month for ending date
 					if ((endingMonth == 2) && (!isLeapYear(endingYear))) {
-						if ((endingDay >= 1) && (endingDay <= MAXIMUM_DAY_FOR_MONTH[endingMonth - 1] - 1)) {
+						if ((endingDay >= 1) && (endingDay <= MAXIMUM_DAY_FOR_MONTH[endingMonth - 1] + 1)) {
+							_decodeDate = _decodeDate + dateInput.substr(11, 2) + dateInput.substr(14, 2) + dateInput.substr(17, 4);
+							return true;
+						}
+
+					//When not leap year or FEBRUARY month for ending date
+					} else if ((endingDay >= 1) && (endingDay <= MAXIMUM_DAY_FOR_MONTH[endingMonth - 1])) {
 							_decodeDate = _decodeDate + dateInput.substr(11, 2) + dateInput.substr(14, 2) + dateInput.substr(17, 4);
 							return true;
 						}
 					}
-				}
-			} else {
-				if ((startingDay >= 1) && (startingDay <= MAXIMUM_DAY_FOR_MONTH[startingMonth - 1])) {
-					_decodeDate = dateInput.substr(0, 2) + dateInput.substr(3, 2) + dateInput.substr(6, 4);
-					if ((endingMonth == 2) && (!isLeapYear(endingYear))) {
-						if ((endingDay >= 1) && (endingDay <= MAXIMUM_DAY_FOR_MONTH[endingMonth - 1])) {
-							_decodeDate = _decodeDate + dateInput.substr(11, 2) + dateInput.substr(14, 2) + dateInput.substr(17, 4);
-							return true;
-						}
-					} else {
-						if ((endingDay >= 1) && (endingDay <= MAXIMUM_DAY_FOR_MONTH[endingMonth - 1])) {
-							_decodeDate = _decodeDate + dateInput.substr(11, 2) + dateInput.substr(14, 2) + dateInput.substr(17, 4);
-							return true;
-						}
-					}
-				}
-			}
 		}
 	}
 
@@ -135,6 +145,7 @@ bool DateParser::isLeapYear(int year) {
 
 Month DateParser::monthConversion(int month) {
 	Month convertedMonth;
+
 	switch (month) {
 	case 1:
 		convertedMonth = JANUARY;

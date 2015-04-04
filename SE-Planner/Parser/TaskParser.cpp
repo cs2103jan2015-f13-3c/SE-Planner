@@ -6,28 +6,46 @@ TaskParser::TaskParser(void) {
 TaskParser::~TaskParser(void) {
 }
 
-//Take in a string that represent a task and convert it
-void TaskParser::parseTask(std::string task) {
-	int timePos;
-	timePos = task.find("time:");
-	int datePos;
-	datePos = task.find("date:");
+Task TaskParser::getTask() {
+	return _task;
+}
 
-	//When "time:" and "date:" not found indicating task is a floating task,
-	if ((timePos == -1) && (datePos == -1)){
-		_timeParser.parseTime("");
-		_dateParser.parseDate("");
+bool TaskParser::parseTask(std::string taskInput) {
+	int timePos = taskInput.find("time:");
+	int datePos = taskInput.find("date:");
+	bool executionResult;
 
-		//Input taskType and description of task
+	//Indicating that task is a floating task
+	if ((timePos == -1) && (datePos == -1)) {
+		executionResult = _timeParser.parseTime("");
+
+		//Check if time is parsed correctly
+		if (!executionResult) {
+			return false;
+		}
+
+		executionResult = _dateParser.parseDate("");
+
+		//Check if date is parsed correctly
+		if (!executionResult) {
+			return false;
+		}
+
+		//Input taskType and description for task
 		_task.setTaskType(FLOATINGTASK);
-		_task.setDescription(task);
+		_task.setDescription(taskInput);
 
-	//When "time:" not found indicating task is a deadline
+	//Indicating that task is a deadline that should not have a range
 	} else if ((timePos == -1) && (datePos != -1)) {
-		_timeParser.parseTime("");
+		executionResult = _timeParser.parseTime("2359"); //Default to 2359
+
+		//Check if time is parsed correctly
+		if (!executionResult) {
+			return false;
+		}
 
 		//Obtain date data to be input into dateParser
-		std::string date = task.substr(datePos, task.size() - datePos);
+		std::string date = taskInput.substr(datePos, taskInput.size() - datePos);
 		std::string dateData = date.substr(5, date.size() - 5);
 		//Remove all white spacing in date data
 		int spacePos = dateData.find(" ");
@@ -35,21 +53,33 @@ void TaskParser::parseTask(std::string task) {
 			dateData.erase(dateData.begin() + spacePos);
 			spacePos = dateData.find(" ");
 		}
+
+		//Check if date is not in XX/XX/XXXX format
+		if (dateData.size() > 10) {
+			return false;
+		}
+
 		//Input date data into dateParser
-		_dateParser.parseDate(dateData);
+		executionResult = _dateParser.parseDate(dateData);
+
+		//Check if date is parsed correctly
+		if (!executionResult) {
+			return false;
+		}
 
 		//Input taskType of task
 		_task.setTaskType(DEADLINE);
+
 		//Input description of task
-		std::string description = task.substr(0, task.size() - date.size());
+		std::string description = taskInput.substr(0, taskInput.size() - date.size());
 		_task.setDescription(description);
 
-	//When "time:" and "date:" are found indicating task is possibly a timed task or deadline
+	//Indicating task can be a deadline or timed task
 	} else {
 		//Check whether time is input before date
 		if (datePos > timePos) {
 			//Obtain date data to be input into dateParser first
-			std::string date = task.substr(datePos, task.size() - datePos);
+			std::string date = taskInput.substr(datePos, taskInput.size() - datePos);
 			std::string dateData = date.substr(5, date.size() - 5);
 			//Remove all white spacing in date data
 			int spacePos = dateData.find(" ");
@@ -58,10 +88,15 @@ void TaskParser::parseTask(std::string task) {
 				spacePos = dateData.find(" ");
 			}
 			//Input date data into dateParser
-			_dateParser.parseDate(dateData);
+			executionResult = _dateParser.parseDate(dateData);
+
+			//Check if date is parsed correctly
+			if (!executionResult) {
+				return false;
+			}
 
 			//Obtain remaing task details
-			std::string remainingTask = task.substr(0, task.size() - date.size());
+			std::string remainingTask = taskInput.substr(0, taskInput.size() - date.size());
 
 			//Obtain time data to be input into timePaser next
 			std::string time = remainingTask.substr(timePos, remainingTask.size() - timePos);
@@ -72,15 +107,23 @@ void TaskParser::parseTask(std::string task) {
 				timeData.erase(timeData.begin() + spacePos);
 				spacePos = timeData.find(" ");
 			}
-			//Input date data into dateParser
-			_timeParser.parseTime(timeData);
+
+			//Input time data into timeParser
+			executionResult = _timeParser.parseTime(timeData);
+
+			//Check if time is parsed correctly
+			if (!executionResult) {
+				return false;
+			}
 
 			//Input description of task
-			std::string description = task.substr(0, task.size() - date.size() - time.size());
+			std::string description = taskInput.substr(0, taskInput.size() - date.size() - time.size());
 			_task.setDescription(description);
+
+		//When date is input before time
 		} else {
 			//Obtain time data to be input into timeParser first
-			std::string time = task.substr(timePos, task.size() - timePos);
+			std::string time = taskInput.substr(timePos, taskInput.size() - timePos);
 			std::string timeData = time.substr(5, time.size() - 5);
 			//Remove all white spacing in time data
 			int spacePos = timeData.find(" ");
@@ -89,10 +132,15 @@ void TaskParser::parseTask(std::string task) {
 				spacePos = timeData.find(" ");
 			}
 			//Input time data into timeParser
-			_timeParser.parseTime(timeData);
+			executionResult = _timeParser.parseTime(timeData);
+
+			//Check if time is parsed correctly
+			if (!executionResult) {
+				return false;
+			}
 
 			//Obtain remaing task details
-			std::string remainingTask = task.substr(0, task.size() - time.size());
+			std::string remainingTask = taskInput.substr(0, taskInput.size() - time.size());
 
 			//Obtain date data to be input into datePaser next
 			std::string date = remainingTask.substr(datePos, remainingTask.size() - datePos);
@@ -104,27 +152,32 @@ void TaskParser::parseTask(std::string task) {
 				spacePos = dateData.find(" ");
 			}
 			//Input date data into dateParser
-			_dateParser.parseDate(dateData);
+			executionResult = _dateParser.parseDate(dateData);
+
+			//Check if date is parsed correctly
+			if (!executionResult) {
+				return false;
+			}
 
 			//Input description of task
-			std::string description = task.substr(0, task.size() - date.size() - time.size());
+			std::string description = taskInput.substr(0, taskInput.size() - date.size() - time.size());
 			_task.setDescription(description);
 		}
 
-		if (_task.getStartingTime().isTimeSame(_task.getEndingTime())) {
+		//Determine if task is a deadline or timed task
+		if (_task.getStartingTime().isSameAs(_task.getEndingTime())) {
 			_task.setTaskType(DEADLINE);
 		} else {
 			_task.setTaskType(TIMEDTASK);
 		}
+
 	}
 
-	//Input time and date of task
 	_task.setStartingTime(_timeParser.getStartingTime());
 	_task.setEndingTime(_timeParser.getEndingTime());
 	_task.setStartingDate(_dateParser.getStartingDate());
 	_task.setEndingDate(_dateParser.getEndingDate());
-}
+	_task.setIsDone(false);
 
-Task TaskParser::getTask() {
-	return _task;
+	return true;
 }
