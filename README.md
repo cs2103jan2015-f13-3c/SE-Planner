@@ -1,1 +1,2 @@
-# Tusk
+# SE-Planner
+Task Management Tool

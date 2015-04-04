@@ -27,10 +27,10 @@
     <ClInclude Include="DateParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="InstructionParser.h">
+    <ClInclude Include="TaskParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TaskParser.h">
+    <ClInclude Include="DisplayTypeParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -47,10 +47,10 @@
     <ClCompile Include="DateParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InstructionParser.cpp">
+    <ClCompile Include="TaskParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TaskParser.cpp">
+    <ClCompile Include="DisplayTypeParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,7 +1,6 @@
 #include "Task.h"
 
 Task::Task(void) {
-	_isDone = false;
 }
 
 Task::~Task(void) {
@@ -18,12 +17,12 @@ void Task::setDescription(std::string description) {
 void Task::setIsDone(bool isDone) {
 	_isDone = isDone;
 }
-
-void Task::setStartingTime(Time startingTime) {
+	
+void Task::setStartingTime(MyTime startingTime) {
 	_startingTime = startingTime;
 }
 
-void Task::setEndingTime(Time endingTime) {
+void Task::setEndingTime(MyTime endingTime) {
 	_endingTime = endingTime;
 }
 
@@ -47,11 +46,11 @@ bool Task::getIsDone() {
 	return _isDone;
 }
 
-Time Task::getStartingTime() {
+MyTime Task::getStartingTime() {
 	return _startingTime;
 }
 
-Time Task::getEndingTime() {
+MyTime Task::getEndingTime() {
 	return _endingTime;
 }
 
@@ -63,14 +62,14 @@ Date Task::getEndingDate() {
 	return _endingDate;
 }
 
-bool Task::isTaskSame(Task task) {
+bool Task::isSameAs(Task task) {
 	if ((_taskType == task.getTaskType()) &&
 		(_description == task.getDescription()) &&
 		(_isDone == task.getIsDone()) &&
-		(_startingTime.isTimeSame(task.getStartingTime())) &&
-		(_endingTime.isTimeSame(task.getEndingTime())) &&
-		(_startingDate.isDateSame(task.getStartingDate())) &&
-		(_endingDate.isDateSame(task.getEndingDate()))) {
+		(_startingTime.isSameAs(task.getStartingTime())) &&
+		(_endingTime.isSameAs(task.getEndingTime())) &&
+		(_startingDate.isSameAs(task.getStartingDate())) &&
+		(_endingDate.isSameAs(task.getEndingDate()))) {
 			return true;
 	} else {
 		return false;

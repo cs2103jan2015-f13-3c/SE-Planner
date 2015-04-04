@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "Time.h"
+#include "MyTime.h"
 #include "Date.h"
 
 enum TaskType {
@@ -14,8 +14,8 @@ private:
 	std::string _description;
 	bool _isDone;
 
-	Time _startingTime;
-	Time _endingTime;
+	MyTime _startingTime;
+	MyTime _endingTime;
 
 	Date _startingDate;
 	Date _endingDate;
@@ -28,9 +28,9 @@ public:
 	void setTaskType(TaskType);
 	void setDescription(std::string);
 	void setIsDone(bool);
-
-	void setStartingTime(Time);
-	void setEndingTime(Time);
+	
+	void setStartingTime(MyTime);
+	void setEndingTime(MyTime);
 
 	void setStartingDate(Date);
 	void setEndingDate(Date);
@@ -40,12 +40,12 @@ public:
 	std::string getDescription();
 	bool getIsDone();
 
-	Time getStartingTime();
-	Time getEndingTime();
+	MyTime getStartingTime();
+	MyTime getEndingTime();
 
 	Date getStartingDate();
 	Date getEndingDate();
 
 	//
-	bool isTaskSame(Task);
+	bool isSameAs(Task);
 };

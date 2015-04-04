@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{8A3FAF98-F9FA-40CC-9641-97C0A76D86FF}</ProjectGuid>
+    <ProjectGuid>{780082CD-ECAB-47DD-A4E0-F0416E560DB3}</ProjectGuid>
     <RootNamespace>Common</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -66,12 +66,12 @@
   <ItemGroup>
     <ClInclude Include="Date.h" />
     <ClInclude Include="Task.h" />
-    <ClInclude Include="Time.h" />
+    <ClInclude Include="MyTime.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Date.cpp" />
     <ClCompile Include="Task.cpp" />
-    <ClCompile Include="Time.cpp" />
+    <ClCompile Include="MyTime.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

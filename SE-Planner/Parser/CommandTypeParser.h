@@ -3,7 +3,7 @@
 #include <string>
 
 enum CommandType {
-	ADD, REMOVE, EDIT, DISPLAY, SEARCH, UNDO, DONE, EXIT, INVALID
+	ADD, DELETE, EDIT, DISPLAY, SEARCH, MARK, UNDO, ERROR
 };
 
 class CommandTypeParser {
@@ -14,6 +14,8 @@ public:
 	CommandTypeParser(void);
 	~CommandTypeParser(void);
 
-	void parseCommandType(std::string);
+	void setCommandType(CommandType);
 	CommandType getCommandType();
+
+	void parseCommandType(std::string);
 };

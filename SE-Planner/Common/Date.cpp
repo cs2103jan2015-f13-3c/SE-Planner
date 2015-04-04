@@ -1,7 +1,6 @@
 #include "Date.h"
 
 Date::Date(void) {
-	_isEmpty = true;
 }
 
 Date::~Date(void) {
@@ -39,9 +38,11 @@ bool Date::getIsEmpty() {
 	return _isEmpty;
 }
 
-bool Date::isDateSame(Date date) {
-	if ((_year == date.getYear()) && (_month == date.getMonth()) &&
-		(_day == date.getDay()) && (_isEmpty == date.getIsEmpty())) {
+bool Date::isSameAs(Date date) {
+	if ((_year == date.getYear()) &&
+		(_month == date.getMonth()) &&
+		(_day == date.getDay()) &&
+		(_isEmpty == date.getIsEmpty())) {
 			return true;
 	} else {
 		return false;

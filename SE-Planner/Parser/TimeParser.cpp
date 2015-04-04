@@ -6,73 +6,68 @@ TimeParser::TimeParser(void) {
 TimeParser::~TimeParser(void) {
 }
 
-int strToInt(std::string str){
-	int number;
-	try{
-        number = stoi(str);
-		
-		} catch (std::invalid_argument&){
-		} catch (std::out_of_range&){
-		}
-		return number;
-}
-
-bool isWithinRange(int hours, int minutes){
-	return (hours<24 || hours>0 || minutes<59 || minutes>0);
-}
-
-//Take in a string with one of the following formats: "" or "XXXX" or "XXXX-XXXX"
-//and convert it to startingTime and endingTime
-void TimeParser::parseTime(std::string time) {
-	int size;
-	size = time.size();
-	int hours;
-	int minutes;
-
-	//When string is ""
-	if (size == 0) {
-		_startingTime.setIsEmpty(true);
-		_endingTime.setIsEmpty(true);
-
-	//When string is "XXXX"
-	} else if (size == 4) {
-		hours = strToInt(time.substr(0, 2));
-		minutes = strToInt(time.substr(2, 2));
-
-		isWithinRange(hours, minutes);
-
-		_startingTime.setHours(hours);
-		_startingTime.setMinutes(minutes);
-		_startingTime.setIsEmpty(false);
-
-		_endingTime = _startingTime;
-
-	//When string is "XXXX-XXXX"
-	} else if (size == 9) {
-		hours = strToInt(time.substr(0, 2));	
-		minutes = strToInt(time.substr(2, 2));
-
-		isWithinRange(hours, minutes);
-
-		_startingTime.setHours(hours);
-		_startingTime.setMinutes(minutes);
-		_startingTime.setIsEmpty(false);
-
-		hours = strToInt(time.substr(5, 2));	
-		minutes = strToInt(time.substr(7, 2));
-		
-		isWithinRange(hours, minutes);
-
-		_endingTime.setHours(hours);
-		_endingTime.setMinutes(minutes);
-		_endingTime.setIsEmpty(false);
-	}
-}
-
-Time TimeParser::getStartingTime() {
+MyTime TimeParser::getStartingTime() {
 	return _startingTime;
 }
-	
-Time TimeParser::getEndingTime() {
+
+MyTime TimeParser::getEndingTime() {
 	return _endingTime;
+}
+
+//Decode timeInput into suitable format
+//before inputting timeInput into startingTime and endingTime
+bool TimeParser::parseTime(std::string timeInput) {
+	if (timeInput.empty()) {
+		_startingTime.setIsEmpty(true);
+		_endingTime.setIsEmpty(true);
+		return true;
+	} else {
+		bool decodeResult = decode(timeInput);
+
+		if (decodeResult) {
+			_startingTime.setHours(stoi(_decodeTime.substr(0, 2)));
+			_startingTime.setMinutes(stoi(_decodeTime.substr(2, 2)));
+			_startingTime.setIsEmpty(false);
+			_endingTime.setHours(stoi(_decodeTime.substr(4, 2)));
+			_endingTime.setMinutes(stoi(_decodeTime.substr(6, 2)));
+			_endingTime.setIsEmpty(false);
+			return true;
+		}
+	}
+
+	return false;
+}
+
+//Decode timeInput into 8 characters string format
+//which the first 4 characters represents the starting time
+//and the last 4 characters represents the ending time
+bool TimeParser::decode(std::string timeInput) {
+	int size = timeInput.size();
+
+	//Check if timeInput is in XXXX format
+	if (size == 4) {
+		int hours = stoi(timeInput.substr(0, 2));
+		int minutes = stoi(timeInput.substr(2, 2));
+
+		if ((hours >= 0) && (hours <= 23) && (minutes >= 0) && (minutes <= 59)) {
+				_decodeTime = timeInput + timeInput;
+				return true;
+		}
+
+	//Check if timeInput is in XXXX-XXXX format
+	} else if (size == 9) {
+		int startingHours = stoi(timeInput.substr(0, 2));
+		int startingMinutes = stoi(timeInput.substr(2, 2));
+		int endingHours = stoi(timeInput.substr(5, 2));
+		int endingMinutes = stoi(timeInput.substr(7, 2));
+
+		if ((startingHours >= 0) && (startingHours <= 23) && (startingMinutes >= 0) && (startingMinutes <= 59) &&
+			(endingHours >= 0) && (endingHours <= 23) && (endingMinutes >= 0) && (endingMinutes <= 59) &&
+			(timeInput[4] == '-')) {
+				_decodeTime = timeInput.substr(0, 4) + timeInput.substr(5, 4);
+				return true;
+		}
+	}
+
+	return false;
 }

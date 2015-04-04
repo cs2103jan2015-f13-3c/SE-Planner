@@ -26,5 +26,5 @@ public:
 	int getDay();
 	bool getIsEmpty();
 
-	bool isDateSame(Date);
+	bool isSameAs(Date);
 };

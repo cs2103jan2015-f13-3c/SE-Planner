@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{B8558748-D815-4542-B873-CEBBEFF4EE3A}</ProjectGuid>
+    <ProjectGuid>{E3EAD5A3-C103-4F8E-B822-8DDA6D22B5CA}</ProjectGuid>
     <RootNamespace>Parser</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -65,9 +65,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.vcxproj">
+      <Project>{780082cd-ecab-47dd-a4e0-f0416e560db3}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="CommandTypeParser.h" />
     <ClInclude Include="DateParser.h" />
-    <ClInclude Include="InstructionParser.h" />
+    <ClInclude Include="DisplayTypeParser.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="TaskParser.h" />
     <ClInclude Include="TimeParser.h" />
@@ -75,15 +80,10 @@
   <ItemGroup>
     <ClCompile Include="CommandTypeParser.cpp" />
     <ClCompile Include="DateParser.cpp" />
-    <ClCompile Include="InstructionParser.cpp" />
+    <ClCompile Include="DisplayTypeParser.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="TaskParser.cpp" />
     <ClCompile Include="TimeParser.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Common\Common.vcxproj">
-      <Project>{8a3faf98-f9fa-40cc-9641-97c0a76d86ff}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

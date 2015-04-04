@@ -1,18 +1,22 @@
 #pragma once
 
 #include <string>
-#include "Time.h"
+#include "MyTime.h"
 
 class TimeParser {
 private:
-	Time _startingTime;
-	Time _endingTime;
+	MyTime _startingTime;
+	MyTime _endingTime;
+	std::string _decodeTime;
+
+	bool decode(std::string);
 
 public:
 	TimeParser(void);
 	~TimeParser(void);
 
-	void parseTime(std::string);
-	Time getStartingTime();
-	Time getEndingTime();
+	MyTime getStartingTime();
+	MyTime getEndingTime();
+
+	bool parseTime(std::string);
 };
