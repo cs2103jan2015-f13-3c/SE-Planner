@@ -38,6 +38,11 @@ bool TimeParser::parseTime(std::string timeInput) {
 	return false;
 }
 
+// Check if time entered is between 0-23 for hours and 0-59 for minutes
+bool isWithinRange(int hours, int minutes){
+	return ((hours >= 0) && (hours <= 23) && (minutes >= 0) && (minutes <= 59));
+}
+
 //Decode timeInput into 8 characters string format
 //which the first 4 characters represents the starting time
 //and the last 4 characters represents the ending time
@@ -49,7 +54,7 @@ bool TimeParser::decode(std::string timeInput) {
 		int hours = stoi(timeInput.substr(0, 2));
 		int minutes = stoi(timeInput.substr(2, 2));
 
-		if ((hours >= 0) && (hours <= 23) && (minutes >= 0) && (minutes <= 59)) {
+		if (isWithinRange(hours, minutes)) {
 				_decodeTime = timeInput + timeInput;
 				return true;
 		}
@@ -61,9 +66,9 @@ bool TimeParser::decode(std::string timeInput) {
 		int endingHours = stoi(timeInput.substr(5, 2));
 		int endingMinutes = stoi(timeInput.substr(7, 2));
 
-		if ((startingHours >= 0) && (startingHours <= 23) && (startingMinutes >= 0) && (startingMinutes <= 59) &&
-			(endingHours >= 0) && (endingHours <= 23) && (endingMinutes >= 0) && (endingMinutes <= 59) &&
-			(timeInput[4] == '-')) {
+		if ( isWithinRange(startingHours, startingMinutes) &&
+			isWithinRange(endingHours, endingMinutes) &&
+			(timeInput[4] == '-') ) {
 				_decodeTime = timeInput.substr(0, 4) + timeInput.substr(5, 4);
 				return true;
 		}

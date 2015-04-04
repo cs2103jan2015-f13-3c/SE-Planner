@@ -5,6 +5,8 @@
 #include "TimeParser.h"
 #include "DateParser.h"
 
+const std::string DEFAULT_TIME = "2359";
+
 class TaskParser {
 private:
 	Task _task;

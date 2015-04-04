@@ -10,6 +10,22 @@ Task TaskParser::getTask() {
 	return _task;
 }
 
+std::string removeTrailingSpaces(std::string input){
+	int spacePos = input.find(" ");
+
+	// No whitespace found
+	if(spacePos == -1){
+		return input;
+	}
+
+	// Continue to remove last char of string until no whitespace is found
+	while(input.at(input.size()-1) == ' ' && input.size()>0){
+		input.erase(input.size()-1);
+	}
+
+	return input;
+}
+
 bool TaskParser::parseTask(std::string taskInput) {
 	int timePos = taskInput.find("time:");
 	int datePos = taskInput.find("date:");
@@ -33,11 +49,12 @@ bool TaskParser::parseTask(std::string taskInput) {
 
 		//Input taskType and description for task
 		_task.setTaskType(FLOATINGTASK);
+		taskInput = removeTrailingSpaces(taskInput);
 		_task.setDescription(taskInput);
 
 	//Indicating that task is a deadline that should not have a range
 	} else if ((timePos == -1) && (datePos != -1)) {
-		executionResult = _timeParser.parseTime("2359"); //Default to 2359
+		executionResult = _timeParser.parseTime(DEFAULT_TIME); //Default to 2359
 
 		//Check if time is parsed correctly
 		if (!executionResult) {
@@ -72,6 +89,7 @@ bool TaskParser::parseTask(std::string taskInput) {
 
 		//Input description of task
 		std::string description = taskInput.substr(0, taskInput.size() - date.size());
+		description = removeTrailingSpaces(description);
 		_task.setDescription(description);
 
 	//Indicating task can be a deadline or timed task
@@ -118,6 +136,7 @@ bool TaskParser::parseTask(std::string taskInput) {
 
 			//Input description of task
 			std::string description = taskInput.substr(0, taskInput.size() - date.size() - time.size());
+			description = removeTrailingSpaces(description);
 			_task.setDescription(description);
 
 			_task.setStartingTime(_timeParser.getStartingTime());
@@ -167,6 +186,7 @@ bool TaskParser::parseTask(std::string taskInput) {
 
 			//Input description of task
 			std::string description = taskInput.substr(0, taskInput.size() - date.size() - time.size());
+			description = removeTrailingSpaces(description);
 			_task.setDescription(description);
 
 			_task.setStartingTime(_timeParser.getStartingTime());

@@ -22,9 +22,9 @@ CommandType Parser::parseUserInput(std::string userInput) {
 
 	//Parse task only if command is add
 	if (commandType == ADD) {
-		executionResult = _taskParser.parseTask(remainingUserInput);
 
-		if (!executionResult) {
+		executionResult = _taskParser.parseTask(remainingUserInput);
+		if ( !executionResult || firstSpacePos == -1) {
 			_commandTypeParser.setCommandType(ERROR);
 		}
 
@@ -38,8 +38,8 @@ CommandType Parser::parseUserInput(std::string userInput) {
 		//Obtain updated task and put into taskParser;
 		remainingUserInput = remainingUserInput.substr(firstSpacePos+1,remainingUserInput.size() - index.size());
 		executionResult = _taskParser.parseTask(remainingUserInput);
-
-		if (!executionResult) {
+		
+		if ( !executionResult || firstSpacePos == -1) {
 			_commandTypeParser.setCommandType(ERROR);
 		}
 
