@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Control", "Control\Control.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UI", "UI\UI.vcxproj", "{5016FCC6-EC83-47C0-843D-9609AD25B221}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ParserTest", "ParserTest\ParserTest.vcxproj", "{7F319446-2C7D-448F-8D78-5B87175C02FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -43,6 +45,10 @@ Global
 		{5016FCC6-EC83-47C0-843D-9609AD25B221}.Debug|Win32.Build.0 = Debug|Win32
 		{5016FCC6-EC83-47C0-843D-9609AD25B221}.Release|Win32.ActiveCfg = Release|Win32
 		{5016FCC6-EC83-47C0-843D-9609AD25B221}.Release|Win32.Build.0 = Release|Win32
+		{7F319446-2C7D-448F-8D78-5B87175C02FD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7F319446-2C7D-448F-8D78-5B87175C02FD}.Debug|Win32.Build.0 = Debug|Win32
+		{7F319446-2C7D-448F-8D78-5B87175C02FD}.Release|Win32.ActiveCfg = Release|Win32
+		{7F319446-2C7D-448F-8D78-5B87175C02FD}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
