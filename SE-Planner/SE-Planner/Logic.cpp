@@ -158,47 +158,50 @@ vector<Task> Logic::Done(vector<Task> allTask, vector<Task> displayedTask, vecto
 
 }
 
-// YOONG ZHEN
-vector<Task> Logic::Search(vector<Task> allTask, Task searchTask)
-{
-	// list of all Task that match the requirement
-	vector<Task> matchTask;
-	matchTask.clear();
-
-	// if the search info is INVALID
-	if (searchTask.taskType == NUL)
-	{
-		success = 0;
-		return matchTask;
-	}
-	else
-	{
-		success = 1;
-		int totalDisplay = 0;
-
-		for (int i = 0; i < allTask.size(); i++)
-		{
-			// check Title
-			bool matchTitle = utility.compareTitle(allTask[i],searchTask);
-			// check Date
-			bool matchDate = utility.compareDate(allTask[i],searchTask);
-			// check Time
-			bool matchTime = utility.compareTime(allTask[i],searchTask);
-
-			// if match every thing
-			if (matchTitle && matchDate && matchTime)
-			{
-				totalDisplay++;
-				matchTask.push_back(allTask[i]);
-				if (totalDisplay == 5) break;
-				// LIMIT DISPLAY IS 5, CAN CHANGE LATER. I TOTALLY FORGET ABOUT THIS WHEN DOING OP2
-			}
-		}
-
-		return matchTask;
+//Search function's sub-functions
+bool isSearchedTaskValid(Task searchedTask) {
+	if (searchedTask.taskType != NUL) {
+		return true;
+	} else {
+		return false;
 	}
 }
 
+bool isSearchedTaskMatch(Task task, Task searchedTask) {
+	Utility utility;
+	bool isTitleMatch = utility.compareTitle(task, searchedTask);
+	bool isDateMatch = utility.compareDate(task, searchedTask);
+	bool isTimeMatch = utility.compareTime(task, searchedTask);
+
+	if (isTitleMatch && isDateMatch && isTimeMatch) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+vector<Task> findAllMatchedTasks(vector<Task> allTasks, Task searchedTask) {
+	vector<Task> matchedTasks;
+
+	for (int i = 0; i < allTasks.size(); i++) {
+		if (isSearchedTaskMatch(allTasks[i], searchedTask)) {
+			matchedTasks.push_back(allTasks[i]);
+		}
+	}
+
+	return matchedTasks;
+}
+
+//Main search function
+vector<Task> Logic::Search(vector<Task> allTasks, Task searchedTask) {
+	vector<Task> matchedTasks;
+
+	if (isSearchedTaskValid(searchedTask)) {
+		matchedTasks = findAllMatchedTasks(allTasks, searchedTask);
+	}
+
+	return matchedTasks;
+}
 
 // YOONG ZHEN
 // THIS IS THE COMPARATOR FOR THE SORT FUNCTION OF THE DISPLAY COMMAND. 
