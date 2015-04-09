@@ -158,7 +158,7 @@ vector<Task> Logic::Done(vector<Task> allTask, vector<Task> displayedTask, vecto
 
 }
 
-// Search's sub-functions
+//Search function's sub-functions
 bool isSearchedTaskValid(Task searchedTask) {
 	if (searchedTask.taskType != NUL) {
 		return true;
@@ -167,25 +167,40 @@ bool isSearchedTaskValid(Task searchedTask) {
 	}
 }
 
-// YOONG ZHEN
-vector<Task> Logic::Search(vector<Task> allTasks, Task searchedTask) {
+bool isSearchedTaskMatch(Task task, Task searchedTask) {
+	Utility utility;
+	bool isTitleMatch = utility.compareTitle(task, searchedTask);
+	bool isDateMatch = utility.compareDate(task, searchedTask);
+	bool isTimeMatch = utility.compareTime(task, searchedTask);
+
+	if (isTitleMatch && isDateMatch && isTimeMatch) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+vector<Task> findAllMatchedTasks(vector<Task> allTasks, Task searchedTask) {
 	vector<Task> matchedTasks;
 
-	if (searchedTask.taskType != NUL) {
-		for (int i = 0; i < allTasks.size(); i++) {
-			bool isTitleMatch = utility.compareTitle(allTasks[i],searchedTask);
-			bool isDateMatch = utility.compareDate(allTasks[i],searchedTask);
-			bool isTimeMatch = utility.compareTime(allTasks[i],searchedTask);
-
-			if (isTitleMatch && isDateMatch && isTimeMatch) {
-				matchedTasks.push_back(allTasks[i]);
-			}
+	for (int i = 0; i < allTasks.size(); i++) {
+		if (isSearchedTaskMatch(allTasks[i], searchedTask)) {
+			matchedTasks.push_back(allTasks[i]);
 		}
 	}
 
 	return matchedTasks;
 }
 
+vector<Task> Logic::Search(vector<Task> allTasks, Task searchedTask) {
+	vector<Task> matchedTasks;
+
+	if (isSearchedTaskValid(searchedTask)) {
+		matchedTasks = findAllMatchedTasks(allTasks, searchedTask);
+	}
+
+	return matchedTasks;
+}
 
 // YOONG ZHEN
 // THIS IS THE COMPARATOR FOR THE SORT FUNCTION OF THE DISPLAY COMMAND. 
