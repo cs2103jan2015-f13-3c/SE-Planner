@@ -295,19 +295,22 @@ vector<Task> Logic::Display(vector<Task> allTask, Task displayTask, InstructionT
 
 		// REMOVE ALL DONE
 		// THIS IS CURRENTLY MESSY
-		for (int i = 0; i < allTask.size(); i++)
-			if (allTask[i].isDone == false) allTask1.push_back(allTask[i]);
+		
 
 		if (instruction == ALL)
 		{
+			for (int i = 0; i < allTask.size(); i++)
+				if (allTask[i].isDone == false) allTask1.push_back(allTask[i]);
 			matchTask = allTask1;
 		}
-		else if (instruction == DONE)
+		else if (instruction == DISPLAYDONE)
 		{
 			for (int i = 0; i < allTask.size(); i++)
+			{
 				if (allTask[i].isDone) matchTask.push_back(allTask[i]);
+			}
 		}
-		else if (instruction == UNDONE)
+		else if (instruction == DISPLAYUNDONE)
 		{
 			for (int i = 0; i < allTask.size(); i++)
 				if (!allTask[i].isDone) matchTask.push_back(allTask[i]);
