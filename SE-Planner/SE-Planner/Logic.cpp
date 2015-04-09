@@ -192,6 +192,7 @@ vector<Task> findAllMatchedTasks(vector<Task> allTasks, Task searchedTask) {
 	return matchedTasks;
 }
 
+//Main search function
 vector<Task> Logic::Search(vector<Task> allTasks, Task searchedTask) {
 	vector<Task> matchedTasks;
 
