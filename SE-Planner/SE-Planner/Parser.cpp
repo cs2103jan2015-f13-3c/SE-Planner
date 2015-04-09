@@ -146,6 +146,7 @@ CommandType extractCommandType(string inp)
 		if (cmd == "exit") ret = EXIT;
 		if (cmd == "cls") ret = CLS;
 		if (cmd == "help") ret = HELP;
+		if (cmd == "undone") ret = UNDONE;
 	}
 
 	return ret;
@@ -675,6 +676,20 @@ Parser::Parser(string inp)
 			isInstruction = true;
 			newCommand.instruction = ALL;
 		}
+
+		regex rgxDone("display done");
+		if (regex_search(inp,rgxDone))
+		{
+			isInstruction = true;
+			newCommand.instruction = DISPLAYDONE;
+		}
+
+		regex rgxUndone("display undone");
+		if (regex_search(inp,rgxUndone))
+		{
+			isInstruction = true;
+			newCommand.instruction = DISPLAYUNDONE;
+		}
 		// or get date
 
 		if (!isInstruction)
@@ -738,6 +753,25 @@ Parser::Parser(string inp)
 		// extract delete index;
 		
 		istringstream iss(inp.substr(4));
+
+		int readIndex;
+		bool correct = true;
+
+		while (iss>>readIndex)
+		{
+			newCommand.idx.push_back(readIndex);
+			if (readIndex < 1) correct = false;
+		}
+
+		if (!correct) newCommand.idx.clear();
+
+	}
+
+	if (cmdType == UNDONE)
+	{
+		// extract delete index;
+		
+		istringstream iss(inp.substr(6));
 
 		int readIndex;
 		bool correct = true;
