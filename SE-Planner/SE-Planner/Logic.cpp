@@ -159,14 +159,14 @@ vector<Task> Logic::Done(vector<Task> allTask, vector<Task> displayedTask, vecto
 }
 
 // YOONG ZHEN
-vector<Task> Logic::Search(vector<Task> allTask, Task searchTask)
+vector<Task> Logic::Search(vector<Task> allTasks, Task searchedTask)
 {
 	// list of all Task that match the requirement
 	vector<Task> matchTask;
 	matchTask.clear();
 
 	// if the search info is INVALID
-	if (searchTask.taskType == NUL)
+	if (searchedTask.taskType == NUL)
 	{
 		success = 0;
 		return matchTask;
@@ -176,20 +176,20 @@ vector<Task> Logic::Search(vector<Task> allTask, Task searchTask)
 		success = 1;
 		int totalDisplay = 0;
 
-		for (int i = 0; i < allTask.size(); i++)
+		for (int i = 0; i < allTasks.size(); i++)
 		{
 			// check Title
-			bool matchTitle = utility.compareTitle(allTask[i],searchTask);
+			bool matchTitle = utility.compareTitle(allTasks[i],searchedTask);
 			// check Date
-			bool matchDate = utility.compareDate(allTask[i],searchTask);
+			bool matchDate = utility.compareDate(allTasks[i],searchedTask);
 			// check Time
-			bool matchTime = utility.compareTime(allTask[i],searchTask);
+			bool matchTime = utility.compareTime(allTasks[i],searchedTask);
 
 			// if match every thing
 			if (matchTitle && matchDate && matchTime)
 			{
 				totalDisplay++;
-				matchTask.push_back(allTask[i]);
+				matchTask.push_back(allTasks[i]);
 				if (totalDisplay == 5) break;
 				// LIMIT DISPLAY IS 5, CAN CHANGE LATER. I TOTALLY FORGET ABOUT THIS WHEN DOING OP2
 			}
