@@ -356,83 +356,50 @@ vector<Task> Logic::Display(vector<Task> allTask, Task displayTask, InstructionT
 	return matchTask;
 }
 
-// YOONG ZHEN
-vector<Task> Logic::Edit(vector<Task> allTask, vector<Task> displayedTask, int index, Task editTask)
+//Edit function's sub-functions
+bool isInputValid(vector<Task> displayedTasks, int index, Task newTaskInfo) {
+	if ((index > displayedTasks.size()) || (newTaskInfo.taskType == NUL)) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
+
+bool isInputTaskTypeValid(Task toBeEditedTask, Task newTaskInfo) {
+
+}
+//Main edit function
+vector<Task> Logic::Edit(vector<Task> allTasks, vector<Task> displayedTasks, int index, Task newTaskInfo)
 {
-	// IF THE EDIT COMMAND INFO IS INVALID
-	if (editTask.taskType == NUL)
-	{
-		success = 0;
-		return allTask;
-	}
-	else
-	{
-		// IF THE INDEX EXCEEDS THE DISPLAY TASK LIST
-		if (index > displayedTask.size())
-		{
-			success = 0;
-			return allTask;
-		}
-
-		Task theTask = displayedTask[index-1];
-
-		// IS THE DATE & TIME EDITABLE OR NOT
-		bool canEditDate = true;
-		bool canEditTime = true;
+	if (isInputValid(displayedTasks, index, newTaskInfo)) {
+		Task toBeEditedTask = displayedTasks[index - 1];
+		bool isTaskEditable = true;
 		
-		if (theTask.taskType == FLOATTASK)
-		{
-			if (editTask.taskType != FLOATTASK)
-			{
-				canEditDate = false;
-				canEditTime = false;
-			}
+		if ((toBeEditedTask.taskType == FLOATTASK) && (newTaskInfo.taskType != FLOATTASK)) {
+			isTaskEditable = false;
 		}
 
-		// DEADLINE CANNOT BE CHANGED TO TIMED TASK
-		if (theTask.taskType == DEAD)
-		{
-			if (editTask.taskType == TIMED)
-			{
-				canEditDate = false;
-				canEditTime = false;
-			}
+		if ((toBeEditedTask.taskType == DEAD) && (newTaskInfo.taskType == TIMED)) {
+			isTaskEditable = false;
 		}
 
-		if (theTask.taskType == TIMED)
-		{
-			// TIMED TASK HAS RANGE OF TIME
-			// CANNOT CHANGE TO DEADLINE (WITH SPECIFIED TIME) 
-
-			if (editTask.taskType == DEAD && !utility.isNull(editTask.startTime))
-			{
-				canEditDate = false;
-				canEditTime = false;
-			}
+		if ((toBeEditedTask.taskType == TIMED) && (newTaskInfo.taskType == DEAD)) {
+			isTaskEditable = false;
 		}
 
-		// OTHERWISE, GO AHEAD
-		if (canEditDate && canEditTime)
-		{
-			vector<Task> temp = allTask;
-
-			for (int i = 0; i < temp.size(); i++)
-				if (utility.isSame(temp[i],theTask))
-				{
-					if (!utility.isNull(editTask.title)) temp[i].title = editTask.title;
-					if (!utility.isNull(editTask.startDate)) temp[i].startDate = editTask.startDate;
-					if (!utility.isNull(editTask.endDate)) temp[i].endDate = editTask.endDate;
-					if (!utility.isNull(editTask.startTime)) temp[i].startTime = editTask.startTime;
-					if (!utility.isNull(editTask.endTime)) temp[i].endTime = editTask.endTime;
-
-					if (utility.isValidAddTask(temp[i])) success = 1;
-					else success = 0;
+		if (isTaskEditable) {
+			for (int i = 0; i < allTasks.size(); i++) {
+				if (utility.isSame(allTasks[i],toBeEditedTask)) {
+					if (!utility.isNull(newTaskInfo.title)) allTasks[i].title = newTaskInfo.title;
+					if (!utility.isNull(newTaskInfo.startDate)) allTasks[i].startDate = newTaskInfo.startDate;
+					if (!utility.isNull(newTaskInfo.endDate)) allTasks[i].endDate = newTaskInfo.endDate;
+					if (!utility.isNull(newTaskInfo.startTime)) allTasks[i].startTime = newTaskInfo.startTime;
+					if (!utility.isNull(newTaskInfo.endTime)) allTasks[i].endTime = newTaskInfo.endTime;
 				}
-
-			return temp;
+			}
 		}
-
-		return allTask;
-
 	}
+
+	return allTasks;
 }
