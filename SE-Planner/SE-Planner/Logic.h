@@ -26,7 +26,7 @@ public:
 	// YOONG ZHEN
 	vector<Task> Search(vector<Task> allTasks, Task searchedTask);
 	vector<Task> Display(vector<Task> allTask, Task displayTask, InstructionType instruction);
-	vector<Task> Edit(vector<Task> allTask, vector<Task> displayedTask, int index, Task editTask);
+	vector<Task> Edit(vector<Task> allTasks, vector<Task> displayedTasks, int index, Task newTaskInfo);
 	
 
 

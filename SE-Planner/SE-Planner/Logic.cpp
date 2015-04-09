@@ -369,87 +369,81 @@ vector<Task> Logic::Display(vector<Task> allTask, Task displayTask, InstructionT
 	return matchTask;
 }
 
-// YOONG ZHEN
-vector<Task> Logic::Edit(vector<Task> allTask, vector<Task> displayedTask, int index, Task editTask)
-{
-	// IF THE EDIT COMMAND INFO IS INVALID
-	if (editTask.taskType == NUL)
-	{
-		success = 0;
-		return allTask;
-	}
-	else
-	{
-		// IF THE INDEX EXCEEDS THE DISPLAY TASK LIST
-		if (index > displayedTask.size())
-		{
-			success = 0;
-			return allTask;
-		}
-
-		Task theTask = displayedTask[index-1];
-
-		// IS THE DATE & TIME EDITABLE OR NOT
-		bool canEditDate = true;
-		bool canEditTime = true;
-		
-		if (theTask.taskType == FLOATTASK)
-		{
-			if (editTask.taskType != FLOATTASK)
-			{
-				canEditDate = false;
-				canEditTime = false;
-			}
-		}
-
-		// DEADLINE CANNOT BE CHANGED TO TIMED TASK
-		if (theTask.taskType == DEAD)
-		{
-			if (editTask.taskType == TIMED)
-			{
-				canEditDate = false;
-				canEditTime = false;
-			}
-		}
-
-		if (theTask.taskType == TIMED)
-		{
-			// TIMED TASK HAS RANGE OF TIME
-			// CANNOT CHANGE TO DEADLINE (WITH SPECIFIED TIME) 
-
-			if (editTask.taskType == DEAD && !utility.isNull(editTask.startTime))
-			{
-				canEditDate = false;
-				canEditTime = false;
-			}
-		}
-
-		// OTHERWISE, GO AHEAD
-		if (canEditDate && canEditTime)
-		{
-			vector<Task> temp = allTask;
-
-			for (int i = 0; i < temp.size(); i++)
-				if (utility.isSame(temp[i],theTask))
-				{
-					if (!utility.isNull(editTask.title)) temp[i].title = editTask.title;
-					if (!utility.isNull(editTask.startDate)) temp[i].startDate = editTask.startDate;
-					if (!utility.isNull(editTask.endDate)) temp[i].endDate = editTask.endDate;
-					if (!utility.isNull(editTask.startTime)) temp[i].startTime = editTask.startTime;
-					if (!utility.isNull(editTask.endTime)) temp[i].endTime = editTask.endTime;
-
-					if (utility.isValidAddTask(temp[i])) success = 1;
-					else success = 0;
-				}
-
-			return temp;
-		}
-
-		return allTask;
-
+//Edit function's sub-functions
+bool isInputValid(vector<Task> displayedTasks, int index, Task newTaskInfo) {
+	if ((index > displayedTasks.size()) || (newTaskInfo.taskType == NUL)) {
+		return false;
+	} else {
+		return true;
 	}
 }
 
+
+bool isTaskTypeValid(Task toBeEditedTask, Task newTaskInfo) {
+	if (((toBeEditedTask.taskType == FLOATTASK) && (newTaskInfo.taskType != FLOATTASK)) ||
+		((toBeEditedTask.taskType == DEAD) && (newTaskInfo.taskType == TIMED)) ||
+		((toBeEditedTask.taskType == TIMED) && (newTaskInfo.taskType == DEAD))) {
+		return false;
+	} else {
+		true;
+	}
+}
+
+Task updateTask(Task toBeEditedTask, Task newTaskInfo) {
+	Utility utility;
+
+	if (!utility.isNull(newTaskInfo.title)) {
+		toBeEditedTask.title = newTaskInfo.title;
+	}
+
+	if (!utility.isNull(newTaskInfo.startDate)) {
+		toBeEditedTask.startDate = newTaskInfo.startDate;
+	}
+
+	if (!utility.isNull(newTaskInfo.endDate)) {
+		toBeEditedTask.endDate = newTaskInfo.endDate;
+	}
+
+	if (!utility.isNull(newTaskInfo.startTime)) {
+		toBeEditedTask.startTime = newTaskInfo.startTime;
+	}
+
+	if (!utility.isNull(newTaskInfo.endTime)) {
+		toBeEditedTask.endTime = newTaskInfo.endTime;
+	}
+
+	return toBeEditedTask;
+}
+
+vector<Task> updateAllTasks(vector<Task> allTasks, Task toBeEditedTask, Task newTaskInfo) {
+	Utility utility;
+
+	for (int i = 0; i < allTasks.size(); i++) {
+		if (utility.isSame(allTasks[i],toBeEditedTask)) {
+			allTasks[i] = updateTask(allTasks[i], newTaskInfo);
+		}
+	}
+
+	return allTasks;
+}
+
+<<<<<<< HEAD
+//Main edit function
+vector<Task> Logic::Edit(vector<Task> allTasks, vector<Task> displayedTasks, int index, Task newTaskInfo)
+{
+	if (isInputValid(displayedTasks, index, newTaskInfo)) {
+		Task toBeEditedTask = displayedTasks[index - 1];
+
+		if (isTaskTypeValid(toBeEditedTask, newTaskInfo)) {
+			for (int i = 0; i < allTasks.size(); i++) {
+				allTasks = updateAllTasks(allTasks, toBeEditedTask, newTaskInfo);
+			}
+		}
+	}
+
+	return allTasks;
+}
+=======
 // Tung
 vector<Task> Logic::Undone(vector<Task> allTask, vector<Task> displayedTask, vector<int> index)
 {
@@ -505,3 +499,4 @@ vector<Task> Logic::Undone(vector<Task> allTask, vector<Task> displayedTask, vec
 	return temp;
 
 }
+>>>>>>> 097f761e4df7efa9972d61acbbfe2a34d8be5832
