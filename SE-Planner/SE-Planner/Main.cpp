@@ -172,6 +172,22 @@ int main()
 					isDifferentState = false;
 			}
 		}
+		else if (userCommand.cmd == UNDONE)
+		{
+			MainTaskList = logic.Undone(MainTaskList,DisplayTaskList,userCommand.idx);
+
+			//for (int i = 0; i < MainTaskList.size(); i++) cout<<MainTaskList[i].isDone<<endl;
+			if (logic.success == 1)
+			{
+				isDifferentState = true;
+				ui.showMessage("UNDONE !\n");
+			}
+			else 
+			{
+					ui.showFailureMessage();
+					isDifferentState = false;
+			}
+		}
 		else if (userCommand.cmd == UNDO)
 		{
 			history.undo();

@@ -295,12 +295,25 @@ vector<Task> Logic::Display(vector<Task> allTask, Task displayTask, InstructionT
 
 		// REMOVE ALL DONE
 		// THIS IS CURRENTLY MESSY
-		for (int i = 0; i < allTask.size(); i++)
-			if (allTask[i].isDone == false) allTask1.push_back(allTask[i]);
+		
 
 		if (instruction == ALL)
 		{
+			for (int i = 0; i < allTask.size(); i++)
+				if (allTask[i].isDone == false) allTask1.push_back(allTask[i]);
 			matchTask = allTask1;
+		}
+		else if (instruction == DISPLAYDONE)
+		{
+			for (int i = 0; i < allTask.size(); i++)
+			{
+				if (allTask[i].isDone) matchTask.push_back(allTask[i]);
+			}
+		}
+		else if (instruction == DISPLAYUNDONE)
+		{
+			for (int i = 0; i < allTask.size(); i++)
+				if (!allTask[i].isDone) matchTask.push_back(allTask[i]);
 		}
 		else if (instruction == OVERDUE)
 		{
@@ -432,4 +445,60 @@ vector<Task> Logic::Edit(vector<Task> allTask, vector<Task> displayedTask, int i
 		return allTask;
 
 	}
+}
+
+// Tung
+vector<Task> Logic::Undone(vector<Task> allTask, vector<Task> displayedTask, vector<int> index)
+{
+	
+	// Logic similar to Done
+	if (index.size() == 0)
+	{
+		success = 0;
+		return allTask;
+	}
+
+	for (int j = 0; j < index.size(); j++)
+	{
+		if (index[j] > displayedTask.size())
+		{
+			success = 0;
+			return allTask;
+		}
+	}
+
+	success = 1;
+
+	bool marked[1000];
+	for (int i = 0; i <= allTask.size() + 1; i++) marked[i] = false;
+
+	vector<Task> temp;
+	temp.clear();
+
+	for (int j = 0; j < index.size(); j++)
+	{
+		success = 1;
+
+		Task undoneTask = displayedTask[index[j]-1];
+
+
+		for (int i = 0; i < allTask.size(); i++)
+		{
+			if (utility.isSame(allTask[i],undoneTask)) 
+			{
+				marked[i] = true;
+				break;
+			}
+		}		
+	}
+
+	for (int i = 0; i < allTask.size(); i++)
+	{
+		temp.push_back(allTask[i]);
+		if (marked[i]) temp[i].isDone = false;
+		//cout<<i<<" "<<temp[i].isDone<<endl;
+	}
+
+	return temp;
+
 }

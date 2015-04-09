@@ -1,7 +1,7 @@
 0add new task
 0add op1 reflection date: 9/4/2015 time: 2000
-0add task 1
-0add task 2
+1add task 1
+1add task 2
 0add dead dead: 5/4
 1add timed date: 5/4/2015-10/4/2015 time: 2000-1000
 1add dead3 date: 5/4/2015 time: 2359
@@ -15,3 +15,4 @@
 0add tyagugfladdhslifu date: 3/4/2015 time: 2359
 0add adglahgd date: 5/3/2015 time: 2359
 0add yafieufhlu date: 30/4/2015 time: 2359
+
