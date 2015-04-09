@@ -366,37 +366,63 @@ bool isInputValid(vector<Task> displayedTasks, int index, Task newTaskInfo) {
 }
 
 
-bool isInputTaskTypeValid(Task toBeEditedTask, Task newTaskInfo) {
-
+bool isTaskTypeValid(Task toBeEditedTask, Task newTaskInfo) {
+	if (((toBeEditedTask.taskType == FLOATTASK) && (newTaskInfo.taskType != FLOATTASK)) ||
+		((toBeEditedTask.taskType == DEAD) && (newTaskInfo.taskType == TIMED)) ||
+		((toBeEditedTask.taskType == TIMED) && (newTaskInfo.taskType == DEAD))) {
+		return false;
+	} else {
+		true;
+	}
 }
+
+Task updateTask(Task toBeEditedTask, Task newTaskInfo) {
+	Utility utility;
+
+	if (!utility.isNull(newTaskInfo.title)) {
+		toBeEditedTask.title = newTaskInfo.title;
+	}
+
+	if (!utility.isNull(newTaskInfo.startDate)) {
+		toBeEditedTask.startDate = newTaskInfo.startDate;
+	}
+
+	if (!utility.isNull(newTaskInfo.endDate)) {
+		toBeEditedTask.endDate = newTaskInfo.endDate;
+	}
+
+	if (!utility.isNull(newTaskInfo.startTime)) {
+		toBeEditedTask.startTime = newTaskInfo.startTime;
+	}
+
+	if (!utility.isNull(newTaskInfo.endTime)) {
+		toBeEditedTask.endTime = newTaskInfo.endTime;
+	}
+
+	return toBeEditedTask;
+}
+
+vector<Task> updateAllTasks(vector<Task> allTasks, Task toBeEditedTask, Task newTaskInfo) {
+	Utility utility;
+
+	for (int i = 0; i < allTasks.size(); i++) {
+		if (utility.isSame(allTasks[i],toBeEditedTask)) {
+			allTasks[i] = updateTask(allTasks[i], newTaskInfo);
+		}
+	}
+
+	return allTasks;
+}
+
 //Main edit function
 vector<Task> Logic::Edit(vector<Task> allTasks, vector<Task> displayedTasks, int index, Task newTaskInfo)
 {
 	if (isInputValid(displayedTasks, index, newTaskInfo)) {
 		Task toBeEditedTask = displayedTasks[index - 1];
-		bool isTaskEditable = true;
-		
-		if ((toBeEditedTask.taskType == FLOATTASK) && (newTaskInfo.taskType != FLOATTASK)) {
-			isTaskEditable = false;
-		}
 
-		if ((toBeEditedTask.taskType == DEAD) && (newTaskInfo.taskType == TIMED)) {
-			isTaskEditable = false;
-		}
-
-		if ((toBeEditedTask.taskType == TIMED) && (newTaskInfo.taskType == DEAD)) {
-			isTaskEditable = false;
-		}
-
-		if (isTaskEditable) {
+		if (isTaskTypeValid(toBeEditedTask, newTaskInfo)) {
 			for (int i = 0; i < allTasks.size(); i++) {
-				if (utility.isSame(allTasks[i],toBeEditedTask)) {
-					if (!utility.isNull(newTaskInfo.title)) allTasks[i].title = newTaskInfo.title;
-					if (!utility.isNull(newTaskInfo.startDate)) allTasks[i].startDate = newTaskInfo.startDate;
-					if (!utility.isNull(newTaskInfo.endDate)) allTasks[i].endDate = newTaskInfo.endDate;
-					if (!utility.isNull(newTaskInfo.startTime)) allTasks[i].startTime = newTaskInfo.startTime;
-					if (!utility.isNull(newTaskInfo.endTime)) allTasks[i].endTime = newTaskInfo.endTime;
-				}
+				allTasks = updateAllTasks(allTasks, toBeEditedTask, newTaskInfo);
 			}
 		}
 	}
