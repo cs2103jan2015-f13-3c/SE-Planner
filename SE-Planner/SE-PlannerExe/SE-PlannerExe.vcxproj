@@ -11,12 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{10FF180B-EE2D-4ADD-9670-E44890BA2BBE}</ProjectGuid>
-    <RootNamespace>SEPlanner</RootNamespace>
+    <ProjectGuid>{163F5558-5DB8-4F5E-9361-341DCED08591}</ProjectGuid>
+    <RootNamespace>SEPlannerExe</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
@@ -62,21 +62,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Common.h" />
-    <ClInclude Include="History.h" />
-    <ClInclude Include="Logic.h" />
-    <ClInclude Include="Parser.h" />
-    <ClInclude Include="Storage.h" />
-    <ClInclude Include="UI.h" />
-    <ClInclude Include="Utility.h" />
+    <ClCompile Include="..\SE-Planner\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="History.cpp" />
-    <ClCompile Include="Logic.cpp" />
-    <ClCompile Include="Parser.cpp" />
-    <ClCompile Include="Storage.cpp" />
-    <ClCompile Include="UI.cpp" />
-    <ClCompile Include="Utility.cpp" />
+    <ProjectReference Include="..\SE-Planner\SE-Planner.vcxproj">
+      <Project>{10ff180b-ee2d-4add-9670-e44890ba2bbe}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
