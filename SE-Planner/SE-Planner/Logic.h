@@ -32,5 +32,8 @@ public:
 
 	// sorting comparator for the displayedTaskList
 	bool orderTask(Task,Task);
+
+	// Tung
+	vector<Task> Undone(vector<Task> allTask, vector<Task> displayedTask, vector<int> index);
 };
 
