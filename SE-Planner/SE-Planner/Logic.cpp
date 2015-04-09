@@ -158,45 +158,32 @@ vector<Task> Logic::Done(vector<Task> allTask, vector<Task> displayedTask, vecto
 
 }
 
-// YOONG ZHEN
-vector<Task> Logic::Search(vector<Task> allTasks, Task searchedTask)
-{
-	// list of all Task that match the requirement
-	vector<Task> matchTask;
-	matchTask.clear();
-
-	// if the search info is INVALID
-	if (searchedTask.taskType == NUL)
-	{
-		success = 0;
-		return matchTask;
+// Search's sub-functions
+bool isSearchedTaskValid(Task searchedTask) {
+	if (searchedTask.taskType != NUL) {
+		return true;
+	} else {
+		return false;
 	}
-	else
-	{
-		success = 1;
-		int totalDisplay = 0;
+}
 
-		for (int i = 0; i < allTasks.size(); i++)
-		{
-			// check Title
-			bool matchTitle = utility.compareTitle(allTasks[i],searchedTask);
-			// check Date
-			bool matchDate = utility.compareDate(allTasks[i],searchedTask);
-			// check Time
-			bool matchTime = utility.compareTime(allTasks[i],searchedTask);
+// YOONG ZHEN
+vector<Task> Logic::Search(vector<Task> allTasks, Task searchedTask) {
+	vector<Task> matchedTasks;
 
-			// if match every thing
-			if (matchTitle && matchDate && matchTime)
-			{
-				totalDisplay++;
-				matchTask.push_back(allTasks[i]);
-				if (totalDisplay == 5) break;
-				// LIMIT DISPLAY IS 5, CAN CHANGE LATER. I TOTALLY FORGET ABOUT THIS WHEN DOING OP2
+	if (searchedTask.taskType != NUL) {
+		for (int i = 0; i < allTasks.size(); i++) {
+			bool isTitleMatch = utility.compareTitle(allTasks[i],searchedTask);
+			bool isDateMatch = utility.compareDate(allTasks[i],searchedTask);
+			bool isTimeMatch = utility.compareTime(allTasks[i],searchedTask);
+
+			if (isTitleMatch && isDateMatch && isTimeMatch) {
+				matchedTasks.push_back(allTasks[i]);
 			}
 		}
-
-		return matchTask;
 	}
+
+	return matchedTasks;
 }
 
 
