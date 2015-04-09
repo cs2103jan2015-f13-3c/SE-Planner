@@ -58,7 +58,7 @@ public:
 
 	// currently used function
 	void showFailureMessage(void);
-	void printIfEmpty(const vector<Task>);
+	bool printIfEmpty(const vector<Task>);
 	void getMaxTitleAndInfoLength(const vector<Task>, int &, int &);
 	void printUpperBorder(const int, const int);
 	void printMainContent(const vector<Task>, const int, const int);

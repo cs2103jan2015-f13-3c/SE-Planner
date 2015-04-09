@@ -1,5 +1,5 @@
 #include "Utility.h"
-
+#include <fstream>
 
 Utility::Utility(void)
 {
@@ -269,4 +269,10 @@ bool Utility::isValidOtherTask(Task x)
 	bool test5 = isNotNullTime(x.endTime);
 	//cout<<"ISOK = "<<test1<<" "<<test2<<" "<<test3<<" "<<test4<<" "<<test5<<endl;
 	return isOK;
+}
+
+void Utility::log(string logString)
+{
+	ofstream logFile("logFile.txt", std::ios_base::out | std::ios_base::app);
+	logFile<<logString<<endl;
 }

@@ -14,3 +14,7 @@
 #include "Parser.h"
 #include "Common.h"
 #include "Utility.h"
+#include "UI.h"
+#include "Storage.h"
+#include "Logic.h"
+#include "History.h"

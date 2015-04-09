@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Common.h"
+#include "Utility.h"
+
 #include <vector>
 
 using namespace std;
@@ -17,6 +19,8 @@ public:
 
 	vector<Task> getAllTask(void);
 	void writeToFile(vector<Task>);
+
+	Utility utility;
 
 };
 

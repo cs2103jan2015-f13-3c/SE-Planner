@@ -66,17 +66,22 @@ vector<Task> Storage::getAllTask(void){
 			//cout<<"LINE READ FROM FILE: "<<line<<endl;
 			// file Structure : [1/0]add ..........
 			// process each line
+			try {
+				bool DoneStatus = false;
+				DoneStatus = setStatus(line);
 
-			// GET DONE STATUS
-			bool DoneStatus = false;
-			DoneStatus = setStatus(line);
-
-			// extract the add command: add ....... and pass to parser
-			line = line.substr(1);
-			//cout<<"LINE TO PARSER: "<<line<<endl;
-			Task newTask = Task();
-			newTask = lineToParser(line, DoneStatus);
-			if (newTask.taskType != NUL) allTask.push_back(newTask);
+				// extract the add command: add ....... and pass to parser
+				line = line.substr(1);
+				//cout<<"LINE TO PARSER: "<<line<<endl;
+				Task newTask = Task();
+				newTask = lineToParser(line, DoneStatus);
+				if (newTask.taskType != NUL) allTask.push_back(newTask);
+			}
+			catch (exception& e)
+			{
+				utility.log("Empty line break in output file");
+			}
+			
 		}
 		myfile.close();
 	}

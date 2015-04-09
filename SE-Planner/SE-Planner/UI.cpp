@@ -39,15 +39,17 @@ void UI::showMessage(string message) {
 	cout << message << endl;
 }
 
-void UI::printIfEmpty(const vector<Task> showArray) {
+bool UI::printIfEmpty(const vector<Task> showArray) {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	
 	if (showArray.size() == 0) {
 		SetConsoleTextAttribute(hConsole,YELLOW);
 		showMessage(ERROR_VECTOR_EMPTY);
 		SetConsoleTextAttribute(hConsole,LIGHT_GREY);
-		return;
+		return true;
 	}
+
+	return false;
 }
 
 void UI::getMaxTitleAndInfoLength(const vector<Task> showArray, int &maxTitleLength, int &maxInfoLength) {
@@ -232,7 +234,7 @@ void UI::showTaskList(vector<Task> showArray) {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); 
 
 	// Nothing to Show
-	printIfEmpty(showArray);
+	if (printIfEmpty(showArray)) return;
 	
 	// GET THE WIDTH OF TABLE
 	getMaxTitleAndInfoLength(showArray, maxTitleLength, maxInfoLength);

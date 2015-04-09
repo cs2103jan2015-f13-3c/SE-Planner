@@ -1,15 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Express 2012 for Windows Desktop
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SE-Planner", "SE-Planner\SE-Planner.vcxproj", "{10FF180B-EE2D-4ADD-9670-E44890BA2BBE}"
 EndProject
-<<<<<<< HEAD
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SE-PlannerExe", "SE-PlannerExe\SE-PlannerExe.vcxproj", "{163F5558-5DB8-4F5E-9361-341DCED08591}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ParserUnitTest", "ParserUnitTest\ParserUnitTest.vcxproj", "{D0B53380-A0BF-4FAF-834A-A0D726969B9D}"
-=======
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "StorageTest", "StorageTest\StorageTest.vcxproj", "{82CD947C-E35C-4707-BC9D-030FC6CA4221}"
->>>>>>> 3449f8ad7b40f8f5755d16bc56ac068b6bab589a
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,7 +17,6 @@ Global
 		{10FF180B-EE2D-4ADD-9670-E44890BA2BBE}.Debug|Win32.Build.0 = Debug|Win32
 		{10FF180B-EE2D-4ADD-9670-E44890BA2BBE}.Release|Win32.ActiveCfg = Release|Win32
 		{10FF180B-EE2D-4ADD-9670-E44890BA2BBE}.Release|Win32.Build.0 = Release|Win32
-<<<<<<< HEAD
 		{163F5558-5DB8-4F5E-9361-341DCED08591}.Debug|Win32.ActiveCfg = Debug|Win32
 		{163F5558-5DB8-4F5E-9361-341DCED08591}.Debug|Win32.Build.0 = Debug|Win32
 		{163F5558-5DB8-4F5E-9361-341DCED08591}.Release|Win32.ActiveCfg = Release|Win32
@@ -30,12 +25,6 @@ Global
 		{D0B53380-A0BF-4FAF-834A-A0D726969B9D}.Debug|Win32.Build.0 = Debug|Win32
 		{D0B53380-A0BF-4FAF-834A-A0D726969B9D}.Release|Win32.ActiveCfg = Release|Win32
 		{D0B53380-A0BF-4FAF-834A-A0D726969B9D}.Release|Win32.Build.0 = Release|Win32
-=======
-		{82CD947C-E35C-4707-BC9D-030FC6CA4221}.Debug|Win32.ActiveCfg = Debug|Win32
-		{82CD947C-E35C-4707-BC9D-030FC6CA4221}.Debug|Win32.Build.0 = Debug|Win32
-		{82CD947C-E35C-4707-BC9D-030FC6CA4221}.Release|Win32.ActiveCfg = Release|Win32
-		{82CD947C-E35C-4707-BC9D-030FC6CA4221}.Release|Win32.Build.0 = Release|Win32
->>>>>>> 3449f8ad7b40f8f5755d16bc56ac068b6bab589a
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

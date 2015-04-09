@@ -9,11 +9,13 @@ namespace ParserUnitTest
 	{
 	public:
 		
-		TEST_METHOD(SimpleAddTest)
+		Utility utility;
+
+		TEST_METHOD(Parser_ParseAddFloatTask)
 		{
 			// TODO: Your test code here
 			Parser parser = Parser("add a simple task");
-			Utility utility;
+			
 
 			Task parserActual = parser.getTask();
 
@@ -26,11 +28,10 @@ namespace ParserUnitTest
 			
 		}
 
-		TEST_METHOD(SimpleAddDeadline)
+		TEST_METHOD(Parser_ParseAddDeadLineWithoutTime)
 		{
 			// TODO: Your test code here
 			Parser parser = Parser("add test deadline date: 9/4");
-			Utility utility;
 
 			Task parserActual = parser.getTask();
 
@@ -47,5 +48,40 @@ namespace ParserUnitTest
 			
 		}
 
+		TEST_METHOD(Parser_ParseAddDealineWithouDate)
+		{
+		}
+
+		TEST_METHOD(Parser_ParseAddTimedTask)
+		{
+		}
+
+		TEST_METHOD(Parser_Delete)
+		{
+		}
+
+		TEST_METHOD(Parser_Done)
+		{
+		}
+
+		TEST_METHOD(Parser_Search)
+		{
+		}
+
+		TEST_METHOD(Parser_Display)
+		{
+		}
+
+		TEST_METHOD(Parser_Edit)
+		{
+		}
+
+		TEST_METHOD(Parser_Undo)
+		{
+		}
+
+		TEST_METHOD(Parser_Undone)
+		{
+		}
 	};
 }

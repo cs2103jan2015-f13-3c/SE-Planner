@@ -86,11 +86,21 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="HistoryUndoUnitTest.cpp" />
+    <ClCompile Include="LogicAddUnitTest.cpp" />
+    <ClCompile Include="LogicDeleteUnitTest.cpp" />
+    <ClCompile Include="LogicDisplayUnitTest.cpp" />
+    <ClCompile Include="LogicDoneUnitTest.cpp" />
+    <ClCompile Include="LogicEditUnitTest.cpp" />
+    <ClCompile Include="LogicSearchUnitTest.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ParserUnitTest.cpp" />
+    <ClCompile Include="StorageUnitTest.cpp" />
+    <ClCompile Include="UIUnitTest.cpp" />
+    <ClCompile Include="UtilityUnitTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SE-Planner\SE-Planner.vcxproj">

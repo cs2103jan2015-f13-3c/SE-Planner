@@ -46,6 +46,6 @@ public:
 	// for DELETE, EDIT, DONE
 	bool isSame(Task, Task); // find the task from displayTaskList inside mainTaskList
 
-	
+	void log(string);
 };
 

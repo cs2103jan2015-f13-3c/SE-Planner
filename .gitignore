@@ -196,3 +196,4 @@ FakesAssemblies/
 *.opt
 old ver/
 SE-Planner.7z
+SE-Planner/SE-PlannerExe/output.txt
