@@ -1,4 +1,4 @@
-//Author Chen Xiaodan
+//@author A0115935A
 #include "UI.h"
 #include "Utility.h"
 
@@ -10,6 +10,7 @@
 using namespace std;
 
 UI::UI(void) {
+	_outputString = "";
 }
 
 
@@ -36,6 +37,7 @@ void UI::showExitMessage(void) {
 }
 
 void UI::showMessage(string message) {
+	_outputString = message + "\n";
 	cout << message << endl;
 }
 
@@ -234,8 +236,10 @@ void UI::showTaskList(vector<Task> showArray) {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); 
 
 	// Nothing to Show
-	if (printIfEmpty(showArray)) return;
-	
+	if (printIfEmpty(showArray)) {
+		return;
+	}
+
 	// GET THE WIDTH OF TABLE
 	getMaxTitleAndInfoLength(showArray, maxTitleLength, maxInfoLength);
 	
@@ -265,4 +269,10 @@ void UI::showHelp() {
 	}
 	SetConsoleTextAttribute(hConsole, LIGHT_GREY);
 	showMessage("\n");
+}
+
+//TESTING METHOD
+
+string UI::getOutputString() {
+	return _outputString;
 }
