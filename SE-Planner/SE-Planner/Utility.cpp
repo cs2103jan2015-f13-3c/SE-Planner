@@ -136,13 +136,13 @@ bool Utility::isValidAddTask(Task x)
 	{
 	}
 
-	if (x.taskType == TIMED)
+	if (x.taskType == DEAD)
 	{
 		if (!isValidDate(x.startDate)) isOK = false;
 		if (!isValidTime(x.startTime)) isOK = false;
 	}
 
-	if (x.taskType == DEAD)
+	if (x.taskType == TIMED)
 	{
 		if (!isValidDate(x.startDate)) isOK = false;
 		if (!isValidTime(x.startTime)) isOK = false;
@@ -231,13 +231,13 @@ bool Utility::isValidOtherTask(Task x)
 	{
 	}
 
-	if (x.taskType == TIMED)
+	if (x.taskType == DEAD)
 	{
 		if (isNotNullDate(x.startDate)) if (!isValidDate(x.startDate)) isOK = false;
 		if (isNotNullTime(x.startTime)) if (!isValidTime(x.startTime)) isOK = false;
 	}
 
-	if (x.taskType == DEAD)
+	if (x.taskType == TIMED)
 	{
 		if (isNotNullDate(x.startDate)) if (!isValidDate(x.startDate)) isOK = false;
 		if (isNotNullTime(x.startTime)) if (!isValidTime(x.startTime)) isOK = false;

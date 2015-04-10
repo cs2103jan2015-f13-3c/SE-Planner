@@ -195,8 +195,10 @@ vector<Task> findAllMatchedTasks(vector<Task> allTasks, Task searchedTask) {
 //Main search function
 vector<Task> Logic::Search(vector<Task> allTasks, Task searchedTask) {
 	vector<Task> matchedTasks;
+	success = 0;
 
 	if (isSearchedTaskValid(searchedTask)) {
+		success = 1;
 		matchedTasks = findAllMatchedTasks(allTasks, searchedTask);
 	}
 
@@ -397,29 +399,31 @@ Task updateTask(Task toBeEditedTask, Task newTaskInfo) {
 	return toBeEditedTask;
 }
 
-vector<Task> updateAllTasks(vector<Task> allTasks, Task toBeEditedTask, Task newTaskInfo) {
-	Utility utility;
-
-	for (int i = 0; i < allTasks.size(); i++) {
-		if (utility.isSame(allTasks[i],toBeEditedTask)) {
-			allTasks[i] = updateTask(allTasks[i], newTaskInfo);
-		}
-	}
-
-	return allTasks;
-}
 
 //Main edit function
 vector<Task> Logic::Edit(vector<Task> allTasks, vector<Task> displayedTasks, int index, Task newTaskInfo)
 {
+	success = 1;
+
 	if (isInputValid(displayedTasks, index, newTaskInfo)) {
 		Task toBeEditedTask = displayedTasks[index - 1];
 
 		if (isTaskTypeValid(toBeEditedTask, newTaskInfo)) {
 			for (int i = 0; i < allTasks.size(); i++) {
-				allTasks = updateAllTasks(allTasks, toBeEditedTask, newTaskInfo);
+				if (utility.isSame(allTasks[i],toBeEditedTask)) {
+					Task newTask = updateTask(allTasks[i], newTaskInfo);
+					if (utility.isValidAddTask(newTask)) allTasks[i] = newTask;
+					else success = 0;
+				}
 			}
 		}
+		else {
+			success = 0;
+		}
+
+	}
+	else {
+		success = 0;
 	}
 
 	return allTasks;

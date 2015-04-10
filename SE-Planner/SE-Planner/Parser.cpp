@@ -340,7 +340,7 @@ void extractOtherDateTime(string inp)
 
 		// only one date and optional one time
 
-		regex rgxOnlyDate("date: \\s*([\\d\\/]+)");
+		regex rgxOnlyDate("date:\\s*([\\d\\/]+)");
 		if (regex_search(inp,cap,rgxOnlyDate))
 		{
 			newTask.startDate = ParseDate(cap[1]);
@@ -354,7 +354,7 @@ void extractOtherDateTime(string inp)
 		}
 		else
 		{
-			regex rgxOnlyTime("time: \\s*(\\d+)");
+			regex rgxOnlyTime("time:\\s*(\\d+)");
 			if (regex_search(inp,cap,rgxOnlyTime))
 			{
 				newTask.startTime = ParseTime(cap[1]);
