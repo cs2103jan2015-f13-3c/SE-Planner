@@ -11,28 +11,23 @@
 using namespace std;
 
 
-Logic::Logic(void)
-{
+Logic::Logic(void){
 	Utility utility;
 }
 
 
-Logic::~Logic(void)
-{
+Logic::~Logic(void){
 }
 
 // WEIMIN
-vector<Task> Logic::Add(vector<Task> allTask, Task addTask)
-{
+vector<Task> Logic::Add(vector<Task> allTask, Task addTask){
 	
-	if (addTask.taskType == NUL)
-	{
-		success = 0;
+	if (addTask.taskType == NUL){
+		success = OPERATION_FAILED;
 		return allTask;
 	}
-	else
-	{
-		success = 1;
+	else{
+		success = OPERATION_SUCCEEDED;
 
 		vector<Task> temp = allTask;
 		temp.push_back(addTask);
@@ -40,59 +35,59 @@ vector<Task> Logic::Add(vector<Task> allTask, Task addTask)
 	}
 }
 
-// WEIMIN
-vector<Task> Logic::Delete(vector<Task> allTask, vector<Task> displayedTask, vector<int> index)
-{
+bool isValidInstruction(vector<Task> displayedTask, vector<int> index){
 	// if there is no index instruction -> fail command
-	if (index.size() == 0)
-	{
-		success = 0;
-		return allTask;
+	if (index.size() == 0){
+		return false;
 	}
 
 	// if any index exceeds the size of display Task List -> fail command
-	for (int j = 0; j < index.size(); j++)
-	{
+	for (int j = 0; j < index.size(); j++){
 		//cout<<index[j]<<endl;
-		if (index[j] > displayedTask.size())
-		{
-			success = 0;
-			return allTask;
+		if (index[j] > displayedTask.size()){
+			return false;
 		}
 	}
 
+	return true;
+}
 
-	success = 1;
+// WEIMIN
+vector<Task> Logic::Delete(vector<Task> allTask, vector<Task> displayedTask, vector<int> index){
+	
+	if (isValidInstruction(displayedTask, index)){
+		success = OPERATION_FAILED;
+		return allTask;
+	}
+	
+	success = OPERATION_SUCCEEDED;
 
 	// 'marked' array for allTask
 	// meaning : false = this task will NOT be deleted
-	bool marked[1000];
-	for (int i = 0; i <= allTask.size() + 1; i++) marked[i] = false;
-
+	bool marked[MAX_TASK_SIZE];
+	for (int i = 0; i <= allTask.size() + 1; i++){
+		marked[i] = false;
+	}
 	vector<Task> temp;
 	temp.clear();
 
 	// mark the task to be deleted inside the mainTaskList
-	for (int j = 0; j < index.size(); j++)
-	{
+	for (int j = 0; j < index.size(); j++){
 		
-		success = 1;
+		success = OPERATION_SUCCEEDED;
 
 		Task deleteTask = displayedTask[index[j]-1];
 
 
-		for (int i = 0; i < allTask.size(); i++)
-		{
-			if (utility.isSame(allTask[i],deleteTask)) 
-			{
+		for (int i = 0; i < allTask.size(); i++){
+			if (utility.isSame(allTask[i],deleteTask)) {
 				marked[i] = true; // THIS TASK WILL BE DELETED
 				break;
 			}
 		}		
 	}
 
-	for (int i = 0; i < allTask.size(); i++)
-	{
+	for (int i = 0; i < allTask.size(); i++){
 		// DELETE ACCORDINGLY
 		if (!marked[i]) temp.push_back(allTask[i]);
 	}
@@ -102,53 +97,39 @@ vector<Task> Logic::Delete(vector<Task> allTask, vector<Task> displayedTask, vec
 }
 
 // WEIMIN
-vector<Task> Logic::Done(vector<Task> allTask, vector<Task> displayedTask, vector<int> index)
-{
+vector<Task> Logic::Done(vector<Task> allTask, vector<Task> displayedTask, vector<int> index){
 	
-	// Logic similar to Done
-	if (index.size() == 0)
-	{
-		success = 0;
+	if (isValidInstruction(displayedTask, index)){
+		success = OPERATION_FAILED;
 		return allTask;
 	}
 
-	for (int j = 0; j < index.size(); j++)
-	{
-		if (index[j] > displayedTask.size())
-		{
-			success = 0;
-			return allTask;
-		}
+	success = OPERATION_SUCCEEDED;
+
+	bool marked[MAX_TASK_SIZE];
+
+	for (int i = 0; i <= allTask.size() + 1; i++){
+		marked[i] = false;
 	}
-
-	success = 1;
-
-	bool marked[1000];
-	for (int i = 0; i <= allTask.size() + 1; i++) marked[i] = false;
-
+	
 	vector<Task> temp;
 	temp.clear();
 
-	for (int j = 0; j < index.size(); j++)
-	{
+	for (int j = 0; j < index.size(); j++){
 		
-		success = 1;
+		success = OPERATION_SUCCEEDED;
 
 		Task doneTask = displayedTask[index[j]-1];
 
-
-		for (int i = 0; i < allTask.size(); i++)
-		{
-			if (utility.isSame(allTask[i],doneTask)) 
-			{
+		for (int i = 0; i < allTask.size(); i++){
+			if (utility.isSame(allTask[i],doneTask)) {
 				marked[i] = true;
 				break;
 			}
 		}		
 	}
 
-	for (int i = 0; i < allTask.size(); i++)
-	{
+	for (int i = 0; i < allTask.size(); i++){
 		temp.push_back(allTask[i]);
 		if (marked[i]) temp[i].isDone = true;
 		//cout<<i<<" "<<temp[i].isDone<<endl;
@@ -432,7 +413,7 @@ vector<Task> Logic::Undone(vector<Task> allTask, vector<Task> displayedTask, vec
 	// Logic similar to Done
 	if (index.size() == 0)
 	{
-		success = 0;
+		success = OPERATION_FAILED;
 		return allTask;
 	}
 
@@ -440,12 +421,12 @@ vector<Task> Logic::Undone(vector<Task> allTask, vector<Task> displayedTask, vec
 	{
 		if (index[j] > displayedTask.size())
 		{
-			success = 0;
+			success = OPERATION_FAILED;
 			return allTask;
 		}
 	}
 
-	success = 1;
+	success = OPERATION_SUCCEEDED;
 
 	bool marked[1000];
 	for (int i = 0; i <= allTask.size() + 1; i++) marked[i] = false;
@@ -455,7 +436,7 @@ vector<Task> Logic::Undone(vector<Task> allTask, vector<Task> displayedTask, vec
 
 	for (int j = 0; j < index.size(); j++)
 	{
-		success = 1;
+		success = OPERATION_SUCCEEDED;
 
 		Task undoneTask = displayedTask[index[j]-1];
 
