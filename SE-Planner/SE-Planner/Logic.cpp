@@ -35,7 +35,7 @@ vector<Task> Logic::Add(vector<Task> allTask, Task addTask){
 	}
 }
 
-bool isValidInstruction(vector<Task> displayedTask, vector<int> index){
+bool isValidIndex(vector<Task> displayedTask, vector<int> index){
 	// if there is no index instruction -> fail command
 	if (index.size() == 0){
 		return false;
@@ -55,7 +55,7 @@ bool isValidInstruction(vector<Task> displayedTask, vector<int> index){
 // WEIMIN
 vector<Task> Logic::Delete(vector<Task> allTask, vector<Task> displayedTask, vector<int> index){
 	
-	if (isValidInstruction(displayedTask, index)){
+	if (!isValidIndex(displayedTask, index)){
 		success = OPERATION_FAILED;
 		return allTask;
 	}
@@ -99,7 +99,7 @@ vector<Task> Logic::Delete(vector<Task> allTask, vector<Task> displayedTask, vec
 // WEIMIN
 vector<Task> Logic::Done(vector<Task> allTask, vector<Task> displayedTask, vector<int> index){
 	
-	if (isValidInstruction(displayedTask, index)){
+	if (!isValidIndex(displayedTask, index)){
 		success = OPERATION_FAILED;
 		return allTask;
 	}
@@ -413,21 +413,9 @@ vector<Task> Logic::Edit(vector<Task> allTasks, vector<Task> displayedTasks, int
 // Tung
 vector<Task> Logic::Undone(vector<Task> allTask, vector<Task> displayedTask, vector<int> index)
 {
-	
-	// Logic similar to Done
-	if (index.size() == 0)
-	{
+	if (!isValidIndex(displayedTask, index)){
 		success = OPERATION_FAILED;
 		return allTask;
-	}
-
-	for (int j = 0; j < index.size(); j++)
-	{
-		if (index[j] > displayedTask.size())
-		{
-			success = OPERATION_FAILED;
-			return allTask;
-		}
 	}
 
 	success = OPERATION_SUCCEEDED;
