@@ -260,113 +260,95 @@ bool Logic::orderTask(Task t1, Task t2)
 	}
 }
 
-// YOONG ZHEN
-vector<Task> Logic::Display(vector<Task> allTask, Task displayTask, InstructionType instruction)
+//Display function's sub-functions
+Date getTodayDate() {
+	Date today;
+	time_t t = time(0);
+	struct tm * now = localtime ( &t );
+
+	today = Date(now->tm_mday,now->tm_mon+1,now->tm_year+1900);
+
+	return today;
+}
+
+Date getTmrDate() {
+	Date tmr;
+	time_t t = time(0);
+	struct tm * now = localtime ( &t );
+
+	time(&t);
+	t = t + (60 * 60 * 24);
+	struct tm * now1 = localtime (&t);
+		
+	tmr = Date(now1->tm_mday,now1->tm_mon+1,now1->tm_year+1900);
+
+	return tmr;
+}
+
+//Main display function
+vector<Task> Logic::Display(vector<Task> allTasks, Task displayedTaskDate, InstructionType instruction)
 {
-	// TODAY, TMR, SHOWDATE, OVERDUE, ALL, NONE
+	vector<Task> displayedTasks;
+	Date today = getTodayDate();
+	Date tmr =  getTmrDate();
+	Date specificDate = Date(displayedTaskDate.startDate.day,displayedTaskDate.startDate.month,displayedTaskDate.startDate.year);
 
-	vector<Task> matchTask;
-	matchTask.clear();
-
-	if (instruction == NONE)
-	{
-		success = 0;
-		
-	}
-	else
-	{
-		//cout<<"I AM HERE"<<endl;
-		success = 1;
-
-		// GET DATE OF TODAY AND TMR
-		Date today = Date();
-		Date tmr = Date();
-
-		time_t t = time(0);
-		struct tm * now = localtime ( &t );
-
-		today = Date(now->tm_mday,now->tm_mon+1,now->tm_year+1900);
-
-		time(&t);
-		t = t + (60 * 60 * 24);
-		struct tm * now1 = localtime (&t);
-		
-		tmr = Date(now1->tm_mday,now1->tm_mon+1,now1->tm_year+1900);
-
-		vector<Task> allTask1;
-		allTask1.clear();
-
-		// REMOVE ALL DONE
-		// THIS IS CURRENTLY MESSY
-		
-
-		if (instruction == ALL)
-		{
-			for (int i = 0; i < allTask.size(); i++)
-				if (allTask[i].isDone == false) allTask1.push_back(allTask[i]);
-			matchTask = allTask1;
+	switch (instruction) {
+	case ALL:
+		for (int i = 0; i < allTasks.size(); i++) {
+			displayedTasks.push_back(allTasks[i]);
 		}
-		else if (instruction == DISPLAYDONE)
-		{
-			for (int i = 0; i < allTask.size(); i++)
-			{
-				if (allTask[i].isDone) matchTask.push_back(allTask[i]);
+		break;
+	case DISPLAYDONE:
+		for (int i = 0; i < allTasks.size(); i++) {
+			if (allTasks[i].isDone) {
+				displayedTasks.push_back(allTasks[i]);
 			}
 		}
-		else if (instruction == DISPLAYUNDONE)
-		{
-			for (int i = 0; i < allTask.size(); i++)
-				if (!allTask[i].isDone) matchTask.push_back(allTask[i]);
+		break;
+	case DISPLAYUNDONE:
+		for (int i = 0; i < allTasks.size(); i++) {
+			if (!allTasks[i].isDone) {
+				displayedTasks.push_back(allTasks[i]);
+			}
 		}
-		else if (instruction == OVERDUE)
-		{
-			// NOT DONE & BEFORE TODAY
-			for (int i = 0; i < allTask.size(); i++)
-			{
-				if (!allTask[i].isDone && utility.beforeToday(allTask[i].startDate,today))
-					matchTask.push_back(allTask[i]);
+		break;
+	case OVERDUE:
+		for (int i = 0; i < allTasks.size(); i++) {
+			if (!allTasks[i].isDone && utility.beforeToday(allTasks[i].startDate,today)) {
+				displayedTasks.push_back(allTasks[i]);
 			}
-
 		}
-		else
-		{
-			Date matchDate = Date();
-			// get date today
-
-			if (instruction == TODAY)
-			{
-				matchDate = Date(today.day,today.month,today.year);
+		break;
+	case TODAY:
+		for (int i = 0; i < allTasks.size(); i++) {
+			if (!allTasks[i].isDone && (allTasks[i].taskType == FLOATTASK || utility.isEqual(allTasks[i].startDate,today))) {
+				displayedTasks.push_back(allTasks[i]);
 			}
-			// get date tmr
-
-			if (instruction == TMR)
-			{
-				matchDate = Date(tmr.day,tmr.month,tmr.year);
-			}
-
-			if (instruction == SHOWDATE)
-			{
-				matchDate = Date(displayTask.startDate.day,displayTask.startDate.month,displayTask.startDate.year);
-			}
-
-			// match
-
-			for (int i = 0; i < allTask.size(); i++)
-			{
-				// SHOW UNDONE 
-				// AND (SHOW FLOAT OR THE STARTDATE MATCHES THE DATE)
-				if (!allTask[i].isDone && (allTask[i].taskType == FLOATTASK || utility.isEqual(allTask[i].startDate,matchDate))) matchTask.push_back(allTask[i]);
-			}
-
 		}
-	}
-
+		break;
+	case TMR:
+		for (int i = 0; i < allTasks.size(); i++) {
+			if (!allTasks[i].isDone && (allTasks[i].taskType == FLOATTASK || utility.isEqual(allTasks[i].startDate,tmr))) {
+				displayedTasks.push_back(allTasks[i]);
+			}
+		}
+		break;
+	case SHOWDATE:
+		for (int i = 0; i < allTasks.size(); i++) {
+			if (!allTasks[i].isDone && (allTasks[i].taskType == FLOATTASK || utility.isEqual(allTasks[i].startDate,specificDate))) {
+				displayedTasks.push_back(allTasks[i]);
+			}
+		}
+		break;
+	default:
+		break;
+	};
 
 	// sort Task
-	// SHOULD NOT TOUCH LAST PART OF sort
-	sort(matchTask.begin(),matchTask.end(),bind(&Logic::orderTask,this,std::placeholders::_1,std::placeholders::_2));
+	sort(displayedTasks.begin(),displayedTasks.end(),bind(&Logic::orderTask,this,std::placeholders::_1,std::placeholders::_2));
 
-	return matchTask;
+	return displayedTasks;
 }
 
 //Edit function's sub-functions
@@ -427,7 +409,10 @@ vector<Task> updateAllTasks(vector<Task> allTasks, Task toBeEditedTask, Task new
 	return allTasks;
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> d6010dcbaf48a4ba25f3f7bd4d00158d32b10ee9
 //Main edit function
 vector<Task> Logic::Edit(vector<Task> allTasks, vector<Task> displayedTasks, int index, Task newTaskInfo)
 {
@@ -498,4 +483,8 @@ vector<Task> Logic::Undone(vector<Task> allTask, vector<Task> displayedTask, vec
 
 	return temp;
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> d6010dcbaf48a4ba25f3f7bd4d00158d32b10ee9
