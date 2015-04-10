@@ -6,6 +6,10 @@
 
 using namespace std;
 
+const int OPERATION_SUCCEEDED = 1;
+const int OPERATION_FAILED = 0;
+const int MAX_TASK_SIZE = 1000;
+
 class Logic
 {
 public:
