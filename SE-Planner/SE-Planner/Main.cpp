@@ -123,7 +123,8 @@ int main()
 			DisplayTaskList = logic.Display(MainTaskList,userTask,userCommand.instruction);
 			//for (int i = 0; i < DisplayTaskList.size(); i++) cout<<DisplayTaskList[i].isDone<<endl;
 
-			if (logic.success == 1)
+			//if (logic.success == 1)
+			if (true)
 			{
 				ui.showMessage("\n");
 				ui.showTaskList(DisplayTaskList);

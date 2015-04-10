@@ -409,10 +409,6 @@ vector<Task> updateAllTasks(vector<Task> allTasks, Task toBeEditedTask, Task new
 	return allTasks;
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> d6010dcbaf48a4ba25f3f7bd4d00158d32b10ee9
 //Main edit function
 vector<Task> Logic::Edit(vector<Task> allTasks, vector<Task> displayedTasks, int index, Task newTaskInfo)
 {
@@ -483,8 +479,8 @@ vector<Task> Logic::Undone(vector<Task> allTask, vector<Task> displayedTask, vec
 
 	return temp;
 
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> d6010dcbaf48a4ba25f3f7bd4d00158d32b10ee9
+
+
+
