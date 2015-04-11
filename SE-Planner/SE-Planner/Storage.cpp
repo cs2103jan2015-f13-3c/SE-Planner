@@ -5,12 +5,13 @@
 #include <fstream>
 #include "Parser.h"
 
+
+
 Storage::Storage(void){
+	outputFile = getOutputFilePath();
 }
 
 Storage::Storage(string filePath){
-	// currently useless
-	// will implement this later
 	outputFile = filePath;
 }
 
@@ -198,3 +199,68 @@ void Storage::writeToFile(vector<Task> allTask){
 		myfile.close();
 	}
 }
+
+bool Storage::setOutputFilePath(string folderPath)
+{
+	// remove backslash
+	if (folderPath.length() > 0)
+	{
+		char lastCharacter = folderPath[folderPath.length()-1];
+		if (lastCharacter == '/' || lastCharacter == '\\') folderPath = folderPath.substr(0,folderPath.length()-1);
+	}
+
+	string filePath = folderPath + '/' + OUTPUT_FILENAME;
+
+	ofstream newOutputFile;
+	newOutputFile.open(filePath);
+
+	if (newOutputFile.is_open())
+	{
+		ofstream settingFile;
+		settingFile.open(SETTING_FILE);
+
+		settingFile << filePath;
+		settingFile.close();
+		outputFile = filePath;
+	}
+	else return false;
+}
+
+string Storage::getOutputFilePath()
+{
+	ifstream settingFile;
+	settingFile.open(SETTING_FILE);
+
+	bool isSettingFileValid = true;
+
+	if (settingFile.is_open())
+	{
+		string filePath;
+		getline(settingFile,filePath);
+
+		// try open
+		ifstream testOutputFile(filePath);
+
+		if (testOutputFile.is_open())
+		{
+			testOutputFile.close();
+			return filePath;
+		}
+		else isSettingFileValid = false;
+	}
+	else isSettingFileValid = false;
+
+	if (!isSettingFileValid)
+	{
+		settingFile.close();
+
+		ofstream writeToSettingFile;
+		writeToSettingFile.open(SETTING_FILE);
+
+		string defaultOutput = "output.txt";
+		writeToSettingFile << defaultOutput;
+
+		return defaultOutput;
+	}
+}
+

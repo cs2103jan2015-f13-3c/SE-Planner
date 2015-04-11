@@ -7,6 +7,9 @@
 
 using namespace std;
 
+const string SETTING_FILE = "setting.txt";
+const string OUTPUT_FILENAME = "task.txt";
+
 class Storage
 {
 public:
@@ -21,6 +24,9 @@ public:
 	void writeToFile(vector<Task>);
 
 	Utility utility;
+
+	bool setOutputFilePath(string filePath);
+	string getOutputFilePath();
 
 };
 

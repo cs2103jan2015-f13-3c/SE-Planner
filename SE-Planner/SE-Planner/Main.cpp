@@ -13,100 +13,68 @@ using namespace std;
 
 int main()
 {
-	//cout<<"Hello"<<endl;
-
-	/*
-	while (true) {
-	string inp;
-	getline(cin,inp);
-	cout<<"INP = "<<inp<<endl;
-	regex rgx("date:\\s*([\\d\\/]+\\s*-\\s*[\\d\\/]+)");
-	smatch result;
-	regex_search(inp, result, rgx);
-	for(size_t i=0; i<result.size(); ++i)
-	{
-		cout << result[i] << endl;
-	}
-	
-
-	// v0.2 Parser TEST
-	Parser test;
-	while (true)
-	{
-		string cmd;
-		getline(cin,cmd);
-
-		test = Parser(cmd);
-
-	}
-	// end of PARSER TEST
-	*/
-
-	// TEST ADD, DEL, EXIT, INPUT, OUTPUT
 	vector<Task> MainTaskList;
 	vector<Task> DisplayTaskList;
+	vector<Task> LastStateTaskList;
 
 	MainTaskList.clear();
 	DisplayTaskList.clear();
-
+	LastStateTaskList.clear();
 	UI ui;
-	Storage storage = Storage("output.txt");
+	Storage storage = Storage();
+
 	Parser parser;
 	Logic logic;
-	History history;
-	
-	bool isDifferentState = true;
+	History history = History();
+
 
 	while (true)
 	{
 		MainTaskList = storage.getAllTask();
+		LastStateTaskList = MainTaskList;
 
-		if (isDifferentState) history.push(MainTaskList);
-
+		// Color White for clarity
 		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleTextAttribute(hConsole,15);
 		string userString = ui.getInput();
-		//SetConsoleTextAttribute(hConsole,15);
 
 		parser = Parser(userString);
 
 		Command userCommand = parser.getCommand();
 		Task userTask = parser.getTask();
 
-		// LOGIC PART
-		// CAN BE SEPARATED LATER
-		//SetConsoleTextAttribute(hConsole,11);
+
+		// MAIN COMMAND SWITCH
 
 		if (userCommand.cmd == INVALID)
 		{
-			ui.showMessage("WRONG COMMAND FORMAT !\n");
-			isDifferentState = false;
+			ui.showFailureMessage();
+			history.isNewState = false;
 		}
 		else if (userCommand.cmd == ADD)
 		{
 			MainTaskList = logic.Add(MainTaskList,userTask);
 			ui.showMessage("ADDED !\n");
-			isDifferentState = true;
+			history.isNewState = true;
 		}
 		else if (userCommand.cmd == DEL)
 		{
-			//cout<<"HELLO?"<<endl;
 			MainTaskList = logic.Delete(MainTaskList,DisplayTaskList,userCommand.idx);
 			if (logic.success == 1)
 			{
-				isDifferentState = true;
+				history.isNewState = true;
 				ui.showMessage("DELETED !\n");
 			}
 			else 
 			{
 				ui.showFailureMessage();
-				isDifferentState = false;
+				history.isNewState = false;
 			}
 
 		}
 		else if (userCommand.cmd == SEARCH)
 		{
-			isDifferentState = false;
+			history.isNewState = false;
 			DisplayTaskList = logic.Search(MainTaskList,userTask);
 
 			if (logic.success == 1)
@@ -114,22 +82,18 @@ int main()
 				ui.showMessage("\n");
 				ui.showTaskList(DisplayTaskList);
 			}
-			else ui.showFailureMessage();
+			else
+			{
+				ui.showFailureMessage();
+			}
 			
 		}
 		else if (userCommand.cmd == DISPLAY)
 		{
-			isDifferentState = false;
+			history.isNewState = false;
 			DisplayTaskList = logic.Display(MainTaskList,userTask,userCommand.instruction);
-			//for (int i = 0; i < DisplayTaskList.size(); i++) cout<<DisplayTaskList[i].isDone<<endl;
-
-			//if (logic.success == 1)
-			if (true)
-			{
-				ui.showMessage("\n");
-				ui.showTaskList(DisplayTaskList);
-			}
-			else ui.showFailureMessage();
+	
+			ui.showTaskList(DisplayTaskList);
 		}
 		else if (userCommand.cmd == EDIT)
 		{
@@ -137,13 +101,13 @@ int main()
 
 			if (logic.success == 1)
 			{
-				isDifferentState = true;
+				history.isNewState = true;
 				ui.showMessage("EDITED !\n");
 			}
 			else
 			{
 				ui.showFailureMessage();
-				isDifferentState = false;
+				history.isNewState = false;
 			}
 		}
 		else if (userCommand.cmd == EXIT)
@@ -154,59 +118,81 @@ int main()
 		else if (userCommand.cmd == CLS)
 		{
 			system("CLS");
-			isDifferentState = false;
+			history.isNewState = true;
 
 		}
 		else if (userCommand.cmd == DONE)
 		{
 			MainTaskList = logic.Done(MainTaskList,DisplayTaskList,userCommand.idx);
 
-			//for (int i = 0; i < MainTaskList.size(); i++) cout<<MainTaskList[i].isDone<<endl;
 			if (logic.success == 1)
 			{
-				isDifferentState = true;
+				history.isNewState = true;
 				ui.showMessage("DONE !\n");
 			}
 			else 
 			{
-					ui.showFailureMessage();
-					isDifferentState = false;
+				ui.showFailureMessage();
+				history.isNewState = false;
 			}
 		}
 		else if (userCommand.cmd == UNDONE)
 		{
 			MainTaskList = logic.Undone(MainTaskList,DisplayTaskList,userCommand.idx);
 
-			//for (int i = 0; i < MainTaskList.size(); i++) cout<<MainTaskList[i].isDone<<endl;
 			if (logic.success == 1)
 			{
-				isDifferentState = true;
+				history.isNewState = true;
 				ui.showMessage("UNDONE !\n");
 			}
 			else 
 			{
-					ui.showFailureMessage();
-					isDifferentState = false;
+				ui.showFailureMessage();
+				history.isNewState = false;
 			}
 		}
 		else if (userCommand.cmd == UNDO)
 		{
-			history.undo();
-			MainTaskList = history.undo();
 
-			isDifferentState = true;
+			if (history.canUndo())
+			{
+				MainTaskList = history.undoState();
+				ui.showMessage("DONE !\n");
+			}
+			else
+			{
+				ui.showMessage("CAN'T UNDO !\n");
+			}
+			
 
-			ui.showMessage("DONE !\n");
+			history.isNewState = true;
+			
 		}
 		else if (userCommand.cmd == HELP)
 		{
-			isDifferentState = false;
+			history.isNewState = false;
 			ui.showHelp();
+		}
+		else if (userCommand.cmd == USE)
+		{
+			bool isNewPathOK = storage.setOutputFilePath(userCommand.path);
+
+			if (isNewPathOK) ui.showMessage("Changed !\n");
+			else ui.showFailureMessage();
+
+			history.clearState();
+			history.isNewState = false;
+			
 		}
 
 		// JUST WRITE TO FILE, UPDATE LAST VERSION
-		
-		if (isDifferentState) storage.writeToFile(MainTaskList);
+		if (history.isNewState) 
+		{
+			storage.writeToFile(MainTaskList);
+
+			
+			if (userCommand.cmd != UNDO) history.pushState(LastStateTaskList);
+		}
 
 	}
 	

@@ -147,6 +147,7 @@ CommandType extractCommandType(string inp)
 		if (cmd == "cls") ret = CLS;
 		if (cmd == "help") ret = HELP;
 		if (cmd == "undone") ret = UNDONE;
+		if (cmd == "use") ret = USE;
 	}
 
 	return ret;
@@ -786,6 +787,16 @@ Parser::Parser(string inp)
 
 	}
 
+	if (cmdType == USE)
+	{
+		regex rgxFilePath("use (.*)");
+		
+		if (regex_search(inp,cap,rgxFilePath))
+		{
+			newCommand.path = cap[1];
+		}
+
+	}
 	if (cmdType == CLS)
 	{
 	}

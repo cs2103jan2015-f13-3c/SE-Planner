@@ -17,7 +17,7 @@ enum InstructionType
 
 enum CommandType
 {
-	ADD, SEARCH, DISPLAY, DEL, EDIT, DONE, UNDO, REDO, EXIT, INVALID, CLS, HELP, UNDONE
+	ADD, SEARCH, DISPLAY, DEL, EDIT, DONE, UNDO, REDO, EXIT, INVALID, CLS, HELP, UNDONE, USE
 };
 
 class Date 
@@ -90,6 +90,7 @@ public:
 	CommandType cmd;
 	vector<int> idx;
 	InstructionType instruction;
+	string path;
 
 	Command()
 	{
@@ -97,6 +98,7 @@ public:
 		cmd = INVALID;
 		idx.clear();
 		instruction = NONE;
+		path = "";
 	}
 };
 

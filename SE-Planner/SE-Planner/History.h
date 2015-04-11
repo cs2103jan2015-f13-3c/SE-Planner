@@ -12,8 +12,12 @@ public:
 
 	stack< vector<Task> > TaskStack;
 
-	void push(vector<Task>);
-	vector<Task> undo(void);
+	void pushState(vector<Task>);
+	vector<Task> undoState(void);
+	void clearState();
+	bool canUndo(void);
+
+	bool isNewState;
 
 };
 
