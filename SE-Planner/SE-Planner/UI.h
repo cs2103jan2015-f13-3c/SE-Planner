@@ -48,6 +48,8 @@ static const string helpStringArray[NUM_COMMANDS][NUM_HELP_FIELDS] = {
 
 class UI
 {
+private:
+	string _outputString;
 public:
 	UI(void);
 	~UI(void);
@@ -67,5 +69,8 @@ public:
 	void showMessage(string);
 	void showHelp();
 	string getInput(void);
+
+	//TESTING METHOD
+	string getOutputString();
 };
 
