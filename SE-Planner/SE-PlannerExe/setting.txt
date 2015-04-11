@@ -1,1 +1,1 @@
-C:\Tung/task.txt
+c:\tung\task.txt

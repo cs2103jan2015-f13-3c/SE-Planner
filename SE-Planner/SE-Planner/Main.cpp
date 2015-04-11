@@ -177,20 +177,29 @@ int main()
 		{
 			bool isNewPathOK = storage.setOutputFilePath(userCommand.path);
 
-			if (isNewPathOK) ui.showMessage("Changed !\n");
-			else ui.showFailureMessage();
+			if (isNewPathOK)
+			{
+					ui.showMessage("Changed !\n");
+					history.clearState();
+			}
+			else
+			{
+					ui.showFailureMessage();
+			}
 
-			history.clearState();
 			history.isNewState = false;
 			
+		}
+		else if (userCommand.cmd == WHERE)
+		{
+			history.isNewState = false;
+			ui.showMessage(storage.getOutputFilePath()+"\n");
 		}
 
 		// JUST WRITE TO FILE, UPDATE LAST VERSION
 		if (history.isNewState) 
 		{
 			storage.writeToFile(MainTaskList);
-
-			
 			if (userCommand.cmd != UNDO) history.pushState(LastStateTaskList);
 		}
 

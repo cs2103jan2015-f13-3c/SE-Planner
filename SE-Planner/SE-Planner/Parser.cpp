@@ -148,6 +148,7 @@ CommandType extractCommandType(string inp)
 		if (cmd == "help") ret = HELP;
 		if (cmd == "undone") ret = UNDONE;
 		if (cmd == "use") ret = USE;
+		if (cmd == "where") ret = WHERE;
 	}
 
 	return ret;
@@ -691,6 +692,8 @@ Parser::Parser(string inp)
 			isInstruction = true;
 			newCommand.instruction = DISPLAYUNDONE;
 		}
+
+		
 		// or get date
 
 		if (!isInstruction)

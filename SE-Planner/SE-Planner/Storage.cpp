@@ -209,10 +209,10 @@ bool Storage::setOutputFilePath(string folderPath)
 		if (lastCharacter == '/' || lastCharacter == '\\') folderPath = folderPath.substr(0,folderPath.length()-1);
 	}
 
-	string filePath = folderPath + '/' + OUTPUT_FILENAME;
+	string filePath = folderPath + '\\' + OUTPUT_FILENAME;
 
 	ofstream newOutputFile;
-	newOutputFile.open(filePath);
+	newOutputFile.open(filePath,std::ios_base::out | std::ios_base::app);
 
 	if (newOutputFile.is_open())
 	{
