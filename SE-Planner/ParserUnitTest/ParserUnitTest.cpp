@@ -57,7 +57,7 @@ namespace ParserUnitTest
 			Task parserExpected = Task();
 			parserExpected.taskType = DEAD;
 			parserExpected.title = "test deadline";
-			parserExpected.startDate = Date(10,4,2015);
+			parserExpected.startDate = Date(11,4,2015);
 			parserExpected.endDate = parserExpected.startDate;
 			parserExpected.startTime = Time(16,00);
 			parserExpected.endTime = parserExpected.startTime;

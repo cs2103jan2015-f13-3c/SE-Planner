@@ -42,5 +42,24 @@ namespace UIUnitTest {
 			Assert::AreEqual(expectedPrint, actualPrint);
 		}
 
+		TEST_METHOD(UIDisplay) {	
+			UI testUI;
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+
+			vector<Task> allTask = storage.getAllTask();
+			Parser parser = Parser("display all");
+			Command actualCommand = parser.getCommand();
+
+			Task nulTask = Task();
+
+			vector<Task> displayTask = logic.Display(allTask, nulTask, actualCommand.instruction);
+
+			Assert::AreEqual(6,(int)displayTask.size());
+
+			testUI.showTaskList(displayTask);
+
+		}
+
 	};
 }

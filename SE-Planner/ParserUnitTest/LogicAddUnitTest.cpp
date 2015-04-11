@@ -9,12 +9,28 @@ namespace LogicAddUnitTest
 	{
 	public:
 		
+		
+
 		TEST_METHOD(LogicAddFloat)
 		{	
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+
+			vector<Task> allTask = storage.getAllTask();
+
+			Task addTask;
+			addTask.taskType = FLOATTASK;
+			addTask.title = "a new thing";
+
+			allTask = logic.Add(allTask,addTask);
+
+			Assert::IsTrue(allTask[allTask.size()-1].title == "a new thing");
 		}
+
 
 		TEST_METHOD(LogicAddDeadline)
 		{	
+			
 		}
 
 		TEST_METHOD(LogicAddTimedTask)
@@ -22,7 +38,20 @@ namespace LogicAddUnitTest
 		}
 
 		TEST_METHOD(LogicAddInvalid)
-		{	
+		{
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+
+			vector<Task> allTask = storage.getAllTask();
+			int previousSize = allTask.size();
+
+			Task addTask;
+			addTask.taskType = NUL;
+			addTask.title = "a new thing";
+
+			allTask = logic.Add(allTask,addTask);
+
+			Assert::IsTrue(allTask.size() == previousSize);
 		}
 
 		

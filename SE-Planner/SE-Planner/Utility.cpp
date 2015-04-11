@@ -275,4 +275,6 @@ void Utility::log(string logString)
 {
 	ofstream logFile("logFile.txt", std::ios_base::out | std::ios_base::app);
 	logFile<<logString<<endl;
+	logFile.flush();
+	logFile.close();
 }

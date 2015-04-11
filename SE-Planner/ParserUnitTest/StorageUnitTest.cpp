@@ -11,11 +11,11 @@ namespace StorageUnitTest
 		
 		TEST_METHOD(Storage_ReadFileTest)
 		{
-			Storage storage = Storage("..\\SE-PlannerExe\\output.txt");
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest - Copy.txt");
 
 			vector<Task> actualTaskList = storage.getAllTask();
 
-			Assert::AreEqual(7,(int)actualTaskList.size());
+			Assert::AreEqual(6,(int)actualTaskList.size());
 			
 		}
 
