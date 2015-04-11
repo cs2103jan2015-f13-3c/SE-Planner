@@ -14,6 +14,7 @@
     <ProjectGuid>{D0B53380-A0BF-4FAF-834A-A0D726969B9D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>ParserUnitTest</RootNamespace>
+    <ProjectName>UnitTest</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

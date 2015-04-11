@@ -15,7 +15,7 @@ namespace StorageUnitTest
 
 			vector<Task> actualTaskList = storage.getAllTask();
 
-			Assert::AreEqual(2,(int)actualTaskList.size());
+			Assert::AreEqual(7,(int)actualTaskList.size());
 			
 		}
 
