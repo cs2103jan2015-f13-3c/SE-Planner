@@ -9,18 +9,6 @@ namespace LogicEditUnitTest
 	{
 	public:
 		
-		TEST_METHOD(LogicEditFloatTitle)
-		{	
-		}
-
-		TEST_METHOD(LogicEditDeadlineDate)
-		{	
-		}
-
-		TEST_METHOD(LogicEditDeadlineTime)
-		{	
-		}
-
 		TEST_METHOD(LogicEditTimedTask)
 		{	
 			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
@@ -43,8 +31,5 @@ namespace LogicEditUnitTest
 			Assert::IsTrue(newTask[3].title == "new timed task");
 		}
 
-		TEST_METHOD(LogicEditInvalid)
-		{	
-		}
 	};
 }

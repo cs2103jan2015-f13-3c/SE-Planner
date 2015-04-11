@@ -25,6 +25,22 @@ namespace UtilityUnitTest
 			testDate = Date(31,2,2015);
 			testValue = utility.isValidDate(testDate);
 			Assert::AreEqual(true, !testValue);
+
+			testDate = Date(28,2,2015);
+			testValue = utility.isValidDate(testDate);
+			Assert::AreEqual(true, testValue);
+
+			testDate = Date(29,2,2012);
+			testValue = utility.isValidDate(testDate);
+			Assert::AreEqual(true, testValue);
+
+			testDate = Date(29,2,2000);
+			testValue = utility.isValidDate(testDate);
+			Assert::AreEqual(true, testValue);
+
+			testDate = Date(29,2,3000);
+			testValue = utility.isValidDate(testDate);
+			Assert::AreEqual(true, !testValue);
 		}
 
 		TEST_METHOD(isValidTime)

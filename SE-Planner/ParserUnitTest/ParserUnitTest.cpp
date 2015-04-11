@@ -24,14 +24,13 @@ namespace ParserUnitTest
 			parserExpected.title = "a simple task";
 
 			Assert::IsTrue(utility.isSame(parserExpected,parserActual));
-			Assert::IsTrue(parser.getCommand().cmd == ADD);
 			
 		}
 
 		TEST_METHOD(Parser_ParseAddDeadLineWithoutTime)
 		{
 			// TODO: Your test code here
-			Parser parser = Parser("add test deadline date: 9/4");
+			Parser parser = Parser("add test deadline date: 9");
 
 			Task parserActual = parser.getTask();
 
@@ -44,13 +43,12 @@ namespace ParserUnitTest
 			parserExpected.endTime = parserExpected.startTime;
 
 			Assert::IsTrue(utility.isSame(parserExpected,parserActual));
-			Assert::IsTrue(parser.getCommand().cmd == ADD);
 			
 		}
 
 		TEST_METHOD(Parser_ParseAddDealineWithouDate)
 		{
-			Parser parser = Parser("add test deadline time: 16");
+			Parser parser = Parser("add test deadline time: 1630");
 
 			Task parserActual = parser.getTask();
 
@@ -59,11 +57,10 @@ namespace ParserUnitTest
 			parserExpected.title = "test deadline";
 			parserExpected.startDate = Date(11,4,2015);
 			parserExpected.endDate = parserExpected.startDate;
-			parserExpected.startTime = Time(16,00);
+			parserExpected.startTime = Time(16,30);
 			parserExpected.endTime = parserExpected.startTime;
 
 			Assert::IsTrue(utility.isSame(parserExpected,parserActual));
-			Assert::IsTrue(parser.getCommand().cmd == ADD);
 		}
 
 		TEST_METHOD(Parser_ParseAddTimedTask)
@@ -81,7 +78,20 @@ namespace ParserUnitTest
 			parserExpected.endTime = Time(20,00);
 
 			Assert::IsTrue(utility.isSame(parserExpected,parserActual));
-			Assert::IsTrue(parser.getCommand().cmd == ADD);
+
+			parser = Parser("add special timed time: 10-20");
+
+			parserActual = parser.getTask();
+
+			parserExpected = Task();
+			parserExpected.taskType = TIMED;
+			parserExpected.title = "special timed";
+			parserExpected.startTime = Time(10,00);
+			parserExpected.endTime = Time(20,00);
+
+			Assert::IsTrue(utility.isEqual(parserExpected.startTime,parserActual.startTime));
+			Assert::IsTrue(utility.isEqual(parserExpected.endTime,parserActual.endTime));
+			
 		}
 
 		TEST_METHOD(Parser_Delete)
@@ -279,6 +289,12 @@ namespace ParserUnitTest
 			Assert::IsTrue(utility.isEqual(editTask.startDate,expectedDate));
 			expectedDate = Date(17,4,2015);
 			Assert::IsTrue(utility.isEqual(editTask.endDate,expectedDate));
+
+			parser = Parser("edit 1 date: 15/4 - 12/4");
+			actualCommand = parser.getCommand();
+			editTask = parser.getTask();
+			Assert::IsTrue(actualCommand.idx.size() == 1);
+			Assert::IsTrue(actualCommand.cmd == INVALID);
 		}
 
 		TEST_METHOD(Parser_Undo)
