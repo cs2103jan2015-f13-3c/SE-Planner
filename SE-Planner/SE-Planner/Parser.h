@@ -27,11 +27,13 @@ public:
 	Parser(void);
 	~Parser(void);
 
+	// IMPORTANT API
 	Parser(string);
 	Command getCommand(void);
 	Task getTask(void);
 
 
+	// PARSER-SPECIFIC
 	void extractDisplayInfo(string);
 	void trimString(string &);
 	void assumeInfo(void);

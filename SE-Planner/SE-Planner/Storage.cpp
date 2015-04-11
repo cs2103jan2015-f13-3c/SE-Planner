@@ -185,14 +185,9 @@ void Storage::writeToFile(vector<Task> allTask){
 	myfile.open(outputFile);
 
 	if (myfile.is_open()){
-		//cout<<"WRITING TO FILE"<<endl;
-		//cout<<"TASK WRITTEN TO FILE = "<<allTask.size()<<endl;
 
 		for (int i = 0; i < allTask.size(); i++){
 			string out = convertToString(allTask[i]);
-			//cout<<allTask[i].isDone<<endl;
-			//cout<<"CONVERTED = "<<out<<endl;
-			//out = "test";
 			myfile << out << endl;
 		}
 		myfile.flush();
@@ -200,11 +195,12 @@ void Storage::writeToFile(vector<Task> allTask){
 	}
 }
 
-bool Storage::setOutputFilePath(string folderPath)
-{
+/*
+	@desc: set the new folder path. Report false if unable to write there
+*/
+bool Storage::setOutputFilePath(string folderPath) {
 	// remove backslash
-	if (folderPath.length() > 0)
-	{
+	if (folderPath.length() > 0) {
 		char lastCharacter = folderPath[folderPath.length()-1];
 		if (lastCharacter == '/' || lastCharacter == '\\') folderPath = folderPath.substr(0,folderPath.length()-1);
 	}
@@ -214,8 +210,7 @@ bool Storage::setOutputFilePath(string folderPath)
 	ofstream newOutputFile;
 	newOutputFile.open(filePath,std::ios_base::out | std::ios_base::app);
 
-	if (newOutputFile.is_open())
-	{
+	if (newOutputFile.is_open()) {
 		ofstream settingFile;
 		settingFile.open(SETTING_FILE);
 
@@ -226,23 +221,23 @@ bool Storage::setOutputFilePath(string folderPath)
 	else return false;
 }
 
-string Storage::getOutputFilePath()
-{
+/*
+	@desc: Get Current Output FilePath. If unable to open, create a new default one
+*/
+string Storage::getOutputFilePath() {
 	ifstream settingFile;
 	settingFile.open(SETTING_FILE);
 
 	bool isSettingFileValid = true;
 
-	if (settingFile.is_open())
-	{
+	if (settingFile.is_open()) {
 		string filePath;
 		getline(settingFile,filePath);
 
 		// try open
 		ifstream testOutputFile(filePath);
 
-		if (testOutputFile.is_open())
-		{
+		if (testOutputFile.is_open()) {
 			testOutputFile.close();
 			return filePath;
 		}
@@ -250,8 +245,7 @@ string Storage::getOutputFilePath()
 	}
 	else isSettingFileValid = false;
 
-	if (!isSettingFileValid)
-	{
+	if (!isSettingFileValid) {
 		settingFile.close();
 
 		ofstream writeToSettingFile;

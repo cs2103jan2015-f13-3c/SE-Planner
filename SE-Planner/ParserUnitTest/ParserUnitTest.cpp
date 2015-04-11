@@ -60,7 +60,7 @@ namespace ParserUnitTest
 			parserExpected.startTime = Time(16,30);
 			parserExpected.endTime = parserExpected.startTime;
 
-			Assert::IsTrue(utility.isSame(parserExpected,parserActual));
+			Assert::IsTrue(utility.isEqual(parserExpected.startTime,Time(16,30)));
 		}
 
 		TEST_METHOD(Parser_ParseAddTimedTask)

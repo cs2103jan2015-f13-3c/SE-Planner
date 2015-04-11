@@ -50,5 +50,16 @@ namespace StorageUnitTest
 
 		}
 
+		TEST_METHOD(Storage_OutputFile)
+		{
+			Storage storage = Storage();
+
+			storage.setOutputFilePath("");
+			string actualOutputFile = storage.getOutputFilePath();
+
+			string expectedOutputFile = "output.txt";
+			Assert::AreEqual(expectedOutputFile,actualOutputFile);
+		}
+
 	};
 }

@@ -61,5 +61,13 @@ namespace UIUnitTest {
 
 		}
 
+		TEST_METHOD(UIInputHelp)
+		{
+			UI testUI;
+
+			testUI.showHelp();
+
+		}
+
 	};
 }

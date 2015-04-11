@@ -384,7 +384,7 @@ Task updateTask(Task toBeEditedTask, Task newTaskInfo) {
 //Main edit function
 vector<Task> Logic::Edit(vector<Task> allTasks, vector<Task> displayedTasks, int index, Task newTaskInfo)
 {
-	success = 1;
+	success = OPERATION_SUCCEEDED;
 
 	if (isInputValid(displayedTasks, index, newTaskInfo)) {
 		Task toBeEditedTask = displayedTasks[index - 1];
@@ -394,17 +394,17 @@ vector<Task> Logic::Edit(vector<Task> allTasks, vector<Task> displayedTasks, int
 				if (utility.isSame(allTasks[i],toBeEditedTask)) {
 					Task newTask = updateTask(allTasks[i], newTaskInfo);
 					if (utility.isValidAddTask(newTask)) allTasks[i] = newTask;
-					else success = 0;
+					else success = OPERATION_FAILED;
 				}
 			}
 		}
 		else {
-			success = 0;
+			success = OPERATION_FAILED;
 		}
 
 	}
 	else {
-		success = 0;
+		success = OPERATION_FAILED;
 	}
 
 	return allTasks;

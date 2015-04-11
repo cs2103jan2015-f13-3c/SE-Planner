@@ -9,24 +9,25 @@ namespace HistoryUndoUnitTest
 	{
 	public:
 		
-		TEST_METHOD(HistoryUndoDelete)
-		{	
+		TEST_METHOD(HistoryUndoPushState)
+		{
+			History history;
+			history.clearState();
+
+			vector<Task> currentState;
+			history.pushState(currentState);
+
+			history.undoState();
+
+			Assert::AreEqual(true, history.TaskStack.empty());
 		}
 
-		TEST_METHOD(HistoryUndoEdit)
-		{	
-		}
+		TEST_METHOD(HistoryUndoEmptyState)
+		{
+			History history;
+			history.clearState();
 
-		TEST_METHOD(HistoryUndoAdd)
-		{	
-		}
-
-		TEST_METHOD(HistoryUndoDone)
-		{	
-		}
-
-		TEST_METHOD(HistoryUndoUndone)
-		{	
+			Assert::AreEqual(false, history.canUndo());
 		}
 	};
 }

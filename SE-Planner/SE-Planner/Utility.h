@@ -6,6 +6,9 @@
 
 using namespace std;
 
+/*
+	@desc: Useful function class
+*/
 class Utility
 {
 public:
@@ -46,6 +49,7 @@ public:
 	// for DELETE, EDIT, DONE
 	bool isSame(Task, Task); // find the task from displayTaskList inside mainTaskList
 
+	// log to logfile
 	void log(string);
 	
 };
