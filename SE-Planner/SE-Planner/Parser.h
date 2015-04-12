@@ -21,7 +21,7 @@ const string COMMAND_UNDONE		= "undone";
 const string COMMAND_WHERE		= "where";
 const string COMMAND_USE		= "use";
 
-class Parser
+class Parser 
 {
 public:
 	Parser(void);
@@ -32,7 +32,7 @@ public:
 	Command getCommand(void);
 	Task getTask(void);
 
-
+private:
 	// PARSER-SPECIFIC
 	void extractDisplayInfo(string);
 	void trimString(string &);

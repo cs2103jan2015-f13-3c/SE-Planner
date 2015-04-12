@@ -4,13 +4,13 @@
 #include <vector>
 #include <stack>
 
-class History
+class History 
 {
 public:
 	History(void);
 	~History(void);
 
-	stack< vector<Task> > TaskStack;
+	stack< vector<Task> > StateStack;
 
 	void pushState(vector<Task>);
 	vector<Task> undoState(void);

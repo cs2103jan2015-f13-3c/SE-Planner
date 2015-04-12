@@ -163,30 +163,6 @@ namespace UtilityUnitTest
 			Assert::AreEqual(false,testValue);
 		}
 
-		TEST_METHOD(isValidAddTask)
-		{	
-		}
-
-		TEST_METHOD(isValidOtherTask)
-		{	
-		}
-
-		TEST_METHOD(compareTitle)
-		{
-			
-		}
-
-		TEST_METHOD(compareDate)
-		{	
-		}
-
-		TEST_METHOD(compareTime)
-		{	
-		}
-
-		TEST_METHOD(isSameTask)
-		{	
-		}
 
 	};
 }

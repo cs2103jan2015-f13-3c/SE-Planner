@@ -16,17 +16,19 @@ public:
 	Storage(void);
 	~Storage(void);
 
-	string outputFile;
-
 	Storage(string);
 
+	// IMPORTANT API
 	vector<Task> getAllTask(void);
 	void writeToFile(vector<Task>);
-
-	Utility utility;
-
 	bool setOutputFilePath(string filePath);
 	string getOutputFilePath();
+
+private:
+	// STORAGE-SPECIFIC
+	Utility utility;
+	string outputFile;
+	
 
 };
 

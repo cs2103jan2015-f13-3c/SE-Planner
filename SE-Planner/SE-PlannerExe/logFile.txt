@@ -1,2 +1,1 @@
 Empty line break in output file
-Empty line break in output file

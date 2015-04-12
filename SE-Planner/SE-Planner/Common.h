@@ -4,57 +4,47 @@
 
 using namespace std;
 
-enum TaskType
-{
+enum TaskType {
 	// NUL = The Task is INVALID
-	FLOATTASK, TIMED, DEAD, NUL, REPEAT
+	FLOATTASK, TIMED, DEAD, NUL
 };
 
-enum InstructionType
-{
+enum InstructionType {
 	TODAY, TMR, SHOWDATE, OVERDUE, ALL, NONE, DISPLAYDONE, DISPLAYUNDONE
 };
 
-enum CommandType
-{
+enum CommandType {
 	ADD, SEARCH, DISPLAY, DEL, EDIT, DONE, UNDO, REDO, EXIT, INVALID, CLS, HELP, UNDONE, USE, WHERE
 };
 
-class Date 
-{
+class Date  {
 public:
 	int year, month, day;
 
-	Date()
-	{
+	Date() {
 		// default constructor
 		year = -1;
 		month = -1;
 		day = -1;
 	}
 
-	Date(int x, int y, int z)
-	{
+	Date(int x, int y, int z) {
 		day = x; month = y; year = z;
 	}
 
-
 };
 
-class Time
-{
+class Time {
 public:
 	int hour,min;
 
-	Time()
-	{
+	Time() {
 		// default constructor
 		hour = -1;
 		min = -1;
 	}
 
-	Time(int x, int y)
-	{
+	Time(int x, int y) {
 		hour = x; min = y;
 	}
 };
@@ -70,8 +60,7 @@ public:
 
 	bool isDone;
 
-	Task()
-	{
+	Task() {
 		// default constructor
 		title = "";
 		taskType = NUL;
@@ -84,8 +73,7 @@ public:
 
 };
 
-class Command 
-{
+class Command {
 public:
 	CommandType cmd;
 	vector<int> idx;

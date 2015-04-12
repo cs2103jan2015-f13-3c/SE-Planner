@@ -21,7 +21,7 @@ static const char border[8] = {
 
 //CONSTANTS
 static const int NUM_HELP_FIELDS = 5;
-static const int NUM_COMMANDS = 8;
+static const int NUM_COMMANDS = 10;
 
 static const string COMMAND_PROMPT_ARROW = "> ";
 static const string LEFT_BRACE = "[";
@@ -43,6 +43,8 @@ static const string helpStringArray[NUM_COMMANDS][NUM_HELP_FIELDS] = {
 		{"edit\t", " [index]", " [title]", " \tdate: [new date]", " \ttime: [new time]\n"}, 
 		{"display\t", "", " [today, tomorrow, overdue, all, DD/MM/YY]\n", "", ""}, 
 		{"undo\n", "", "", "", ""},
+		{"use", "[folderPath]\n", "", "", ""},
+		{"where\n", "", "", "", ""},
 		{"cls\n", "", "", "", ""}
 	};
 

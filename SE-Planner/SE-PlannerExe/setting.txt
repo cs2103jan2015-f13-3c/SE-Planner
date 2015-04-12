@@ -1,1 +1,1 @@
-c:\tung\task.txt
+output.txt

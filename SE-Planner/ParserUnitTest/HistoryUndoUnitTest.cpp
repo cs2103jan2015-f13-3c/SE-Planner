@@ -19,7 +19,7 @@ namespace HistoryUndoUnitTest
 
 			history.undoState();
 
-			Assert::AreEqual(true, history.TaskStack.empty());
+			Assert::AreEqual(true, history.StateStack.empty());
 		}
 
 		TEST_METHOD(HistoryUndoEmptyState)

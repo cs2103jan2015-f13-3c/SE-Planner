@@ -1,34 +1,37 @@
 #include "History.h"
 
-
-History::History(void)
-{
-	while (!TaskStack.empty()) TaskStack.pop();
+/*
+	@desc: clear stack for safety
+*/
+History::History(void) {
+	while (!StateStack.empty()) StateStack.pop();
 	isNewState = true;
 }
 
 
-History::~History(void)
-{
+History::~History(void) {
 }
 
-void History::pushState(vector<Task> newState)
-{
-	TaskStack.push(newState);
+/*
+	@desc: push new program state
+*/
+void History::pushState(vector<Task> newState) {
+	StateStack.push(newState);
 }
 
-void History::clearState()
-{
-	while (!TaskStack.empty()) TaskStack.pop();
+void History::clearState() {
+	while (!StateStack.empty()) StateStack.pop();
 }
 
-bool History::canUndo()
-{
-	return (!TaskStack.empty());
+bool History::canUndo() {
+	return (!StateStack.empty());
 }
-vector<Task> History::undoState()
-{
-	vector<Task> ret = TaskStack.top();
-	TaskStack.pop();
+
+/*
+	@desc: undo to previous state
+*/
+vector<Task> History::undoState() {
+	vector<Task> ret = StateStack.top();
+	StateStack.pop();
 	return ret;
 }

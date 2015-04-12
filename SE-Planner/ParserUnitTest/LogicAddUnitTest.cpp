@@ -8,8 +8,6 @@ namespace LogicAddUnitTest
 	TEST_CLASS(LogicAddUnitTestClass)
 	{
 	public:
-		
-		
 
 		TEST_METHOD(LogicAddFloat)
 		{	

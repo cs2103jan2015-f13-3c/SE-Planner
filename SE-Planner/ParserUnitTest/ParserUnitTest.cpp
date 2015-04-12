@@ -15,7 +15,6 @@ namespace ParserUnitTest
 		{
 			// TODO: Your test code here
 			Parser parser = Parser("add a simple task");
-			
 
 			Task parserActual = parser.getTask();
 

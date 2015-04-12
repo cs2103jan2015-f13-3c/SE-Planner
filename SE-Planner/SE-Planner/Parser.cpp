@@ -503,12 +503,10 @@ Parser::Parser(string inp) {
 }
 
 
-Command Parser::getCommand()
-{
+Command Parser::getCommand() {
 	return newCommand;
 }
 
-Task Parser::getTask()
-{
+Task Parser::getTask() {
 	return newTask;
 }
