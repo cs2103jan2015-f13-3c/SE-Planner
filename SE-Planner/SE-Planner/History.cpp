@@ -1,4 +1,5 @@
 #include "History.h"
+#include <assert.h>
 
 /*
 	@desc: clear stack for safety
@@ -31,6 +32,7 @@ bool History::canUndo() {
 	@desc: undo to previous state
 */
 vector<Task> History::undoState() {
+	assert(canUndo());
 	vector<Task> ret = StateStack.top();
 	StateStack.pop();
 	return ret;

@@ -126,6 +126,8 @@ bool Utility::isEqual(Time t1, Time t2) {
 bool Utility::isValidAddTask(Task x) {
 	bool isOK = true;
 
+	if (isNull(x.title)) isOK = false;
+
 	if (x.taskType == FLOATTASK) {
 	}
 

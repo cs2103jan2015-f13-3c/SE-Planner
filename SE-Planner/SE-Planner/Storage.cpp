@@ -76,7 +76,7 @@ vector<Task> Storage::getAllTask(void){
 				//cout<<"LINE TO PARSER: "<<line<<endl;
 				Task newTask = Task();
 				newTask = lineToParser(line, DoneStatus);
-				if (newTask.taskType != NUL) allTask.push_back(newTask);
+				if (newTask.taskType != NUL && utility.isValidAddTask(newTask)) allTask.push_back(newTask);
 			}
 			catch (exception& e)
 			{
