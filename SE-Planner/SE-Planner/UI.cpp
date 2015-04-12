@@ -16,7 +16,7 @@ UI::UI(void) {
 
 UI::~UI(void) {
 }
-
+// get user input
 string UI::getInput(void) {
 	cout << COMMAND_PROMPT_ARROW;
 	string input;
@@ -53,7 +53,7 @@ bool UI::printIfEmpty(const vector<Task> showArray) {
 
 	return false;
 }
-
+// finding the largest size of the input, to set as the size of the display box 
 void UI::getMaxTitleAndInfoLength(const vector<Task> showArray, int &maxTitleLength, int &maxInfoLength) {
 	for (int i = 0; i < (int) showArray.size(); i++) {
 		maxTitleLength = max(maxTitleLength, (int) showArray[i].title.length());
@@ -101,7 +101,7 @@ void UI::getMaxTitleAndInfoLength(const vector<Task> showArray, int &maxTitleLen
 
 	}
 }
-
+//print out the upper border with different size of segments, depends on the size of input
 void UI::printUpperBorder(const int maxTitleLength, const int maxInfoLength) {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); 
 
@@ -120,7 +120,7 @@ void UI::printUpperBorder(const int maxTitleLength, const int maxInfoLength) {
 	}
 	cout << border[CORNER_UR] << endl;
 }
-
+// print user inputs with task/time/date in the setted format
 void UI::printMainContent(const vector<Task> showArray, const int maxTitleLength, const int maxInfoLength) {
 	
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); 
@@ -214,6 +214,7 @@ void UI::printMainContent(const vector<Task> showArray, const int maxTitleLength
 		cout << endl;
 	}
 }
+// print the lower border to close the display box 
 void UI::printLowerBorder(const int maxTitleLength, const int maxInfoLength) {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); 
 	
@@ -227,7 +228,7 @@ void UI::printLowerBorder(const int maxTitleLength, const int maxInfoLength) {
 	cout<<border[CORNER_BR]<<endl;
 	cout<<"\n";
 }
-
+// display the task in box form
 void UI::showTaskList(vector<Task> showArray) {
 	int maxTitleLength = 0;
 	int maxInfoLength = 0;
@@ -253,7 +254,7 @@ void UI::showTaskList(vector<Task> showArray) {
 	printLowerBorder(maxTitleLength, maxInfoLength);
 	
 }
-
+// print the information when help command is called 
 void UI::showHelp() {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	const int helpColours[NUM_HELP_FIELDS] = {WHITE, YELLOW, GREEN, TURQOISE, PINK};

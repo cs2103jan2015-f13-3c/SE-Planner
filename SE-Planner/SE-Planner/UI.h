@@ -8,11 +8,11 @@ using namespace std;
 //Hardcoded stuff put below this comment
 enum {
 	BLACK, DARK_BLUE, DARK_GREEN, DARK_TURQOISE, DARK_RED, DARK_PINK, DARK_YELLOW, LIGHT_GREY, GREY, BLUE, GREEN, TURQOISE, RED, PINK, YELLOW, WHITE
-};
+};// enum the color for the use of the display text 
 
 enum {
 	CORNER_UL, CORNER_BL, CORNER_UR, CORNER_BR, HORIZONTAL, VERTICAL, UPPER_CENTER, LOWER_CENTER
-};
+};// enum the ASCII symbol for display  box 
 
 //Corresponding ASCII values
 static const char border[8] = {
@@ -51,7 +51,7 @@ static const string helpStringArray[NUM_COMMANDS][NUM_HELP_FIELDS] = {
 class UI
 {
 private:
-	string _outputString;
+	string _outputString;  
 public:
 	UI(void);
 	~UI(void);
