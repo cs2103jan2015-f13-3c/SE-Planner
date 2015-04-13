@@ -31,6 +31,8 @@ const std::string EMPTY = "Empty Array";
 void processArray(std::vector<Task> array) throw (exception) {
 	if (array.size() == 0){
 		throw exception();
+	} else {
+		//Do nothing
 	}
 }
 
