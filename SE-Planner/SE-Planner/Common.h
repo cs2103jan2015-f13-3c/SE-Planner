@@ -1,10 +1,10 @@
+//@author A0116724J
 #pragma once
 #include <string>
 #include <vector>
 
 using namespace std;
 
-//@author A0116724J
 enum TaskType {
 	// NUL = The Task is INVALID
 	FLOATTASK, TIMED, DEAD, NUL

@@ -1,10 +1,10 @@
+//@author A0108393A
 #include "Storage.h"
 #include <iostream>
 #include <cstdlib>
 #include <fstream>
 #include "Parser.h"
 
-//@author A0108393A
 
 Storage::Storage(void){
 	outputFile = getOutputFilePath();

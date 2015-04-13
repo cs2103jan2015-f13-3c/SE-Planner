@@ -1,3 +1,4 @@
+//@author A0116724J
 #pragma once
 
 #include "Common.h"
@@ -5,7 +6,6 @@
 #include <string>
 
 using namespace std;
-//@author A0116724J
 /*
 	@desc: Useful function class
 */

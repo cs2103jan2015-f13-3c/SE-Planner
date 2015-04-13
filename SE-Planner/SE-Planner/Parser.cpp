@@ -1,3 +1,4 @@
+//@author A0116724J
 #include "Parser.h"
 #include "Utility.h"
 
@@ -10,7 +11,7 @@
 #include <sstream>
 
 using namespace std;
-//@author A0116724J
+
 Command newCommand;
 Task newTask;
 Date today;

@@ -1,3 +1,4 @@
+//@author A0116724J
 #include "Logic.h"
 #include <vector>
 #include <string>
@@ -48,6 +49,7 @@ void processArray(std::vector<Task> array) throw (exception) {
 	}
 }
 
+//@author A0116724J
 Logic::Logic(void){
 	Utility utility;
 }
@@ -588,7 +590,7 @@ Task Logic::updateTask(Task toBeEditedTask, Task newTaskInfo) {
 	return editedTask;
 }
 
-// Tung
+//@author A0116724J
 vector<Task> Logic::Undone(vector<Task> allTask, vector<Task> displayedTask, vector<int> index)
 {
 	if (!isValidIndex(displayedTask, index)){

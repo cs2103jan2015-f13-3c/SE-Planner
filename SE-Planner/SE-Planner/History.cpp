@@ -1,6 +1,7 @@
+//@author A0116724J
 #include "History.h"
 #include <assert.h>
-//@author A0116724J
+
 /*
 	@desc: clear stack for safety
 */

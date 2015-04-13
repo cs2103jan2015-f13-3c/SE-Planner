@@ -1,8 +1,9 @@
+//@author A0116724J
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-//@author A0116724J
+
 namespace LogicAddUnitTest
 {		
 	TEST_CLASS(LogicAddUnitTestClass)

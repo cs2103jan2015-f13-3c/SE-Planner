@@ -1,3 +1,4 @@
+//@author A0116724J
 #pragma once
 
 #include "Common.h"
@@ -16,7 +17,7 @@ public:
 	Logic(void);
 	~Logic(void);
 
-	// IMPORTANT API
+	//@author A0108393A
 	vector<Task> Add(vector<Task> allTask, Task addTask);
 	vector<Task> Delete(vector<Task> allTask, vector<Task> displayedTask, vector<int> index);
 	vector<Task> Done(vector<Task> allTask, vector<Task> displayedTask, vector<int> index);
@@ -26,6 +27,7 @@ public:
 	vector<Task> display(vector<Task>, Task, InstructionType);
 	std::vector<Task> edit(std::vector<Task>, std::vector<Task>, int, Task);
 
+	//@author A0116724J
 	vector<Task> Undone(vector<Task> allTask, vector<Task> displayedTask, vector<int> index);
 
 	// was the command execution succesful or not
