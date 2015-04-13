@@ -20,9 +20,12 @@ public:
 	vector<Task> Add(vector<Task> allTask, Task addTask);
 	vector<Task> Delete(vector<Task> allTask, vector<Task> displayedTask, vector<int> index);
 	vector<Task> Done(vector<Task> allTask, vector<Task> displayedTask, vector<int> index);
+
+	//@author A0108417J
 	std::vector<Task> search(std::vector<Task>, Task);
-	vector<Task> display(vector<Task> allTasks, Task displayedTaskDate, InstructionType instruction);
-	std::vector<Task> edit(std::vector<Task> allTasks, std::vector<Task> displayedTasks, int index, Task newTaskInfo);
+	vector<Task> display(vector<Task>, Task, InstructionType);
+	std::vector<Task> edit(std::vector<Task>, std::vector<Task>, int, Task);
+
 	vector<Task> Undone(vector<Task> allTask, vector<Task> displayedTask, vector<int> index);
 
 	// was the command execution succesful or not
