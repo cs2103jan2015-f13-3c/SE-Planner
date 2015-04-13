@@ -1,11 +1,10 @@
 #include "Storage.h"
-
 #include <iostream>
 #include <cstdlib>
 #include <fstream>
 #include "Parser.h"
 
-
+//@author A0108393A
 
 Storage::Storage(void){
 	outputFile = getOutputFilePath();
@@ -57,14 +56,13 @@ vector<Task> Storage::getAllTask(void){
 
 	// open File for reading
 	ifstream myfile(outputFile);
-	// TODO : HANDLE EXCEPTION WHEN OPENING A FILE
 
 	vector<Task> allTask;
 	allTask.clear();
 
 	if (myfile.is_open()){
 		//cout<<"FILE OPENED"<<endl;
-
+		utility.log("Start getAllTask Function");
 		string line;
 		while (getline(myfile,line)){
 			//cout<<"LINE READ FROM FILE: "<<line<<endl;
@@ -81,18 +79,18 @@ vector<Task> Storage::getAllTask(void){
 				newTask = lineToParser(line, DoneStatus);
 				if (newTask.taskType != NUL && utility.isValidAddTask(newTask)) allTask.push_back(newTask);
 			}
-			catch (exception& e)
-			{
+			catch (exception& e){
 				utility.log("Empty line break in output file");
 			}
 			
 		}
 		myfile.close();
 	}
-	// return
+	// return;
 
 	//cout<<"TASK READ FROM FILE = "<<allTask.size()<<endl;
-
+	
+	utility.log("End getAllTask Function");
 	return allTask;
 
 }
@@ -260,4 +258,3 @@ string Storage::getOutputFilePath() {
 		return defaultOutput;
 	}
 }
-

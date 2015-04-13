@@ -26,6 +26,18 @@ const std::string EDIT_END = "End Edit Function";
 //@author A0108417J
 const std::string EMPTY = "Empty Array";
 
+//@author A0108393A
+const std::string ADD_START = "Start Add Function";
+const std::string ADD_END  = "End Add Function";
+
+//@author A0108393A
+const std::string DELETE_START = "Start Delete Function";
+const std::string DELETE_END  = "End Delete Function";
+
+//@author A0108393A
+const std::string DONE_START = "Start Done Function";
+const std::string DONE_END  = "End Done Function";
+
 //@author A0108417J
 //This function is a general function that throw exception when array size = 0 
 void processArray(std::vector<Task> array) throw (exception) {
@@ -44,18 +56,21 @@ Logic::Logic(void){
 Logic::~Logic(void){
 }
 
-// WEIMIN
+//@author A0108393A
 vector<Task> Logic::Add(vector<Task> allTask, Task addTask){
-	
+	// if there is no taskType defined -> fail command
 	if (addTask.taskType == NUL){
 		success = OPERATION_FAILED;
 		return allTask;
 	}
 	else{
 		success = OPERATION_SUCCEEDED;
-
+		
+		utility.log(ADD_START);
 		vector<Task> temp = allTask;
 		temp.push_back(addTask);
+		
+		utility.log(ADD_END);
 		return temp;
 	}
 }
@@ -77,15 +92,17 @@ bool isValidIndex(vector<Task> displayedTask, vector<int> index){
 	return true;
 }
 
-// WEIMIN
+//@author A0108393A
 vector<Task> Logic::Delete(vector<Task> allTask, vector<Task> displayedTask, vector<int> index){
-	
+	// if index not found or index given exceeds size of displayedTask -> fail command
 	if (!isValidIndex(displayedTask, index)){
 		success = OPERATION_FAILED;
 		return allTask;
 	}
 	
 	success = OPERATION_SUCCEEDED;
+
+	utility.log(DELETE_START);
 
 	// 'marked' array for allTask
 	// meaning : false = this task will NOT be deleted
@@ -116,20 +133,23 @@ vector<Task> Logic::Delete(vector<Task> allTask, vector<Task> displayedTask, vec
 		// DELETE ACCORDINGLY
 		if (!marked[i]) temp.push_back(allTask[i]);
 	}
-
+	
+	utility.log(DELETE_END);
 	return temp;
 
 }
 
-// WEIMIN
+//@author A0108393A
 vector<Task> Logic::Done(vector<Task> allTask, vector<Task> displayedTask, vector<int> index){
-	
+	// if index not found or index given exceeds size of displayedTask -> fail command	
 	if (!isValidIndex(displayedTask, index)){
 		success = OPERATION_FAILED;
 		return allTask;
 	}
 
 	success = OPERATION_SUCCEEDED;
+
+	utility.log(DONE_START);
 
 	bool marked[MAX_TASK_SIZE];
 
@@ -159,7 +179,8 @@ vector<Task> Logic::Done(vector<Task> allTask, vector<Task> displayedTask, vecto
 		if (marked[i]) temp[i].isDone = true;
 		//cout<<i<<" "<<temp[i].isDone<<endl;
 	}
-
+	
+	utility.log(DONE_END);
 	return temp;
 
 }
