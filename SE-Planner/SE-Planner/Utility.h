@@ -5,7 +5,7 @@
 #include <string>
 
 using namespace std;
-
+//@author A0116724J
 /*
 	@desc: Useful function class
 */

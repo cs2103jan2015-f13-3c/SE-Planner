@@ -38,6 +38,9 @@ bool setStatus(string line){
 			return (line[0] == '1');
 }
 
+/*
+	@desc: Pass a line from file to be parsed by parser
+*/
 Task lineToParser(string line, bool DoneStatus){
 	Task newTask;
 	Parser parseFromFile(line);
