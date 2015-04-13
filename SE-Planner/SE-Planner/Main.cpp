@@ -74,7 +74,7 @@ int main()
 
 		else if (userCommand.cmd == SEARCH) {
 			history.isNewState = false;
-			DisplayTaskList = logic.Search(MainTaskList,userTask);
+			DisplayTaskList = logic.search(MainTaskList,userTask);
 
 			if (logic.success == OPERATION_SUCCEEDED) {
 				ui.showMessage("\n");

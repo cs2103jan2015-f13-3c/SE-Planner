@@ -139,107 +139,54 @@ vector<Task> Logic::Done(vector<Task> allTask, vector<Task> displayedTask, vecto
 
 }
 
-//Search function's sub-functions
-bool isSearchedTaskValid(Task searchedTask) {
-	if (searchedTask.taskType != NUL) {
+//@author A0108417J
+std::vector<Task> Logic::search(std::vector<Task> allTasks, Task searchedTask) {
+	std::vector<Task> matchedTasks;
+
+	if (isTaskValid(searchedTask)) {
+		matchedTasks = findMatchedTasks(allTasks, searchedTask);
+		success = OPERATION_SUCCEEDED;
+	} else {
+		success = OPERATION_FAILED;
+	}
+
+	return matchedTasks;
+}
+
+//@author A0108417J
+bool Logic::isTaskValid(Task task) {
+	if (task.taskType != NUL) {
 		return true;
 	} else {
 		return false;
 	}
 }
 
-bool isSearchedTaskMatch(Task task, Task searchedTask) {
-	Utility utility;
-	bool isTitleMatch = utility.compareTitle(task, searchedTask);
-	bool isDateMatch = utility.compareDate(task, searchedTask);
-	bool isTimeMatch = utility.compareTime(task, searchedTask);
+//@author A0108417J
+std::vector<Task> Logic::findMatchedTasks(std::vector<Task> allTasks, Task task) {
+	std::vector<Task> matchedTasks;
+
+	for (int i = 0; i < allTasks.size(); i++) {
+		if (isTaskMatch(allTasks[i], task)) {
+			matchedTasks.push_back(allTasks[i]);
+		} else {
+			//Do nothing
+		}
+	}
+
+	return matchedTasks;
+}
+
+//@author A0108417J
+bool Logic::isTaskMatch(Task task, Task matchingTask) {
+	bool isTitleMatch = utility.compareTitle(task, matchingTask);
+	bool isDateMatch = utility.compareDate(task, matchingTask);
+	bool isTimeMatch = utility.compareTime(task, matchingTask);
 
 	if (isTitleMatch && isDateMatch && isTimeMatch) {
 		return true;
 	} else {
 		return false;
-	}
-}
-
-vector<Task> findAllMatchedTasks(vector<Task> allTasks, Task searchedTask) {
-	vector<Task> matchedTasks;
-
-	for (int i = 0; i < allTasks.size(); i++) {
-		if (isSearchedTaskMatch(allTasks[i], searchedTask)) {
-			matchedTasks.push_back(allTasks[i]);
-		}
-	}
-
-	return matchedTasks;
-}
-
-//Main search function
-vector<Task> Logic::Search(vector<Task> allTasks, Task searchedTask) {
-	vector<Task> matchedTasks;
-	success = 0;
-
-	if (isSearchedTaskValid(searchedTask)) {
-		success = 1;
-		matchedTasks = findAllMatchedTasks(allTasks, searchedTask);
-	}
-
-	return matchedTasks;
-}
-
-// YOONG ZHEN
-// THIS IS THE COMPARATOR FOR THE SORT FUNCTION OF THE DISPLAY COMMAND. 
-// FLOAT AT BOTTOM, THEN SORT BY ENDING DATE, BY TIME, THEN BY NAME
-// orderTask(t1, t2) = true IF t1 shows before t2 when displayed
-// that is t1 < t2
-
-bool Logic::orderTask(Task t1, Task t2)
-{
-	if (t1.taskType == t2.taskType)
-	{
-		// SAME TASK TYPE
-		if (t1.taskType == FLOATTASK)
-		{
-			// FLOAT BOTTOM
-			return (t1.title.compare(t2.title) < 0);
-		}
-		else
-		{
-			// SAME END DATE
-			if (utility.isEqual(t1.endDate,t2.endDate))
-			{
-				// COMPARE TIME
-				if (!utility.isEqual(t1.endTime,t2.endTime))
-				{
-					return (utility.isLaterTime(t1.endTime,t2.endTime));
-				}
-				else return (t1.title.compare(t2.title) < 0);
-			}
-			else return (utility.isLaterDate(t1.endDate,t2.endDate));
-		}
-	}
-	else
-	{
-		// DIFFERENT TASK TYPE
-		if (t1.taskType == FLOATTASK || t2.taskType == FLOATTASK)
-		{
-			// AT MOST ONE FLOAT TASK ( DIFFERENT TASK TYPE)
-			if (t1.taskType == FLOATTASK) return false;
-			else return true;
-		}
-		else
-		{
-			// SAME END DATE
-			if (utility.isEqual(t1.endDate,t2.endDate))
-			{
-				if (!utility.isEqual(t1.endTime,t2.endTime))
-				{
-					// COMPARE TIME
-					return (utility.isLaterTime(t1.endTime,t2.endTime));
-				}
-				else return (t1.title.compare(t2.title) < 0);
-			}
-			else return (utility.isLaterDate(t1.endDate,t2.endDate));
-		}
 	}
 }
 
@@ -456,4 +403,58 @@ vector<Task> Logic::Undone(vector<Task> allTask, vector<Task> displayedTask, vec
 }
 
 
+// THIS IS THE COMPARATOR FOR THE SORT FUNCTION OF THE DISPLAY COMMAND. 
+// FLOAT AT BOTTOM, THEN SORT BY ENDING DATE, BY TIME, THEN BY NAME
+// orderTask(t1, t2) = true IF t1 shows before t2 when displayed
+// that is t1 < t2
 
+bool Logic::orderTask(Task t1, Task t2)
+{
+	if (t1.taskType == t2.taskType)
+	{
+		// SAME TASK TYPE
+		if (t1.taskType == FLOATTASK)
+		{
+			// FLOAT BOTTOM
+			return (t1.title.compare(t2.title) < 0);
+		}
+		else
+		{
+			// SAME END DATE
+			if (utility.isEqual(t1.endDate,t2.endDate))
+			{
+				// COMPARE TIME
+				if (!utility.isEqual(t1.endTime,t2.endTime))
+				{
+					return (utility.isLaterTime(t1.endTime,t2.endTime));
+				}
+				else return (t1.title.compare(t2.title) < 0);
+			}
+			else return (utility.isLaterDate(t1.endDate,t2.endDate));
+		}
+	}
+	else
+	{
+		// DIFFERENT TASK TYPE
+		if (t1.taskType == FLOATTASK || t2.taskType == FLOATTASK)
+		{
+			// AT MOST ONE FLOAT TASK ( DIFFERENT TASK TYPE)
+			if (t1.taskType == FLOATTASK) return false;
+			else return true;
+		}
+		else
+		{
+			// SAME END DATE
+			if (utility.isEqual(t1.endDate,t2.endDate))
+			{
+				if (!utility.isEqual(t1.endTime,t2.endTime))
+				{
+					// COMPARE TIME
+					return (utility.isLaterTime(t1.endTime,t2.endTime));
+				}
+				else return (t1.title.compare(t2.title) < 0);
+			}
+			else return (utility.isLaterDate(t1.endDate,t2.endDate));
+		}
+	}
+}
