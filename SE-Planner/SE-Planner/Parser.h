@@ -6,7 +6,7 @@
 #include <iostream>
 
 using namespace std;
-
+//@author A0116724J
 const string COMMAND_ADD		= "add";
 const string COMMAND_SEARCH		= "search";
 const string COMMAND_DISPLAY	= "display";

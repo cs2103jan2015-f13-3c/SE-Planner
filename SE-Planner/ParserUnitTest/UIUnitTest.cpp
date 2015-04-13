@@ -54,7 +54,7 @@ namespace UIUnitTest {
 
 			Task nulTask = Task();
 
-			vector<Task> displayTask = logic.Display(allTask, nulTask, actualCommand.instruction);
+			vector<Task> displayTask = logic.display(allTask, nulTask, actualCommand.instruction);
 
 			Assert::AreEqual(6,(int)displayTask.size());
 

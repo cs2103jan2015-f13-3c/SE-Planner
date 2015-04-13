@@ -2,7 +2,7 @@
 #include "CppUnitTest.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-
+//@author A0116724J
 namespace LogicDisplayUnitTest
 {		
 	TEST_CLASS(LogicDisplayUnitTestClass)
@@ -22,9 +22,9 @@ namespace LogicDisplayUnitTest
 			Task taskDate = Task();
 
 			vector<Task> displayTask;
-			displayTask = logic.Display(allTask,taskDate,actualCommand.instruction);
+			displayTask = logic.display(allTask,taskDate,actualCommand.instruction);
 
-			Assert::AreEqual(3,(int)displayTask.size());
+			Assert::AreEqual(2,(int)displayTask.size());
 		}
 
 		TEST_METHOD(LogicDisplayTmr)
@@ -40,7 +40,7 @@ namespace LogicDisplayUnitTest
 			Task taskDate = Task();
 
 			vector<Task> displayTask;
-			displayTask = logic.Display(allTask,taskDate,actualCommand.instruction);
+			displayTask = logic.display(allTask,taskDate,actualCommand.instruction);
 
 			Assert::AreEqual(2,(int)displayTask.size());
 		}
@@ -58,9 +58,9 @@ namespace LogicDisplayUnitTest
 			Task taskDate = Task();
 
 			vector<Task> displayTask;
-			displayTask = logic.Display(allTask,taskDate,actualCommand.instruction);
+			displayTask = logic.display(allTask,taskDate,actualCommand.instruction);
 
-			Assert::AreEqual(4,(int)displayTask.size());
+			Assert::AreEqual(5,(int)displayTask.size());
 		}
 
 		TEST_METHOD(LogicDisplayDate)
@@ -77,7 +77,7 @@ namespace LogicDisplayUnitTest
 			
 
 			vector<Task> displayTask;
-			displayTask = logic.Display(allTask,taskDate,actualCommand.instruction);
+			displayTask = logic.display(allTask,taskDate,actualCommand.instruction);
 
 			Assert::AreEqual(3,(int)displayTask.size());
 		}
@@ -95,7 +95,7 @@ namespace LogicDisplayUnitTest
 			Task taskDate = Task();
 
 			vector<Task> displayTask;
-			displayTask = logic.Display(allTask,taskDate,actualCommand.instruction);
+			displayTask = logic.display(allTask,taskDate,actualCommand.instruction);
 
 			Assert::AreEqual(1,(int)displayTask.size());
 		}
@@ -113,7 +113,7 @@ namespace LogicDisplayUnitTest
 			Task taskDate = Task();
 
 			vector<Task> displayTask;
-			displayTask = logic.Display(allTask,taskDate,actualCommand.instruction);
+			displayTask = logic.display(allTask,taskDate,actualCommand.instruction);
 
 			Assert::AreEqual(5,(int)displayTask.size());
 		}

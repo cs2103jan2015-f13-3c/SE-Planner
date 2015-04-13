@@ -2,7 +2,7 @@
 #include "CppUnitTest.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-
+//@author A0116724J
 namespace StorageUnitTest
 {		
 	TEST_CLASS(StorageUnitTestClass)

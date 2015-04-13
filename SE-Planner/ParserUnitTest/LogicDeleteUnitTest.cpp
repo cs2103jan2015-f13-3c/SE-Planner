@@ -2,7 +2,7 @@
 #include "CppUnitTest.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-
+//@author A0116724J
 namespace LogicDeleteUnitTest
 {		
 	TEST_CLASS(LogicDeleteUnitTestClass)
@@ -25,7 +25,7 @@ namespace LogicDeleteUnitTest
 			Assert::AreEqual(6,previousSize);
 			Task nulTask = Task();
 
-			vector<Task> displayedTaskList = logic.Display(allTask,nulTask,ALL);
+			vector<Task> displayedTaskList = logic.display(allTask,nulTask,ALL);
 			Assert::AreEqual(6,(int)displayedTaskList.size());
 			
 			vector<Task> newTask;
@@ -46,7 +46,7 @@ namespace LogicDeleteUnitTest
 			int previousSize = allTask.size();
 			Task nulTask = Task();
 
-			vector<Task> displayedTaskList = logic.Display(allTask,nulTask,ALL);
+			vector<Task> displayedTaskList = logic.display(allTask,nulTask,ALL);
 			allTask = logic.Delete(allTask,displayedTaskList,actualCommand.idx);
 
 			Assert::IsTrue(allTask.size() == previousSize - 2);
@@ -62,7 +62,7 @@ namespace LogicDeleteUnitTest
 			int previousSize = allTask.size();
 			Task nulTask = Task();
 
-			vector<Task> displayedTaskList = logic.Display(allTask,nulTask,ALL);
+			vector<Task> displayedTaskList = logic.display(allTask,nulTask,ALL);
 			allTask = logic.Delete(allTask,displayedTaskList,actualCommand.idx);
 
 			Assert::IsTrue(allTask.size() == previousSize);
