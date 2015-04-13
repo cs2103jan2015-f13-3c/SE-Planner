@@ -43,7 +43,7 @@ static const string helpStringArray[NUM_COMMANDS][NUM_HELP_FIELDS] = {
 		{"edit\t", " [index]", " [title]", " \tdate: [new date]", " \ttime: [new time]\n"}, 
 		{"display\t", "", " [today, tomorrow, overdue, all, DD/MM/YY]\n", "", ""}, 
 		{"undo\n", "", "", "", ""},
-		{"use\t", "[folderPath]\n", "", "", ""},
+		{"use\t", " [folderPath]\n", "", "", ""},
 		{"where\n", "", "", "", ""},
 		{"cls\n", "", "", "", ""}
 	};
