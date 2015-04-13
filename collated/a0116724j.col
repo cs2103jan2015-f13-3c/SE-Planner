@@ -1,0 +1,2411 @@
+//@author: a0116724j
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\HistoryUndoUnitTest.cpp
+	 */
+
+#include "stdafx.h"
+#include "CppUnitTest.h"
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+namespace HistoryUndoUnitTest
+{		
+	TEST_CLASS(HistoryUndoUnitTestClass)
+	{
+	public:
+		
+		TEST_METHOD(HistoryUndoPushState)
+		{
+			History history;
+			history.clearState();
+
+			vector<Task> currentState;
+			history.pushState(currentState);
+
+			history.undoState();
+
+			Assert::AreEqual(true, history.StateStack.empty());
+		}
+
+		TEST_METHOD(HistoryUndoEmptyState)
+		{
+			History history;
+			history.clearState();
+
+			Assert::AreEqual(false, history.canUndo());
+		}
+	};
+}
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\HistoryUndoUnitTest.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicAddUnitTest.cpp
+	 */
+
+#include "stdafx.h"
+#include "CppUnitTest.h"
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+namespace LogicAddUnitTest
+{		
+	TEST_CLASS(LogicAddUnitTestClass)
+	{
+	public:
+
+		TEST_METHOD(LogicAddFloat)
+		{	
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+
+			vector<Task> allTask = storage.getAllTask();
+
+			Task addTask;
+			addTask.taskType = FLOATTASK;
+			addTask.title = "a new thing";
+
+			allTask = logic.Add(allTask,addTask);
+
+			Assert::IsTrue(allTask[allTask.size()-1].title == "a new thing");
+		}
+
+
+		TEST_METHOD(LogicAddDeadline)
+		{	
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+			Utility utility;
+
+			Parser parser = Parser("add a new deadline date: 22/2");
+			Task addTask = parser.getTask();
+			vector<Task> allTask = storage.getAllTask();
+
+			
+			allTask = logic.Add(allTask,addTask);
+
+			string expectedTitle = "a new deadline";
+			Assert::AreEqual(allTask[allTask.size()-1].title,expectedTitle);
+			Assert::IsTrue(utility.isEqual(allTask[allTask.size()-1].startDate,Date(22,2,2015)));
+		}
+
+		TEST_METHOD(LogicAddTimedTask)
+		{	
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+			Utility utility;
+
+			Parser parser = Parser("add a random timed task date: 22/2 time: 10 - 15");
+			Task addTask = parser.getTask();
+			vector<Task> allTask = storage.getAllTask();
+
+			allTask = logic.Add(allTask,addTask);
+
+			Assert::IsTrue(allTask[allTask.size()-1].title == "a random timed task");
+			Assert::IsTrue(utility.isEqual(allTask[allTask.size()-1].startDate,Date(22,2,2015)));
+			Assert::IsTrue(utility.isEqual(allTask[allTask.size()-1].startTime,Time(10,0)));
+			Assert::IsTrue(utility.isEqual(allTask[allTask.size()-1].endTime,Time(15,0)));
+		}
+
+		TEST_METHOD(LogicAddInvalid)
+		{
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+
+			vector<Task> allTask = storage.getAllTask();
+			int previousSize = allTask.size();
+
+			Task addTask;
+			addTask.taskType = NUL;
+			addTask.title = "a new thing";
+
+			allTask = logic.Add(allTask,addTask);
+
+			Assert::IsTrue(allTask.size() == previousSize);
+		}
+
+		
+	};
+}
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicAddUnitTest.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicDeleteUnitTest.cpp
+	 */
+
+#include "stdafx.h"
+#include "CppUnitTest.h"
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+namespace LogicDeleteUnitTest
+{		
+	TEST_CLASS(LogicDeleteUnitTestClass)
+	{
+	public:
+		
+		TEST_METHOD(LogicDeleteOneIndex)
+		{
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+			Parser parser = Parser("delete 1");
+			Command actualCommand = parser.getCommand();
+
+			Assert::IsTrue(actualCommand.cmd == DEL);
+			Assert::IsTrue(actualCommand.idx.size() == 1);
+
+			vector<Task> allTask = storage.getAllTask();
+			int previousSize = allTask.size();
+
+			Assert::AreEqual(6,previousSize);
+			Task nulTask = Task();
+
+			vector<Task> displayedTaskList = logic.display(allTask,nulTask,ALL);
+			Assert::AreEqual(6,(int)displayedTaskList.size());
+			
+			vector<Task> newTask;
+			newTask = logic.Delete(allTask,displayedTaskList,actualCommand.idx);
+
+			Assert::AreEqual(5,(int)newTask.size());
+			
+		}
+
+		TEST_METHOD(LogicDeleteMultipleIndex)
+		{
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+			Parser parser = Parser("delete 1 2");
+			Command actualCommand = parser.getCommand();
+
+			vector<Task> allTask = storage.getAllTask();
+			int previousSize = allTask.size();
+			Task nulTask = Task();
+
+			vector<Task> displayedTaskList = logic.display(allTask,nulTask,ALL);
+			allTask = logic.Delete(allTask,displayedTaskList,actualCommand.idx);
+
+			Assert::IsTrue(allTask.size() == previousSize - 2);
+		}
+
+		TEST_METHOD(LogicDeleteInvalidIndex)
+		{	
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+			Parser parser = Parser("delete 10000");
+			Command actualCommand = parser.getCommand();
+			vector<Task> allTask = storage.getAllTask();
+			int previousSize = allTask.size();
+			Task nulTask = Task();
+
+			vector<Task> displayedTaskList = logic.display(allTask,nulTask,ALL);
+			allTask = logic.Delete(allTask,displayedTaskList,actualCommand.idx);
+
+			Assert::IsTrue(allTask.size() == previousSize);
+		}
+
+	};
+}
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicDeleteUnitTest.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicDisplayUnitTest.cpp
+	 */
+
+#include "stdafx.h"
+#include "CppUnitTest.h"
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+namespace LogicDisplayUnitTest
+{		
+	TEST_CLASS(LogicDisplayUnitTestClass)
+	{
+	public:
+		
+		TEST_METHOD(LogicDisplayToday)
+		{	
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+			Parser parser = Parser("display today");
+			Command actualCommand = parser.getCommand();
+
+			vector<Task> allTask = storage.getAllTask();
+			int previousSize = allTask.size();
+
+			Task taskDate = Task();
+
+			vector<Task> displayTask;
+			displayTask = logic.display(allTask,taskDate,actualCommand.instruction);
+
+			Assert::AreEqual(2,(int)displayTask.size());
+		}
+
+		TEST_METHOD(LogicDisplayTmr)
+		{	
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+			Parser parser = Parser("display tomorrow");
+			Command actualCommand = parser.getCommand();
+
+			vector<Task> allTask = storage.getAllTask();
+			int previousSize = allTask.size();
+
+			Task taskDate = Task();
+
+			vector<Task> displayTask;
+			displayTask = logic.display(allTask,taskDate,actualCommand.instruction);
+
+			Assert::AreEqual(2,(int)displayTask.size());
+		}
+
+		TEST_METHOD(LogicDisplayOverdue)
+		{	
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+			Parser parser = Parser("display overdue");
+			Command actualCommand = parser.getCommand();
+
+			vector<Task> allTask = storage.getAllTask();
+			int previousSize = allTask.size();
+
+			Task taskDate = Task();
+
+			vector<Task> displayTask;
+			displayTask = logic.display(allTask,taskDate,actualCommand.instruction);
+
+			Assert::AreEqual(5,(int)displayTask.size());
+		}
+
+		TEST_METHOD(LogicDisplayDate)
+		{	
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+			Parser parser = Parser("display 11/4");
+			Task taskDate = parser.getTask();
+			Command actualCommand = parser.getCommand();
+
+			vector<Task> allTask = storage.getAllTask();
+			int previousSize = allTask.size();
+
+			
+
+			vector<Task> displayTask;
+			displayTask = logic.display(allTask,taskDate,actualCommand.instruction);
+
+			Assert::AreEqual(3,(int)displayTask.size());
+		}
+
+		TEST_METHOD(LogicDisplayDone)
+		{	
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+			Parser parser = Parser("display done");
+			Command actualCommand = parser.getCommand();
+
+			vector<Task> allTask = storage.getAllTask();
+			int previousSize = allTask.size();
+
+			Task taskDate = Task();
+
+			vector<Task> displayTask;
+			displayTask = logic.display(allTask,taskDate,actualCommand.instruction);
+
+			Assert::AreEqual(1,(int)displayTask.size());
+		}
+
+		TEST_METHOD(LogicDisplayUndone)
+		{	
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+			Parser parser = Parser("display undone");
+			Command actualCommand = parser.getCommand();
+
+			vector<Task> allTask = storage.getAllTask();
+			int previousSize = allTask.size();
+
+			Task taskDate = Task();
+
+			vector<Task> displayTask;
+			displayTask = logic.display(allTask,taskDate,actualCommand.instruction);
+
+			Assert::AreEqual(5,(int)displayTask.size());
+		}
+	};
+}
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicDisplayUnitTest.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicDoneUnitTest.cpp
+	 */
+
+#include "stdafx.h"
+#include "CppUnitTest.h"
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+namespace LogicDoneUnitTest
+{		
+	TEST_CLASS(LogicDeleteUnitTestClass)
+	{
+	public:
+		
+		TEST_METHOD(LogicDoneOneIndex)
+		{	
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+			Parser parser = Parser("done 6");
+			Command actualCommand = parser.getCommand();
+
+
+			vector<Task> allTask = storage.getAllTask();
+
+			Task nulTask = Task();
+			
+			
+			vector<Task> displayedTaskList = logic.display(allTask,nulTask,ALL);
+			Assert::AreEqual(false,allTask[5].isDone);
+
+			
+			vector<Task> newTask;
+			newTask = logic.Done(allTask,displayedTaskList,actualCommand.idx);
+
+			Assert::AreEqual(true,newTask[0].isDone);
+		}
+
+		TEST_METHOD(LogicDoneMultipleIndex)
+		{	
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+			Parser parser = Parser("done 5 6");
+			Command actualCommand = parser.getCommand();
+
+
+			vector<Task> allTask = storage.getAllTask();
+
+			Task nulTask = Task();
+			
+			
+			vector<Task> displayedTaskList = logic.display(allTask,nulTask,ALL);
+			Assert::AreEqual(false,allTask[5].isDone);
+
+			
+			vector<Task> newTask;
+			newTask = logic.Done(allTask,displayedTaskList,actualCommand.idx);
+
+			Assert::AreEqual(true,newTask[0].isDone);
+			Assert::AreEqual(true,newTask[5].isDone);
+		}
+
+		TEST_METHOD(LogicDoneInvalidIndex)
+		{	
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+			Parser parser = Parser("done 10000");
+			Command actualCommand = parser.getCommand();
+
+
+			vector<Task> allTask = storage.getAllTask();
+
+			Task nulTask = Task();
+			
+			
+			vector<Task> displayedTaskList = logic.display(allTask,nulTask,ALL);
+			Assert::AreEqual(false,allTask[5].isDone);
+
+			
+			vector<Task> newTask;
+			newTask = logic.Done(allTask,displayedTaskList,actualCommand.idx);
+
+			Assert::AreEqual(0,logic.success);
+		}
+
+		TEST_METHOD(LogicUnDoneOneIndex)
+		{	
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+			Parser parser = Parser("undone 6");
+			Command actualCommand = parser.getCommand();
+
+
+			vector<Task> allTask = storage.getAllTask();
+
+			Task nulTask = Task();
+			
+			
+			vector<Task> displayedTaskList = logic.display(allTask,nulTask,ALL);
+			Assert::AreEqual(false,allTask[5].isDone);
+
+			
+			vector<Task> newTask;
+			newTask = logic.Undone(allTask,displayedTaskList,actualCommand.idx);
+
+			Assert::AreEqual(false,newTask[0].isDone);
+		}
+
+		TEST_METHOD(LogicUnDoneMultipleIndex)
+		{	
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+			Parser parser = Parser("undone 5 6");
+			Command actualCommand = parser.getCommand();
+
+
+			vector<Task> allTask = storage.getAllTask();
+
+			Task nulTask = Task();
+			
+			
+			vector<Task> displayedTaskList = logic.display(allTask,nulTask,ALL);
+			Assert::AreEqual(false,allTask[5].isDone);
+
+			
+			vector<Task> newTask;
+			newTask = logic.Undone(allTask,displayedTaskList,actualCommand.idx);
+
+			Assert::AreEqual(false,newTask[0].isDone);
+			Assert::AreEqual(false,newTask[5].isDone);
+		}
+
+		TEST_METHOD(LogicUnDoneInvalidIndex)
+		{	
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+			Parser parser = Parser("undone 10000");
+			Command actualCommand = parser.getCommand();
+
+
+			vector<Task> allTask = storage.getAllTask();
+
+			Task nulTask = Task();
+			
+			
+			vector<Task> displayedTaskList = logic.display(allTask,nulTask,ALL);
+			Assert::AreEqual(false,allTask[5].isDone);
+
+			
+			vector<Task> newTask;
+			newTask = logic.Undone(allTask,displayedTaskList,actualCommand.idx);
+
+			Assert::AreEqual(0,logic.success);
+		}
+
+	};
+}
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicDoneUnitTest.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicEditUnitTest.cpp
+	 */
+
+#include "stdafx.h"
+#include "CppUnitTest.h"
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+namespace LogicEditUnitTest
+{		
+	TEST_CLASS(LogicEditUnitTestClass)
+	{
+	public:
+		
+		TEST_METHOD(LogicEditTimedTask)
+		{	
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+			Parser parser = Parser("display all");
+			Command actualCommand = parser.getCommand();
+
+			vector<Task> allTask = storage.getAllTask();
+			
+			vector<Task> displayTask;
+			Task nulTask = Task();
+			displayTask = logic.display(allTask, nulTask, actualCommand.instruction);
+
+			
+			parser = Parser("edit 1 new timed task date: 12/4 time: 11-20");
+			actualCommand = parser.getCommand();
+			Task editTask = parser.getTask();
+			vector<Task> newTask = logic.edit(allTask,displayTask,actualCommand.idx[0],editTask);
+
+			Assert::IsTrue(newTask[3].title == "new timed task");
+		}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicEditUnitTest.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicSearchUnitTest.cpp
+	 */
+
+#include "stdafx.h"
+#include "CppUnitTest.h"
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+namespace LogicSearchUnitTest
+{		
+	TEST_CLASS(LogicSearchUnitTestClass)
+	{
+	public:
+		
+		TEST_METHOD(LogicSearchInvalid)
+		{	
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+			
+
+			vector<Task> allTask = storage.getAllTask();
+			Task nulTask = Task();
+			
+			vector<Task> matchTask;
+			matchTask = logic.search(allTask,nulTask);
+
+			Assert::AreEqual(0, (int)matchTask.size());
+		}
+
+		TEST_METHOD(LogicSearchTitleDateTime)
+		{
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest.txt");
+			Logic logic;
+			Parser parser = Parser("search deadline date: 11/4 time: 11");
+			Command actualCommand = parser.getCommand();
+			Task searchTask = parser.getTask();
+
+			vector<Task> allTask = storage.getAllTask();
+			int previousSize = allTask.size();
+
+			
+			vector<Task> matchTask;
+			matchTask = logic.search(allTask,searchTask);
+
+			Assert::AreEqual(1, (int)matchTask.size());
+		}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicSearchUnitTest.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\ParserUnitTest.cpp
+	 */
+
+#include "stdafx.h"
+#include "CppUnitTest.h"
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+namespace ParserUnitTest
+{		
+	TEST_CLASS(ParserUnitTestClass)
+	{
+	public:
+		
+		Utility utility;
+
+		TEST_METHOD(Parser_ParseAddFloatTask)
+		{
+			// TODO: Your test code here
+			Parser parser = Parser("add a simple task");
+
+			Task parserActual = parser.getTask();
+
+			Task parserExpected = Task();
+			parserExpected.taskType = FLOATTASK;
+			parserExpected.title = "a simple task";
+
+			Assert::IsTrue(utility.isSame(parserExpected,parserActual));
+			
+		}
+
+		TEST_METHOD(Parser_ParseAddDeadLineWithoutTime)
+		{
+			// TODO: Your test code here
+			Parser parser = Parser("add test deadline date: 9");
+
+			Task parserActual = parser.getTask();
+
+			Task parserExpected = Task();
+			parserExpected.taskType = DEAD;
+			parserExpected.title = "test deadline";
+			parserExpected.startDate = Date(9,4,2015);
+			parserExpected.endDate = parserExpected.startDate;
+			parserExpected.startTime = Time(23,59);
+			parserExpected.endTime = parserExpected.startTime;
+
+			Assert::IsTrue(utility.isSame(parserExpected,parserActual));
+			
+		}
+
+		TEST_METHOD(Parser_ParseAddDealineWithouDate)
+		{
+			Parser parser = Parser("add test deadline time: 1630");
+
+			Task parserActual = parser.getTask();
+
+			Task parserExpected = Task();
+			parserExpected.taskType = DEAD;
+			parserExpected.title = "test deadline";
+			parserExpected.startDate = Date(11,4,2015);
+			parserExpected.endDate = parserExpected.startDate;
+			parserExpected.startTime = Time(16,30);
+			parserExpected.endTime = parserExpected.startTime;
+
+			Assert::IsTrue(utility.isEqual(parserExpected.startTime,Time(16,30)));
+		}
+
+		TEST_METHOD(Parser_ParseAddTimedTask)
+		{
+			Parser parser = Parser("add test timed date: 10/4 - 10/4 time: 10-20");
+
+			Task parserActual = parser.getTask();
+
+			Task parserExpected = Task();
+			parserExpected.taskType = TIMED;
+			parserExpected.title = "test timed";
+			parserExpected.startDate = Date(10,4,2015);
+			parserExpected.endDate = parserExpected.startDate;
+			parserExpected.startTime = Time(10,00);
+			parserExpected.endTime = Time(20,00);
+
+			Assert::IsTrue(utility.isSame(parserExpected,parserActual));
+
+			parser = Parser("add special timed time: 10-20");
+
+			parserActual = parser.getTask();
+
+			parserExpected = Task();
+			parserExpected.taskType = TIMED;
+			parserExpected.title = "special timed";
+			parserExpected.startTime = Time(10,00);
+			parserExpected.endTime = Time(20,00);
+
+			Assert::IsTrue(utility.isEqual(parserExpected.startTime,parserActual.startTime));
+			Assert::IsTrue(utility.isEqual(parserExpected.endTime,parserActual.endTime));
+			
+		}
+
+		TEST_METHOD(Parser_Delete)
+		{
+			Parser parser;
+			Command actualCommand;
+
+			parser = Parser("delete 1 2 3");
+			actualCommand = parser.getCommand();
+			Assert::IsTrue(actualCommand.idx.size() == 3);
+			Assert::IsTrue(actualCommand.cmd == DEL);
+
+			parser = Parser("delete -1");
+			actualCommand = parser.getCommand();
+			Assert::IsTrue(actualCommand.idx.size() == 0);
+			Assert::IsTrue(actualCommand.cmd == DEL);
+
+			parser = Parser("delete 1");
+			actualCommand = parser.getCommand();
+			Assert::IsTrue(actualCommand.idx.size() == 1);
+			Assert::IsTrue(actualCommand.cmd == DEL);
+		}
+
+		TEST_METHOD(Parser_Done)
+		{
+			Parser parser;
+			Command actualCommand;
+
+			parser = Parser("done 1 2 3");
+			actualCommand = parser.getCommand();
+			Assert::IsTrue(actualCommand.idx.size() == 3);
+			Assert::IsTrue(actualCommand.cmd == DONE);
+
+			parser = Parser("done -1");
+			actualCommand = parser.getCommand();
+			Assert::IsTrue(actualCommand.idx.size() == 0);
+			Assert::IsTrue(actualCommand.cmd == DONE);
+
+			parser = Parser("done 1");
+			actualCommand = parser.getCommand();
+			Assert::IsTrue(actualCommand.idx.size() == 1);
+			Assert::IsTrue(actualCommand.cmd == DONE);
+		}
+
+		TEST_METHOD(Parser_Search)
+		{
+			Parser parser;
+			Command actualCommand;
+			Task searchTask;
+
+			parser = Parser("search oh hello");
+			actualCommand = parser.getCommand();
+			searchTask = parser.getTask();
+			Assert::IsTrue(actualCommand.cmd == SEARCH);
+			Assert::IsTrue(searchTask.taskType == FLOATTASK);
+			Assert::IsTrue(searchTask.title == "oh hello");
+
+			parser = Parser("search date: 11/4");
+			actualCommand = parser.getCommand();
+			searchTask = parser.getTask();
+			Assert::IsTrue(actualCommand.cmd == SEARCH);
+			Assert::IsTrue(searchTask.taskType == DEAD);
+			Assert::IsTrue(searchTask.title == "");
+			Assert::IsTrue(utility.isEqual(searchTask.startDate,Date(11,4,2015)));
+
+			parser = Parser("search date: 11/4 - 13/4");
+			actualCommand = parser.getCommand();
+			searchTask = parser.getTask();
+			Assert::IsTrue(actualCommand.cmd == SEARCH);
+			Assert::IsTrue(searchTask.taskType == TIMED);
+			Assert::IsTrue(searchTask.title == "");
+			Assert::IsTrue(utility.isEqual(searchTask.startDate,Date(11,4,2015)));
+			Assert::IsTrue(utility.isEqual(searchTask.endDate,Date(13,4,2015)));
+
+			parser = Parser("search date: 13/4 - 11/4");
+			actualCommand = parser.getCommand();
+			searchTask = parser.getTask();
+			Assert::IsTrue(actualCommand.cmd == INVALID);
+
+			parser = Parser("search time: 13");
+			actualCommand = parser.getCommand();
+			searchTask = parser.getTask();
+			Assert::IsTrue(actualCommand.cmd == SEARCH);
+			Assert::IsTrue(searchTask.taskType == DEAD);
+			Assert::IsTrue(searchTask.title == "");
+			Assert::IsTrue(utility.isEqual(searchTask.startTime,Time(13,0)));
+
+			parser = Parser("search time:13 - 15");
+			actualCommand = parser.getCommand();
+			searchTask = parser.getTask();
+			Assert::IsTrue(actualCommand.cmd == SEARCH);
+			Assert::IsTrue(searchTask.taskType == TIMED);
+			Assert::IsTrue(searchTask.title == "");
+			Assert::IsTrue(utility.isEqual(searchTask.startTime,Time(13,0)));
+			Assert::IsTrue(utility.isEqual(searchTask.endTime,Time(15,0)));
+		}
+
+		TEST_METHOD(Parser_Display)
+		{
+			Parser parser;
+			Command actualCommand;
+
+			parser = Parser("display all");
+			actualCommand = parser.getCommand();
+			Assert::IsTrue(actualCommand.instruction == ALL);
+			Assert::IsTrue(actualCommand.cmd == DISPLAY);
+
+			parser = Parser("display overdue");
+			actualCommand = parser.getCommand();
+			Assert::IsTrue(actualCommand.instruction == OVERDUE);
+			Assert::IsTrue(actualCommand.cmd == DISPLAY);
+
+			parser = Parser("display undone");
+			actualCommand = parser.getCommand();
+			Assert::IsTrue(actualCommand.instruction == DISPLAYUNDONE);
+			Assert::IsTrue(actualCommand.cmd == DISPLAY);
+
+			parser = Parser("display done");
+			actualCommand = parser.getCommand();
+			Assert::IsTrue(actualCommand.instruction == DISPLAYDONE);
+			Assert::IsTrue(actualCommand.cmd == DISPLAY);
+
+			parser = Parser("display today");
+			actualCommand = parser.getCommand();
+			Assert::IsTrue(actualCommand.instruction == TODAY);
+			Assert::IsTrue(actualCommand.cmd == DISPLAY);
+
+			parser = Parser("display tomorrow");
+			actualCommand = parser.getCommand();
+			Assert::IsTrue(actualCommand.instruction == TMR);
+			Assert::IsTrue(actualCommand.cmd == DISPLAY);
+
+			parser = Parser("display 9/4");
+			actualCommand = parser.getCommand();
+			Assert::IsTrue(actualCommand.instruction == SHOWDATE);
+			Assert::IsTrue(actualCommand.cmd == DISPLAY);
+
+			parser = Parser("display -1/-1");
+			actualCommand = parser.getCommand();
+			Assert::IsTrue(actualCommand.cmd == INVALID);
+		}
+
+		TEST_METHOD(Parser_Edit)
+		{
+			Parser parser;
+			Command actualCommand;
+			Task editTask;
+
+			parser = Parser("edit 1 a new title");
+			actualCommand = parser.getCommand();
+			editTask = parser.getTask();
+			Assert::IsTrue(actualCommand.idx.size() == 1);
+			Assert::IsTrue(actualCommand.cmd == EDIT);
+			Assert::IsTrue(editTask.taskType == FLOATTASK);
+			Assert::IsTrue(editTask.title == "a new title");
+
+			parser = Parser("edit 1 date: 11/4");
+			actualCommand = parser.getCommand();
+			editTask = parser.getTask();
+			Assert::IsTrue(actualCommand.idx.size() == 1);
+			Assert::IsTrue(actualCommand.cmd == EDIT);
+			Assert::IsTrue(editTask.taskType == DEAD);
+			Assert::IsTrue(editTask.title == "");
+			Assert::IsTrue(utility.isEqual(editTask.startDate,Date(11,4,2015)));
+
+			parser = Parser("edit 1 time: 12");
+			actualCommand = parser.getCommand();
+			editTask = parser.getTask();
+			Assert::IsTrue(actualCommand.idx.size() == 1);
+			Assert::IsTrue(actualCommand.cmd == EDIT);
+			Assert::IsTrue(editTask.taskType == DEAD);
+			Assert::IsTrue(editTask.title == "");
+			Assert::IsTrue(utility.isEqual(editTask.startTime,Time(12,0)));
+			
+			parser = Parser("edit 1 time: 12 - 16");
+			actualCommand = parser.getCommand();
+			editTask = parser.getTask();
+			Assert::IsTrue(actualCommand.idx.size() == 1);
+			Assert::IsTrue(actualCommand.cmd == EDIT);
+			Assert::IsTrue(editTask.taskType == TIMED);
+			Assert::IsTrue(editTask.title == "");
+			Time expectedTime = Time(12,0);
+			Assert::IsTrue(utility.isEqual(editTask.startTime,expectedTime));
+			expectedTime = Time(16,0);
+			Assert::IsTrue(utility.isEqual(editTask.endTime,expectedTime));
+
+			parser = Parser("edit 1 date: 15/4 - 17/4");
+			actualCommand = parser.getCommand();
+			editTask = parser.getTask();
+			Assert::IsTrue(actualCommand.idx.size() == 1);
+			Assert::IsTrue(actualCommand.cmd == EDIT);
+			Assert::IsTrue(editTask.taskType == TIMED);
+			Assert::IsTrue(editTask.title == "");
+			Date expectedDate = Date(15,4,2015);
+			Assert::IsTrue(utility.isEqual(editTask.startDate,expectedDate));
+			expectedDate = Date(17,4,2015);
+			Assert::IsTrue(utility.isEqual(editTask.endDate,expectedDate));
+
+			parser = Parser("edit 1 date: 15/4 - 12/4");
+			actualCommand = parser.getCommand();
+			editTask = parser.getTask();
+			Assert::IsTrue(actualCommand.idx.size() == 1);
+			Assert::IsTrue(actualCommand.cmd == INVALID);
+		}
+
+		TEST_METHOD(Parser_Undo)
+		{
+			Parser parser;
+			Command actualCommand;
+
+			parser = Parser("undo");
+			actualCommand = parser.getCommand();
+			Assert::IsTrue(actualCommand.cmd == UNDO);
+
+			parser = Parser("undo dkasjdkajwe");
+			actualCommand = parser.getCommand();
+			Assert::IsTrue(actualCommand.cmd == UNDO);
+		}
+
+		TEST_METHOD(Parser_Undone)
+		{
+			Parser parser;
+			Command actualCommand;
+
+			parser = Parser("undone 1 2 3");
+			actualCommand = parser.getCommand();
+			Assert::IsTrue(actualCommand.idx.size() == 3);
+			Assert::IsTrue(actualCommand.cmd == UNDONE);
+
+			parser = Parser("undone -1");
+			actualCommand = parser.getCommand();
+			Assert::IsTrue(actualCommand.idx.size() == 0);
+			Assert::IsTrue(actualCommand.cmd == UNDONE);
+
+			parser = Parser("undone 1");
+			actualCommand = parser.getCommand();
+			Assert::IsTrue(actualCommand.idx.size() == 1);
+			Assert::IsTrue(actualCommand.cmd == UNDONE);
+		}
+	};
+}
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\ParserUnitTest.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\StorageUnitTest.cpp
+	 */
+
+#include "stdafx.h"
+#include "CppUnitTest.h"
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+namespace StorageUnitTest
+{		
+	TEST_CLASS(StorageUnitTestClass)
+	{
+	public:
+		
+		TEST_METHOD(Storage_ReadFileTest)
+		{
+			Storage storage = Storage("..\\SE-PlannerExe\\output_unittest - Copy.txt");
+
+			vector<Task> actualTaskList = storage.getAllTask();
+
+			Assert::AreEqual(6,(int)actualTaskList.size());
+			
+		}
+
+		TEST_METHOD(Storage_AutoCreateNewFileTest)
+		{
+			Storage storage = Storage("..\\SE-PlannerExe\\output1.txt");
+
+			vector<Task> actualTaskList = storage.getAllTask();
+
+			Assert::AreEqual(0,(int)actualTaskList.size());
+		}
+
+		TEST_METHOD(Storage_WriteToFile)
+		{
+			Storage storage = Storage("..\\SE-PlannerExe\\output.txt");
+
+			vector<Task> actualTaskList = storage.getAllTask();
+
+			int previousNumberOfTask = actualTaskList.size();
+			// perform one add
+			Parser parser = Parser("add a random new task");
+			Logic logic;
+			
+			actualTaskList = logic.Add(actualTaskList, parser.getTask());
+
+			storage.writeToFile(actualTaskList);
+
+			vector<Task> newTaskList = storage.getAllTask();
+			int newNumberOfTask = newTaskList.size();
+
+			Assert::AreEqual(newNumberOfTask,previousNumberOfTask+1);
+
+		}
+
+		TEST_METHOD(Storage_OutputFile)
+		{
+			Storage storage = Storage();
+
+			storage.setOutputFilePath("");
+			string actualOutputFile = storage.getOutputFilePath();
+
+			string expectedOutputFile = "output.txt";
+			Assert::AreEqual(expectedOutputFile,actualOutputFile);
+		}
+
+	};
+}
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\StorageUnitTest.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\UtilityUnitTest.cpp
+	 */
+
+#include "stdafx.h"
+#include "CppUnitTest.h"
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+namespace UtilityUnitTest
+{		
+	TEST_CLASS(UtilityUnitTestClass)
+	{
+	public:
+
+		Utility utility;
+		bool testValue;
+
+		TEST_METHOD(isValidDate)
+		{
+			Date testDate = Date(6,6,2015);
+			testValue = utility.isValidDate(testDate);
+			Assert::AreEqual(true, testValue);
+
+			testDate = Date(6,-6,2015);
+			testValue = utility.isValidDate(testDate);
+			Assert::AreEqual(true, !testValue);
+
+			testDate = Date(31,2,2015);
+			testValue = utility.isValidDate(testDate);
+			Assert::AreEqual(true, !testValue);
+
+			testDate = Date(28,2,2015);
+			testValue = utility.isValidDate(testDate);
+			Assert::AreEqual(true, testValue);
+
+			testDate = Date(29,2,2012);
+			testValue = utility.isValidDate(testDate);
+			Assert::AreEqual(true, testValue);
+
+			testDate = Date(29,2,2000);
+			testValue = utility.isValidDate(testDate);
+			Assert::AreEqual(true, testValue);
+
+			testDate = Date(29,2,3000);
+			testValue = utility.isValidDate(testDate);
+			Assert::AreEqual(true, !testValue);
+		}
+
+		TEST_METHOD(isValidTime)
+		{	
+			Time testTime = Time(15,0);
+			testValue = utility.isValidTime(testTime);
+			Assert::AreEqual(true,testValue);
+
+			testTime = Time(15,66);
+			testValue = utility.isValidTime(testTime);
+			Assert::AreEqual(false,testValue);
+
+			testTime = Time(25,0);
+			testValue = utility.isValidTime(testTime);
+			Assert::AreEqual(false,testValue);
+
+			testTime = Time(7,30);
+			testValue = utility.isValidTime(testTime);
+			Assert::AreEqual(true,testValue);
+
+			testTime = Time(15,-1);
+			testValue = utility.isValidTime(testTime);
+			Assert::AreEqual(false,testValue);
+		}
+
+		TEST_METHOD(isLaterDate)
+		{
+			Date dateBefore, dateAfter;
+
+			dateBefore = Date(2,4,2015);
+			dateAfter = Date(3,4,2015);
+			testValue = utility.isLaterDate(dateBefore, dateAfter);
+			Assert::AreEqual(true, testValue);
+
+			dateBefore = Date(2,4,2015);
+			dateAfter = Date(1,4,2015);
+			testValue = utility.isLaterDate(dateBefore, dateAfter);
+			Assert::AreEqual(false, testValue);
+
+			dateBefore = Date(2,4,2015);
+			dateAfter = Date(2,4,2015);
+			testValue = utility.isLaterDate(dateBefore, dateAfter);
+			Assert::AreEqual(true, testValue);
+		}
+
+		TEST_METHOD(isLaterTime)
+		{
+			Time timeBefore; 
+			Time timeAfter;
+
+			timeBefore = Time(15,30);
+			timeAfter = Time(15,31);
+			testValue = utility.isLaterTime(timeBefore, timeAfter);
+			Assert::AreEqual(true, testValue);
+
+			timeBefore = Time(15,30);
+			timeAfter = Time(15,30);
+			testValue = utility.isLaterTime(timeBefore, timeAfter);
+			Assert::AreEqual(true, testValue);
+
+			timeBefore = Time(15,30);
+			timeAfter = Time(15,29);
+			testValue = utility.isLaterTime(timeBefore, timeAfter);
+			Assert::AreEqual(false, testValue);
+		}
+
+		TEST_METHOD(isDiffDate)
+		{
+			Date date1, date2;
+
+			date1 = Date(29,3,2015);
+			date2 = Date(28,4,2015);
+			testValue = utility.isDiffDate(date1,date2);
+			Assert::AreEqual(true,testValue);
+
+			date1 = Date(29,3,2015);
+			date2 = Date(29,4,2015);
+			testValue = utility.isDiffDate(date1,date2);
+			Assert::AreEqual(true,testValue);
+
+			date1 = Date(29,3,2015);
+			date2 = Date(28,3,2015);
+			testValue = utility.isDiffDate(date1,date2);
+			Assert::AreEqual(true,testValue);
+
+			date1 = Date(29,3,2015);
+			date2 = Date(29,3,2016);
+			testValue = utility.isDiffDate(date1,date2);
+			Assert::AreEqual(true,testValue);
+
+			date1 = Date(29,3,2015);
+			date2 = Date(29,3,2015);
+			testValue = utility.isDiffDate(date1,date2);
+			Assert::AreEqual(false,testValue);
+		}
+
+		TEST_METHOD(isNullDate)
+		{
+			Date date;
+
+			date = Date();
+			testValue = utility.isNull(date);
+			Assert::AreEqual(true,testValue);
+
+			date = Date(29,3,2015);
+			testValue = utility.isNull(date);
+			Assert::AreEqual(false,testValue);
+		}
+
+		TEST_METHOD(isNullTime)
+		{
+			Time time;
+
+			time = Time();
+			testValue = utility.isNull(time);
+			Assert::AreEqual(true,testValue);
+
+			time = Time(15,30);
+			testValue = utility.isNull(time);
+			Assert::AreEqual(false,testValue);
+		}
+
+
+	};
+}
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\UtilityUnitTest.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\History.cpp
+	 */
+
+#include "History.h"
+#include <assert.h>
+
+/*
+	@desc: clear stack for safety
+*/
+History::History(void) {
+	while (!StateStack.empty()) StateStack.pop();
+	isNewState = true;
+}
+
+
+History::~History(void) {
+}
+
+/*
+	@desc: push new program state
+*/
+void History::pushState(vector<Task> newState) {
+	StateStack.push(newState);
+}
+
+void History::clearState() {
+	while (!StateStack.empty()) StateStack.pop();
+}
+
+bool History::canUndo() {
+	return (!StateStack.empty());
+}
+
+/*
+	@desc: undo to previous state
+*/
+vector<Task> History::undoState() {
+	assert(canUndo());
+	vector<Task> ret = StateStack.top();
+	StateStack.pop();
+	return ret;
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\History.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+#include "Logic.h"
+#include <vector>
+#include <string>
+#include <stdio.h>
+#include <ctype.h>
+#include <ctime>
+#include <iostream>
+#include <algorithm>
+#include <functional> 
+#include <assert.h>
+
+using namespace std;
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+Logic::Logic(void){
+	Utility utility;
+}
+
+
+Logic::~Logic(void){
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+vector<Task> Logic::Undone(vector<Task> allTask, vector<Task> displayedTask, vector<int> index)
+{
+	if (!isValidIndex(displayedTask, index)){
+		success = OPERATION_FAILED;
+		return allTask;
+	}
+
+	success = OPERATION_SUCCEEDED;
+
+	bool marked[1000];
+	for (int i = 0; i <= allTask.size() + 1; i++) marked[i] = false;
+
+	vector<Task> temp;
+	temp.clear();
+
+	for (int j = 0; j < index.size(); j++)
+	{
+		success = OPERATION_SUCCEEDED;
+
+		Task undoneTask = displayedTask[index[j]-1];
+
+
+		for (int i = 0; i < allTask.size(); i++)
+		{
+			if (utility.isSame(allTask[i],undoneTask)) 
+			{
+				marked[i] = true;
+				break;
+			}
+		}		
+	}
+
+	for (int i = 0; i < allTask.size(); i++)
+	{
+		temp.push_back(allTask[i]);
+		if (marked[i]) temp[i].isDone = false;
+		//cout<<i<<" "<<temp[i].isDone<<endl;
+	}
+
+	return temp;
+
+
+}
+
+
+// THIS IS THE COMPARATOR FOR THE SORT FUNCTION OF THE DISPLAY COMMAND. 
+// FLOAT AT BOTTOM, THEN SORT BY ENDING DATE, BY TIME, THEN BY NAME
+// orderTask(t1, t2) = true IF t1 shows before t2 when displayed
+// that is t1 < t2
+
+bool Logic::orderTask(Task t1, Task t2)
+{
+	if (t1.taskType == t2.taskType)
+	{
+		// SAME TASK TYPE
+		if (t1.taskType == FLOATTASK)
+		{
+			// FLOAT BOTTOM
+			return (t1.title.compare(t2.title) < 0);
+		}
+		else
+		{
+			// SAME END DATE
+			if (utility.isEqual(t1.endDate,t2.endDate))
+			{
+				// COMPARE TIME
+				if (!utility.isEqual(t1.endTime,t2.endTime))
+				{
+					return (utility.isLaterTime(t1.endTime,t2.endTime));
+				}
+				else return (t1.title.compare(t2.title) < 0);
+			}
+			else return (utility.isLaterDate(t1.endDate,t2.endDate));
+		}
+	}
+	else
+	{
+		// DIFFERENT TASK TYPE
+		if (t1.taskType == FLOATTASK || t2.taskType == FLOATTASK)
+		{
+			// AT MOST ONE FLOAT TASK ( DIFFERENT TASK TYPE)
+			if (t1.taskType == FLOATTASK) return false;
+			else return true;
+		}
+		else
+		{
+			// SAME END DATE
+			if (utility.isEqual(t1.endDate,t2.endDate))
+			{
+				if (!utility.isEqual(t1.endTime,t2.endTime))
+				{
+					// COMPARE TIME
+					return (utility.isLaterTime(t1.endTime,t2.endTime));
+				}
+				else return (t1.title.compare(t2.title) < 0);
+			}
+			else return (utility.isLaterDate(t1.endDate,t2.endDate));
+		}
+	}
+}
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Main.cpp
+	 */
+
+#include "Parser.h"
+#include "UI.h"
+#include "Storage.h"
+#include "Logic.h"
+#include "History.h"
+
+#include <iostream>
+#include <regex>
+#include <string>
+#include <Windows.h>
+
+using namespace std;
+
+
+int main()
+{
+	vector<Task> MainTaskList;
+	vector<Task> DisplayTaskList;
+	vector<Task> LastStateTaskList;
+
+	MainTaskList.clear();
+	DisplayTaskList.clear();
+	LastStateTaskList.clear();
+	UI ui;
+	Storage storage = Storage();
+
+	Parser parser;
+	Logic logic;
+	History history = History();
+
+
+	while (true) 
+	{
+		// read from file
+		MainTaskList = storage.getAllTask();
+		LastStateTaskList = MainTaskList;
+
+		// Color White for clarity
+		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+		SetConsoleTextAttribute(hConsole,15);
+		string userString = ui.getInput();
+
+		parser = Parser(userString);
+
+		Command userCommand = parser.getCommand();
+		Task userTask = parser.getTask();
+
+
+		// MAIN COMMAND SWITCH
+
+		if (userCommand.cmd == INVALID) {
+			ui.showFailureMessage();
+			history.isNewState = false;
+		}
+
+		else if (userCommand.cmd == ADD) {
+			MainTaskList = logic.Add(MainTaskList,userTask);
+			ui.showMessage("ADDED !\n");
+			history.isNewState = true;
+		}
+
+		else if (userCommand.cmd == DEL) {
+			MainTaskList = logic.Delete(MainTaskList,DisplayTaskList,userCommand.idx);
+			if (logic.success == OPERATION_SUCCEEDED) {
+				history.isNewState = true;
+				ui.showMessage("DELETED !\n");
+			}
+			else {
+				ui.showFailureMessage();
+				history.isNewState = false;
+			}
+
+		}
+
+		else if (userCommand.cmd == SEARCH) {
+			history.isNewState = false;
+			DisplayTaskList = logic.search(MainTaskList,userTask);
+
+			if (logic.success == OPERATION_SUCCEEDED) {
+				ui.showMessage("\n");
+				ui.showTaskList(DisplayTaskList);
+			}
+			else {
+				ui.showFailureMessage();
+			}
+			
+		}
+
+		else if (userCommand.cmd == DISPLAY) {
+			history.isNewState = false;
+			DisplayTaskList = logic.display(MainTaskList,userTask,userCommand.instruction);
+	
+			ui.showTaskList(DisplayTaskList);
+		}
+
+		else if (userCommand.cmd == EDIT) {
+			MainTaskList = logic.edit(MainTaskList,DisplayTaskList,userCommand.idx[0],userTask);
+
+			if (logic.success == OPERATION_SUCCEEDED) {
+				history.isNewState = true;
+				ui.showMessage("EDITED !\n");
+			}
+			else {
+				ui.showFailureMessage();
+				history.isNewState = false;
+			}
+		}
+
+		else if (userCommand.cmd == EXIT) {
+			ui.showExitMessage();
+			exit(0);
+		}
+
+		else if (userCommand.cmd == CLS) {
+			system("CLS");
+			history.isNewState = true;
+
+		}
+
+		else if (userCommand.cmd == DONE) {
+			MainTaskList = logic.Done(MainTaskList,DisplayTaskList,userCommand.idx);
+
+			if (logic.success == OPERATION_SUCCEEDED) {
+				history.isNewState = true;
+				ui.showMessage("DONE !\n");
+			}
+			else {
+				ui.showFailureMessage();
+				history.isNewState = false;
+			}
+		}
+
+		else if (userCommand.cmd == UNDONE) {
+			MainTaskList = logic.Undone(MainTaskList,DisplayTaskList,userCommand.idx);
+
+			if (logic.success == OPERATION_SUCCEEDED) {
+				history.isNewState = true;
+				ui.showMessage("UNDONE !\n");
+			}
+			else {
+				ui.showFailureMessage();
+				history.isNewState = false;
+			}
+		}
+
+		else if (userCommand.cmd == UNDO) {
+
+			if (history.canUndo()) {
+				MainTaskList = history.undoState();
+				ui.showMessage("DONE !\n");
+			}
+			else {
+				ui.showMessage("CAN'T UNDO !\n");
+			}
+			
+
+			history.isNewState = true;
+			
+		}
+
+		else if (userCommand.cmd == HELP) {
+			history.isNewState = false;
+			ui.showHelp();
+		}
+
+		else if (userCommand.cmd == USE) {
+			bool isNewPathOK = storage.setOutputFilePath(userCommand.path);
+
+			if (isNewPathOK) {
+					ui.showMessage("Changed !\n");
+					history.clearState();
+			}
+			else {
+					ui.showFailureMessage();
+			}
+
+			history.isNewState = false;
+			
+		}
+
+		else if (userCommand.cmd == WHERE) {
+			history.isNewState = false;
+			ui.showMessage(storage.getOutputFilePath()+"\n");
+		}
+
+		// JUST WRITE TO FILE, UPDATE LAST VERSION
+		if (history.isNewState)  {
+			storage.writeToFile(MainTaskList);
+			if (userCommand.cmd != UNDO) history.pushState(LastStateTaskList);
+		}
+
+	}
+	
+
+	return 0;
+}
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Main.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Parser.cpp
+	 */
+
+#include "Parser.h"
+#include "Utility.h"
+
+#include <string>
+#include <iostream>
+#include <regex>
+#include <stdio.h>
+#include <ctype.h>
+#include <ctime>
+#include <sstream>
+
+using namespace std;
+
+Command newCommand;
+Task newTask;
+Date today;
+smatch cap;
+
+bool isDateRange = false, isTimeRange = false;
+bool isDateValid = false, isTimeValid = false;
+bool isDate = false, isTime = false;
+string TaskTitle = "";
+string DateString = "";
+string TimeString = "";
+
+
+Parser::Parser(void)
+{
+}
+
+
+Parser::~Parser(void)
+{
+}
+
+/*
+@desc : Parse a string into correct time	
+*/
+Time ParseTime(string inp) {
+	Time ret(-1,-1);
+
+	//HH or H
+	if (inp.length() <= 2) {
+		ret.hour = atoi(inp.c_str());
+		ret.min = 0;
+	}
+
+	//HHMM
+	if (inp.length() == 4) {
+		ret.hour = atoi(inp.substr(0,2).c_str());
+		ret.min = atoi(inp.substr(2,2).c_str());
+	}
+
+	//HMM
+	if (inp.length() == 3) {
+		ret.hour = atoi(inp.substr(0,1).c_str());
+		ret.min = atoi(inp.substr(1,2).c_str());
+	}
+	return ret;
+}
+
+
+/* 
+@desc : Remove all space inside string
+*/
+string removeSpace(string inp) {
+	string str = inp;
+	std::string::iterator end_pos = std::remove(str.begin(), str.end(), ' ');
+	str.erase(end_pos, str.end());
+	return str;
+}
+
+/* 
+@desc : Parse a string into correct date
+*/
+Date ParseDate(string inp) {
+	Date ret(-1,-1,-1);
+	string inp1 = inp;
+	string inp2 = removeSpace(inp1);
+	inp = inp2;
+
+	// D or DD
+	if (inp.length() <= 2) {
+		regex rgxDD("(\\d+)");
+		if (regex_search(inp,cap,rgxDD)) {
+			ret.day = atoi(string(cap[1]).c_str());
+			ret.month = today.month;
+			ret.year = today.year;
+		}
+	}
+
+	// DD/MM
+	else if (inp.length() <= 5) {
+		regex rgxDD("(\\d+)\\/(\\d+)");
+		if (regex_search(inp,cap,rgxDD)) {
+			ret.day = atoi(string(cap[1]).c_str());
+			ret.month = atoi(string(cap[2]).c_str());
+			ret.year = today.year;
+		}
+	}
+	else {
+
+		// DD/MM/YYYY
+		regex rgxDD("(\\d+)\\/(\\d+)\\/(\\d+)");
+		if (regex_search(inp,cap,rgxDD)) {
+			ret.day = atoi(string(cap[1]).c_str());
+			ret.month = atoi(string(cap[2]).c_str());
+			ret.year = atoi(string(cap[3]).c_str());
+			// convert 15 -> 2015
+			if (ret.year >= 0 && ret.year <= 99) ret.year += 2000;
+		}
+	}
+	return ret;
+}
+
+/*
+@desc: Extract Command Type from string
+*/
+CommandType extractCommandType(string inp) {
+
+	CommandType ret = INVALID;
+
+	regex rgx("^\\s*(\\S+)");
+	smatch sm;
+
+	if (regex_search(inp,sm,rgx)) {
+		string cmd = sm[1];
+
+		if (cmd == COMMAND_ADD) ret = ADD;
+		if (cmd == COMMAND_SEARCH) ret = SEARCH;
+		if (cmd == COMMAND_DISPLAY) ret = DISPLAY;
+		if (cmd == COMMAND_DELETE) ret = DEL;
+		if (cmd == COMMAND_EDIT) ret = EDIT;
+		if (cmd == COMMAND_DONE) ret = DONE;
+		if (cmd == COMMAND_UNDO) ret = UNDO;
+		if (cmd == COMMAND_EXIT) ret = EXIT;
+		if (cmd == COMMAND_CLS) ret = CLS;
+		if (cmd == COMMAND_HELP) ret = HELP;
+		if (cmd == COMMAND_UNDONE) ret = UNDONE;
+		if (cmd == COMMAND_USE) ret = USE;
+		if (cmd == COMMAND_WHERE) ret = WHERE;
+	}
+
+	return ret;
+}
+
+/*
+@desc: Extract All Timed Task Info from string
+*/
+void extractTimedTaskInfo(string inp) {
+	newTask.taskType = TIMED;
+
+	if (!isDate) {
+		// TIMED TASK WITHOUT DATE
+		regex rgxTimeRangeInner("(\\d+)\\s*-\\s*(\\d+)");
+		if (regex_search(TimeString, cap, rgxTimeRangeInner))
+		{
+			newTask.startTime = ParseTime(cap[1]);
+			newTask.endTime = ParseTime(cap[2]);
+		}
+	}
+	else {
+		// DATE RANGE
+		if (isDateRange) {
+			// TIMED TASK WITH DATE RANGE
+			regex rgxDateRangeInner("\\s*(.*)\\s*-\\s*(.*)");
+			smatch cap2;
+			if (regex_search(DateString, cap2, rgxDateRangeInner))
+			{
+				newTask.startDate = ParseDate(cap2[1]);
+				newTask.endDate = ParseDate(cap2[2]);
+			}
+		}
+		else {
+			//TIMED TASK WITH DATE NO RANGE
+			regex rgxOnlyDate("date:\\s*([\\d\\/\\s]+)\\s*");
+			if (regex_search(inp, cap, rgxOnlyDate)) {
+				newTask.startDate = ParseDate(cap[1]);
+				newTask.endDate = newTask.startDate;
+			}
+		}
+
+		// TIME RANGE
+		regex rgxTimeRangeInner("(\\d+)\\s*-\\s*(\\d+)");
+		if (regex_search(TimeString, cap, rgxTimeRangeInner)) {
+			newTask.startTime = ParseTime(cap[1]);
+			newTask.endTime = ParseTime(cap[2]);
+		}
+	}
+}
+
+/*
+@desc: Extract Deadline Info From String
+*/
+void extractDeadlineInfo(string inp) {
+	newTask.taskType = DEAD;
+
+	// only one date and optional one time
+
+	regex rgxOnlyDate("date:\\s*([\\d\\/]+)");
+	if (regex_search(inp,cap,rgxOnlyDate)) {
+		newTask.startDate = ParseDate(cap[1]);
+		newTask.endDate = newTask.startDate;
+	}
+
+	if (isTime) {
+		regex rgxOnlyTime("time:\\s*(\\d+)");
+		if (regex_search(inp,cap,rgxOnlyTime)) {
+			newTask.startTime = ParseTime(cap[1]);
+			newTask.endTime = newTask.startTime;
+		}
+	}
+}
+
+/*
+@desc: Extract Date and Time Info from String
+*/
+void extractDateTime(string inp) {
+	smatch sm;
+	regex rgxDateRange("date:\\s*([\\d\\/]+\\s*-\\s*[\\d\\/]+)");
+	if (regex_search(inp,sm,rgxDateRange))  {
+		DateString = sm[1];
+		isDateRange = true;
+	}
+
+	regex rgxTimeRange("time:\\s*(\\d+\\s*-\\s*\\d+)");
+	if (regex_search(inp,sm,rgxTimeRange)) {
+		TimeString = sm[1];
+		isTimeRange = true;
+	}
+
+	if (isDateRange || isTimeRange) {
+		// Timed Task
+		extractTimedTaskInfo(inp);
+	}
+	else {
+		// Deadline
+		extractDeadlineInfo(inp);
+	}
+
+}
+
+/*
+@desc: Trim leading and trailing spaces, tabs
+*/
+void trimString(string &input) {
+	size_t pos;
+	pos = input.find_first_not_of(" \n\t");
+
+	if (pos != string::npos) {
+		input = input.substr(pos);
+	}
+
+	input = input.substr(0, input.find_last_not_of(" \n\t") + 1);
+}
+
+/*
+@desc: Extract Task Title from String
+*/
+void extractTitle(string inp) {
+	if (isDate && isTime) {
+		regex TitleWithDateTime("\\s(.*)\\s(date:|time:).*(date:|time:).*$");
+		if (regex_search(inp,cap,TitleWithDateTime)) newTask.title = cap[1];
+	}
+	else if (!isDate && !isTime) {
+		regex TitleOnly("\\s(.*)");
+		if (regex_search(inp,cap,TitleOnly)) newTask.title = cap[1];
+	}
+	else {
+		regex TitleWithDateOrTime("\\s(.*)\\s(date:|time:).*$");
+		if (regex_search(inp,cap,TitleWithDateOrTime)) newTask.title = cap[1];
+	}
+
+	if (newTask.title != "") trimString(newTask.title);
+
+}
+
+/*
+@desc: Extract All Info of A Task
+*/
+void extractTaskInfo(string inp, int skip) {
+
+	// check if date exist
+	regex rgxDate("date:");
+	if (regex_search(inp,rgxDate)) isDate = true;
+
+	// check if time exist
+	regex rgxTime("time:");
+	if (regex_search(inp,rgxTime)) isTime = true;
+
+	extractTitle(inp.substr(skip));
+
+	if (!isDate && !isTime) {
+		newTask.taskType = FLOATTASK;
+	}
+	else {
+		// extract date and time:
+		extractDateTime(inp);
+	}
+
+}
+
+/*
+@desc: Specifically for ADD command. Auto assume some info, convenient for user
+*/
+void Parser::assumeInfo() {
+	time_t t = time(0);
+	struct tm * now = localtime ( &t );
+
+	today = Date(now->tm_mday,now->tm_mon+1,now->tm_year+1900);
+
+	if (newTask.taskType == DEAD) {
+		// date without time
+		if (!utility.isNull(newTask.startDate) && utility.isNull(newTask.startTime)) {
+			newTask.startTime = Time(23,59);
+			newTask.endTime = Time(23,59);
+		}
+
+		// time without date
+		if (!utility.isNull(newTask.startTime) && utility.isNull(newTask.startDate)) {
+			newTask.startDate = today;
+			newTask.endDate = today;
+		}
+	}
+
+	if (newTask.taskType == TIMED) {
+		// time range without date
+		if (!utility.isNull(newTask.startTime) && utility.isNull(newTask.startDate)) {
+			newTask.startDate = today;
+			newTask.endDate = today;
+		}
+		// date without time
+		if (!utility.isNull(newTask.startDate) && utility.isNull(newTask.startTime)) {
+			newTask.startTime = Time(0,0);
+			newTask.endTime = Time(23,59);
+		}
+	}
+}
+
+/*
+@desc: Read List of Index for DELETE, DONE, UNDONE
+*/
+void readIndexList(string inp, int skip) {
+	istringstream iss(inp.substr(skip));
+
+	int readIndex;
+	bool correct = true;
+
+	while (iss>>readIndex) {
+		newCommand.idx.push_back(readIndex);
+		if (readIndex < 1) correct = false;
+	}
+
+	if (!correct) newCommand.idx.clear();
+}
+
+/*
+@desc: Extract Info for DISPLAY Command
+*/
+void Parser::extractDisplayInfo(string inp) {
+	bool isInstruction = false;
+	// get instruction
+	regex rgxToday("display today");
+	if (regex_search(inp,rgxToday)) {
+		isInstruction = true;
+		newCommand.instruction = TODAY;
+	}
+
+	regex rgxTmr("display tomorrow");
+	if (regex_search(inp,rgxTmr)) {
+		isInstruction = true;
+		newCommand.instruction = TMR;
+	}
+
+	regex rgxOverdue("display overdue");
+	if (regex_search(inp,rgxOverdue)) {
+		isInstruction = true;
+		newCommand.instruction = OVERDUE;
+	}
+
+	regex rgxAll("display all");
+	if (regex_search(inp,rgxAll)) {
+		isInstruction = true;
+		newCommand.instruction = ALL;
+	}
+
+	regex rgxDone("display done");
+	if (regex_search(inp,rgxDone)) {
+		isInstruction = true;
+		newCommand.instruction = DISPLAYDONE;
+	}
+
+	regex rgxUndone("display undone");
+	if (regex_search(inp,rgxUndone)) {
+		isInstruction = true;
+		newCommand.instruction = DISPLAYUNDONE;
+	}
+
+
+	// or get date
+
+	if (!isInstruction) {
+		//display [Date]
+		// Deadline
+		newTask.taskType = DEAD;
+
+		// only one date and optional one time
+
+		regex rgxOnlyDate("display\\s*([\\d\\/]+)");
+		if (regex_search(inp,cap,rgxOnlyDate)) {
+			newTask.startDate = ParseDate(cap[1]);
+			newTask.endDate = newTask.startDate;
+		}
+
+		if (utility.isValidDate(newTask.startDate)) newCommand.instruction = SHOWDATE;
+		else newCommand.cmd = INVALID;
+	}
+
+}
+
+/*
+@desc: Parser Constructor
+@param: user string input command
+
+@post-condition: Invalid Command Type if information is invalid
+*/
+Parser::Parser(string inp) {
+	// receive input, parse accordingly
+	isDateRange = false;
+	isTimeRange = false;
+	isDateValid = false;  
+	isTimeValid = false;
+	isDate = false; 
+	isTime = false;
+	TaskTitle = "";
+	DateString = "";
+	TimeString = "";
+
+	newCommand = Command();
+	newTask = Task();
+
+	// extract command type
+	CommandType cmdType = extractCommandType(inp);
+	newCommand.cmd = cmdType;
+
+
+	if (cmdType == ADD) {
+		extractTaskInfo(inp,COMMAND_ADD.length());
+		assumeInfo();
+
+		bool isValidTask = utility.isValidAddTask(newTask);
+		if (!isValidTask) newCommand.cmd = INVALID;
+	}
+
+	if (cmdType == DEL) {
+		readIndexList(inp,COMMAND_DELETE.length());
+	}
+
+	if (cmdType == EDIT) {
+		// extract EDIT index;
+		regex rgxEditIdx("edit\\s*(\\d+)");
+
+		if (regex_search(inp,cap,rgxEditIdx)) {
+			newCommand.idx.push_back(atoi(string(cap[1]).c_str()));
+			if (newCommand.idx[0] < 1) newCommand.idx.clear();
+		}
+
+		extractTaskInfo(inp,COMMAND_EDIT.length()+2);
+		if (!utility.isValidOtherTask(newTask)) {
+			newCommand.cmd = INVALID;
+		}
+
+	}
+
+	if (cmdType == DISPLAY) {
+		extractDisplayInfo(inp);
+	}
+
+	if (cmdType == SEARCH) {
+		extractTaskInfo(inp,COMMAND_SEARCH.length());
+		if (!utility.isValidOtherTask(newTask)) {
+			newCommand.cmd = INVALID;
+		}
+
+	}
+
+	if (cmdType == DONE) {	
+		readIndexList(inp,COMMAND_DONE.length());
+	}
+
+	if (cmdType == UNDONE) {
+		readIndexList(inp,COMMAND_UNDONE.length());
+	}
+
+	if (cmdType == USE) {
+		regex rgxFilePath("use (.*)");
+
+		if (regex_search(inp,cap,rgxFilePath)) {
+			newCommand.path = cap[1];
+		}
+
+	}
+}
+
+
+Command Parser::getCommand() {
+	return newCommand;
+}
+
+Task Parser::getTask() {
+	return newTask;
+}
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Parser.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Utility.cpp
+	 */
+
+
+#include "Utility.h"
+#include <fstream>
+
+Utility::Utility(void)
+{
+}
+
+
+Utility::~Utility(void)
+{
+}
+
+/*
+@desc: Is DD/MM/YYYY a valid date?
+*/
+bool Utility::isValidDate(Date z) {
+	int d = z.day;
+	int m = z.month;
+	int y = z.year;
+
+	// IF I FOLLOW CODING CONVENTION, THIS PART WILL BE DISASTER TO READ
+	if (! (1<= m && m<=12) ) return false;
+	if (! (1<= d && d<=31) ) return false;
+	if ( (d==31) && (m==2 || m==4 || m==6 || m==9 || m==11) ) return false;
+	if ( (d==30) && (m==2) ) return false;
+	if ( (m==2) && (d==29) && (y%4!=0) ) return false;
+	if ( (m==2) && (d==29) && (y%400==0) ) return true;
+	if ( (m==2) && (d==29) && (y%100==0) ) return false;
+	if ( (m==2) && (d==29) && (y%4==0)  ) return true;
+
+	return true;
+}
+
+/*
+@desc: Is HH/MM a valid time?
+*/
+bool Utility::isValidTime(Time z) {
+	int hh = z.hour;
+	int mm = z.min;
+
+	if (hh < 0 || hh >= 24) return false;
+	if (mm < 0 || mm >= 60) return false;
+
+	return true;
+}
+
+/*
+@desc: Is second date >= first date
+*/
+bool Utility::isLaterDate(Date first, Date second) {
+	int day1 = first.day;
+	int month1 = first.month;
+	int year1 = first.year;
+
+	int day2 = second.day;
+	int month2 = second.month;
+	int year2 = second.year;
+
+	if (year1 != year2) {
+		return year2 > year1;
+	}
+	else if (month1 != month2) {
+		return month2 > month1;
+	}
+	else return (day2 >= day1);
+}
+
+/*
+@desc: Is second time >= first time
+*/
+bool Utility::isLaterTime(Time first, Time second) {
+	int h1 = first.hour;
+	int m1 = first.min;
+
+	int h2 = second.hour;
+	int m2 = second.min;
+
+	if (h1 != h2) {
+		return h2 > h1;
+	}
+	else return m2 >= m1;
+}
+
+/*
+@desc: Are two dates different
+*/
+bool Utility::isDiffDate(Date first, Date second) {
+	if (first.day != second.day || first.month != second.month || first.year != second.year) return true;
+	return false;
+}
+
+bool Utility::isNotNullDate(Date z) {
+	if (z.day != -1 && z.month != -1 && z.year != -1) return true;
+	return false;
+}
+
+bool Utility::isNotNullTime(Time z) {
+	if (z.hour != -1 && z.min != -1) return true;
+	return false;
+}
+
+bool Utility::isNull(string x) {
+	return (x == "");
+}
+
+bool Utility::isNull(Date x) {
+	return (x.day == -1 && x.month == -1 && x.year == -1);
+}
+
+bool Utility::isNull (Time x) {
+	return (x.hour == -1 && x.min == -1);
+}
+
+bool Utility::isEqual(Date d1, Date d2) {
+	return (d1.day == d2.day && d1.month == d2.month && d1.year == d2.year);
+}
+
+bool Utility::isEqual(Time t1, Time t2) {
+	return (t1.hour == t2.hour && t1.min == t2.min);
+}
+
+
+/*
+@desc: Is all information of the task about to added valid?
+*/
+bool Utility::isValidAddTask(Task x) {
+	bool isOK = true;
+
+	if (isNull(x.title)) isOK = false;
+
+	if (x.taskType == FLOATTASK) {
+	}
+
+	if (x.taskType == DEAD) {
+		if (!isValidDate(x.startDate)) isOK = false;
+		if (!isValidTime(x.startTime)) isOK = false;
+	}
+
+	if (x.taskType == TIMED) {
+		if (!isValidDate(x.startDate)) isOK = false;
+		if (!isValidTime(x.startTime)) isOK = false;
+
+		if (!isValidDate(x.endDate)) isOK = false;
+		if (!isValidTime(x.endTime)) isOK = false;
+
+		if (isLaterDate(x.startDate,x.endDate)) {
+			if (!isDiffDate(x.startDate,x.endDate))
+				if (!isLaterTime(x.startTime,x.endTime)) isOK = false;
+		}
+		else isOK = false;
+	}
+
+	return isOK;
+}
+
+/*
+@desc: Test whether task2 is a substring of task1
+*/
+bool Utility::compareTitle(Task task1, Task task2) {
+	if (isNull(task2.title)) return true;
+	else return (task1.title.find(task2.title) != string::npos);
+}
+
+/*
+@desc: Are the dates searched for (task2) match date in task1 
+*/
+bool Utility::compareDate(Task task1, Task task2) {
+	if (isNull(task1.startDate) && isNull(task2.startDate)) return true;
+	else {
+		if (!isNull(task1.startDate) && !isNull(task2.startDate)) {
+			return isEqual(task1.endDate,task2.endDate) && isEqual(task1.startDate,task2.startDate);
+		}
+		else  {
+			if (isNull(task2.startDate)) return true;
+			else return false;
+		}
+	}
+}
+
+/*
+@desc: Are the times searched for (task2) match time in task1 
+*/
+bool Utility::compareTime(Task task1, Task task2) {
+	if (isNull(task1.startTime) && isNull(task2.startTime)) return true;
+	else {
+		if (!isNull(task1.startTime) && !isNull(task2.startTime)) {
+			return isEqual(task1.endTime,task2.endTime) && isEqual(task1.startTime,task2.endTime);
+		}
+		else  {
+			if (isNull(task2.startTime)) return true;
+			else return false;
+		}
+	}
+}
+
+bool Utility::isSame(Task t1, Task t2) {
+	return (t1.title == t2.title && isEqual(t1.startDate,t2.startDate) && isEqual(t1.endDate,t2.endDate) &&
+		isEqual(t1.startTime,t2.startTime) && isEqual(t1.endTime,t2.endTime));
+}
+
+/*
+@desc: True if Date x1 < Date x2
+*/
+bool Utility::beforeToday(Date x1, Date x2) {
+	// true if x1 < x2
+	if (x1.year < x2.year) return true;
+	else if (x1.year == x2.year) {
+		if (x1.month < x2.month) return true;
+		else if (x1.month == x2.month) return x1.day < x2.day;
+	}
+
+	return false;
+}
+
+
+/*
+@desc: Are the search/edit information valid?
+*/
+bool Utility::isValidOtherTask(Task x) {
+	bool isOK = true;
+
+	if (x.taskType == FLOATTASK) {
+	}
+
+	if (x.taskType == DEAD) {
+		if (isNotNullDate(x.startDate)) if (!isValidDate(x.startDate)) isOK = false;
+		if (isNotNullTime(x.startTime)) if (!isValidTime(x.startTime)) isOK = false;
+	}
+
+	if (x.taskType == TIMED) {
+		if (isNotNullDate(x.startDate)) if (!isValidDate(x.startDate)) isOK = false;
+		if (isNotNullTime(x.startTime)) if (!isValidTime(x.startTime)) isOK = false;
+
+		if (isNotNullDate(x.endDate)) if (!isValidDate(x.endDate)) isOK = false;
+		if (isNotNullTime(x.endTime)) if (!isValidTime(x.endTime)) isOK = false;
+
+		if (isNotNullDate(x.startDate) && isNotNullDate(x.endDate)) {
+			if (isLaterDate(x.startDate,x.endDate)) {
+				if (!isDiffDate(x.startDate,x.endDate))
+					if (isNotNullTime(x.startTime) && isNotNullTime(x.endTime))
+						if (!isLaterTime(x.startTime,x.endTime)) isOK = false;
+			}
+			else isOK = false;
+		}
+	}
+
+	// need at least one field to exist
+	if (x.title == "" && !isNotNullDate(x.startDate) && !isNotNullDate(x.endDate) && !isNotNullTime(x.startTime) && !isNotNullTime(x.endTime)) 
+		isOK = false;
+
+	return isOK;
+}
+
+// Logging 
+void Utility::log(string logString) {
+	ofstream logFile("logFile.txt", std::ios_base::out | std::ios_base::app);
+	logFile<<logString<<endl;
+	logFile.flush();
+	logFile.close();
+}
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Utility.cpp
+
+
+
+
+

@@ -1,0 +1,469 @@
+//@author: a0108393a
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+const std::string ADD_START = "Start Add Function";
+const std::string ADD_END  = "End Add Function";
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+const std::string DELETE_START = "Start Delete Function";
+const std::string DELETE_END  = "End Delete Function";
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+const std::string DONE_START = "Start Done Function";
+const std::string DONE_END  = "End Done Function";
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+vector<Task> Logic::Add(vector<Task> allTask, Task addTask){
+	// if there is no taskType defined -> fail command
+	if (addTask.taskType == NUL){
+		success = OPERATION_FAILED;
+		return allTask;
+	}
+	else{
+		success = OPERATION_SUCCEEDED;
+		
+		utility.log(ADD_START);
+		vector<Task> temp = allTask;
+		temp.push_back(addTask);
+		
+		utility.log(ADD_END);
+		return temp;
+	}
+}
+
+bool isValidIndex(vector<Task> displayedTask, vector<int> index){
+	// if there is no index instruction -> fail command
+	if (index.size() == 0){
+		return false;
+	}
+
+	// if any index exceeds the size of display Task List -> fail command
+	for (int j = 0; j < index.size(); j++){
+		//cout<<index[j]<<endl;
+		if (index[j] > displayedTask.size()){
+			return false;
+		}
+	}
+
+	return true;
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+vector<Task> Logic::Delete(vector<Task> allTask, vector<Task> displayedTask, vector<int> index){
+	// if index not found or index given exceeds size of displayedTask -> fail command
+	if (!isValidIndex(displayedTask, index)){
+		success = OPERATION_FAILED;
+		return allTask;
+	}
+	
+	success = OPERATION_SUCCEEDED;
+
+	utility.log(DELETE_START);
+
+	// 'marked' array for allTask
+	// meaning : false = this task will NOT be deleted
+	bool marked[MAX_TASK_SIZE];
+	for (int i = 0; i <= allTask.size() + 1; i++){
+		marked[i] = false;
+	}
+	vector<Task> temp;
+	temp.clear();
+
+	// mark the task to be deleted inside the mainTaskList
+	for (int j = 0; j < index.size(); j++){
+		
+		success = OPERATION_SUCCEEDED;
+
+		Task deleteTask = displayedTask[index[j]-1];
+
+
+		for (int i = 0; i < allTask.size(); i++){
+			if (utility.isSame(allTask[i],deleteTask)) {
+				marked[i] = true; // THIS TASK WILL BE DELETED
+				break;
+			}
+		}		
+	}
+
+	for (int i = 0; i < allTask.size(); i++){
+		// DELETE ACCORDINGLY
+		if (!marked[i]) temp.push_back(allTask[i]);
+	}
+	
+	utility.log(DELETE_END);
+	return temp;
+
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+vector<Task> Logic::Done(vector<Task> allTask, vector<Task> displayedTask, vector<int> index){
+	// if index not found or index given exceeds size of displayedTask -> fail command	
+	if (!isValidIndex(displayedTask, index)){
+		success = OPERATION_FAILED;
+		return allTask;
+	}
+
+	success = OPERATION_SUCCEEDED;
+
+	utility.log(DONE_START);
+
+	bool marked[MAX_TASK_SIZE];
+
+	for (int i = 0; i <= allTask.size() + 1; i++){
+		marked[i] = false;
+	}
+	
+	vector<Task> temp;
+	temp.clear();
+
+	for (int j = 0; j < index.size(); j++){
+		
+		success = OPERATION_SUCCEEDED;
+
+		Task doneTask = displayedTask[index[j]-1];
+
+		for (int i = 0; i < allTask.size(); i++){
+			if (utility.isSame(allTask[i],doneTask)) {
+				marked[i] = true;
+				break;
+			}
+		}		
+	}
+
+	for (int i = 0; i < allTask.size(); i++){
+		temp.push_back(allTask[i]);
+		if (marked[i]) temp[i].isDone = true;
+		//cout<<i<<" "<<temp[i].isDone<<endl;
+	}
+	
+	utility.log(DONE_END);
+	return temp;
+
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Storage.cpp
+	 */
+
+#include "Storage.h"
+#include <iostream>
+#include <cstdlib>
+#include <fstream>
+#include "Parser.h"
+
+
+Storage::Storage(void){
+	outputFile = getOutputFilePath();
+}
+
+Storage::Storage(string filePath){
+	outputFile = filePath;
+}
+
+Storage::~Storage(void){
+}
+
+// Check if the output file is ready for reading/writing. If file not exist, create one
+void checkOuputFile(string outFile){
+	ofstream savefile;
+	savefile.open(outFile, ofstream::app);
+
+	bool fileExist = false;
+	if (savefile.good()) fileExist = true;
+
+	if (!fileExist){
+		//cout<<"SAVE FILE NOT FOUND. CREATED A NEW ONE\n";
+		savefile.open(outFile, ios_base::out);
+	}
+
+	savefile.close();
+}
+
+bool setStatus(string line){
+			return (line[0] == '1');
+}
+
+/*
+	@desc: Pass a line from file to be parsed by parser
+*/
+Task lineToParser(string line, bool DoneStatus){
+	Task newTask;
+	Parser parseFromFile(line);
+	newTask = parseFromFile.getTask();
+	newTask.isDone = DoneStatus;
+			
+	return newTask;
+}
+
+// GET ALL TASKS FROM FILE AND RETURN IN CORRECT FORMAT
+vector<Task> Storage::getAllTask(void){
+	
+	checkOuputFile(outputFile);
+
+	// open File for reading
+	ifstream myfile(outputFile);
+
+	vector<Task> allTask;
+	allTask.clear();
+
+	if (myfile.is_open()){
+		//cout<<"FILE OPENED"<<endl;
+		utility.log("Start getAllTask Function");
+		string line;
+		while (getline(myfile,line)){
+			//cout<<"LINE READ FROM FILE: "<<line<<endl;
+			// file Structure : [1/0]add ..........
+			// process each line
+			try {
+				bool DoneStatus = false;
+				DoneStatus = setStatus(line);
+
+				// extract the add command: add ....... and pass to parser
+				line = line.substr(1);
+				//cout<<"LINE TO PARSER: "<<line<<endl;
+				Task newTask = Task();
+				newTask = lineToParser(line, DoneStatus);
+				if (newTask.taskType != NUL && utility.isValidAddTask(newTask)) allTask.push_back(newTask);
+			}
+			catch (exception& e){
+				utility.log("Empty line break in output file");
+			}
+			
+		}
+		myfile.close();
+	}
+	// return;
+
+	//cout<<"TASK READ FROM FILE = "<<allTask.size()<<endl;
+	
+	utility.log("End getAllTask Function");
+	return allTask;
+
+}
+
+string setTimeString(int time){
+	string timeStr = "";
+	if(time < 10){
+			timeStr = "0"+to_string(time);
+	} else{
+		timeStr = to_string(time);
+	}
+	return timeStr;
+}
+
+// convert time to String for writing to file
+string timeToString(Time time){
+	string out = "";
+	out = setTimeString(time.hour);
+	out += setTimeString(time.min);
+	
+	return out;
+}
+string setTaskDead(string TaskString, Task tempTask){
+			TaskString += "date: ";
+			string TaskDate = to_string(tempTask.startDate.day) + "/" + to_string(tempTask.startDate.month) + "/" + to_string(tempTask.startDate.year);
+			TaskString += TaskDate;
+
+			TaskString += " time: ";
+			string TaskTime = timeToString(tempTask.startTime);
+			TaskString += TaskTime;
+
+			return TaskString;			
+}
+
+string setTaskTimed(string TaskString,Task tempTask){
+	TaskString += "date: ";
+			string TaskDate = to_string(tempTask.startDate.day) + "/" + to_string(tempTask.startDate.month) + "/" + to_string(tempTask.startDate.year);
+			TaskString += TaskDate;
+			TaskString += "-";
+			TaskDate = to_string(tempTask.endDate.day) + "/" + to_string(tempTask.endDate.month) + "/" + to_string(tempTask.endDate.year);
+			TaskString += TaskDate;
+
+			TaskString += " time: ";
+			string TaskTime = timeToString(tempTask.startTime);
+			TaskString += TaskTime;
+			TaskString += "-";
+			TaskTime = timeToString(tempTask.endTime);
+			TaskString += TaskTime;
+			return TaskString;
+}
+
+string setIsDone(Task tempTask, string TaskString){
+	if (tempTask.isDone == true){
+		TaskString += "1";
+	} else {
+		TaskString += "0";
+	}
+	return TaskString;
+}
+
+// convert task to string for writing to file
+string convertToString(Task tempTask){
+	//Task tempTask = Task();
+
+	string TaskString = "";
+
+	// isDone Status
+	TaskString = setIsDone(tempTask, TaskString);
+	// add
+	TaskString += "add ";
+	// Title
+	TaskString += tempTask.title;
+	
+	if (tempTask.taskType != FLOATTASK){
+		TaskString += " ";
+
+		// Deadline
+		if (tempTask.taskType == DEAD){
+			TaskString = setTaskDead(TaskString, tempTask);
+		}
+		// Timed
+
+		if (tempTask.taskType == TIMED){
+			TaskString = setTaskTimed(TaskString, tempTask);
+			}
+	}
+	
+	return TaskString;
+}
+
+void Storage::writeToFile(vector<Task> allTask){
+	ofstream myfile;
+	myfile.open(outputFile);
+
+	if (myfile.is_open()){
+
+		for (int i = 0; i < allTask.size(); i++){
+			string out = convertToString(allTask[i]);
+			myfile << out << endl;
+		}
+		myfile.flush();
+		myfile.close();
+	}
+}
+
+/*
+	@desc: set the new folder path. Report false if unable to write there
+*/
+bool Storage::setOutputFilePath(string folderPath) {
+	// remove backslash
+	if (folderPath.length() > 0) {
+		char lastCharacter = folderPath[folderPath.length()-1];
+		if (lastCharacter == '/' || lastCharacter == '\\') folderPath = folderPath.substr(0,folderPath.length()-1);
+	}
+
+	string filePath = folderPath + '\\' + OUTPUT_FILENAME;
+
+	ofstream newOutputFile;
+	newOutputFile.open(filePath,std::ios_base::out | std::ios_base::app);
+
+	if (newOutputFile.is_open()) {
+		ofstream settingFile;
+		settingFile.open(SETTING_FILE);
+
+		settingFile << filePath;
+		settingFile.close();
+		outputFile = filePath;
+	}
+	else return false;
+}
+
+/*
+	@desc: Get Current Output FilePath. If unable to open, create a new default one
+*/
+string Storage::getOutputFilePath() {
+	ifstream settingFile;
+	settingFile.open(SETTING_FILE);
+
+	bool isSettingFileValid = true;
+
+	if (settingFile.is_open()) {
+		string filePath;
+		getline(settingFile,filePath);
+
+		// try open
+		ifstream testOutputFile(filePath);
+
+		if (testOutputFile.is_open()) {
+			testOutputFile.close();
+			return filePath;
+		}
+		else isSettingFileValid = false;
+	}
+	else isSettingFileValid = false;
+
+	if (!isSettingFileValid) {
+		settingFile.close();
+
+		ofstream writeToSettingFile;
+		writeToSettingFile.open(SETTING_FILE);
+
+		string defaultOutput = "output.txt";
+		writeToSettingFile << defaultOutput;
+
+		return defaultOutput;
+	}
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Storage.cpp
+
+
+
+
+

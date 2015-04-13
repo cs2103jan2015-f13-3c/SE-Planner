@@ -1,0 +1,817 @@
+//@author: a0108417j
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicEditUnitTest.cpp
+	 */
+
+		TEST_METHOD(isIndexValidTest) {
+			Logic logic;
+
+			//Test for valid index
+			std::vector<Task> displayedTasks;
+			Task floatTask;
+			displayedTasks.push_back(floatTask);
+			bool result = logic.isIndexValid(displayedTasks, 1);
+			Assert::IsTrue(result);
+
+			//Test for invalid index of 0 or lesser
+			result = logic.isIndexValid(displayedTasks, 0);
+			Assert::IsFalse(result);
+
+			//Test for invalid index of greater than displayedTask.size()
+			result = logic.isIndexValid(displayedTasks, 2);
+			Assert::IsFalse(result);
+		}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicEditUnitTest.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicEditUnitTest.cpp
+	 */
+
+		TEST_METHOD(isTaskTypeValid) {
+			Logic logic;
+
+			//Test when edit is not allowed when toBeEditedTask is FLOATTASK and newTaskInfo is not FLOATTASK
+			Task tobeEditedTask;
+			tobeEditedTask.taskType = FLOATTASK;
+			Task newTaskInfo;
+			newTaskInfo.taskType = DEAD;
+			bool result = logic.isTaskTypeValid(tobeEditedTask, newTaskInfo);
+			Assert::IsFalse(result);
+
+			//Test when edit is not allowed when toBeEditedTask is TIMED and newTaskInfo is DEAD
+			tobeEditedTask.taskType = TIMED;
+			result = logic.isTaskTypeValid(tobeEditedTask, newTaskInfo);
+			Assert::IsFalse(result);
+
+			//Test when edit is not allowed when toBeEditedTask is DEAD and newTaskInfo is TIMED
+			tobeEditedTask.taskType = DEAD;
+			newTaskInfo.taskType = TIMED;
+			result = logic.isTaskTypeValid(tobeEditedTask, newTaskInfo);
+			Assert::IsFalse(result);
+		}
+
+	};
+}
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicEditUnitTest.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicSearchUnitTest.cpp
+	 */
+
+		TEST_METHOD(isTaskValidTest) {
+			Logic logic;
+
+			//Test if isTaskValid will return false if taskType = NUL
+			Task invalidTask;
+			bool result = logic.isTaskValid(invalidTask);
+			Assert::IsFalse(result);
+
+			//Test if isTaskValid will return true if taskType != NUL
+			Task validTask;
+			validTask.taskType = FLOATTASK;
+			result = logic.isTaskValid(validTask);
+			Assert::IsTrue(result);
+		}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicSearchUnitTest.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicSearchUnitTest.cpp
+	 */
+
+		TEST_METHOD(isTaskMatchTest) {
+			Logic logic;
+
+			//Test if isTaskMatch will return true when all fields of tasks are same
+			Task task;
+			task.title = "Floating Task";
+			Task matchingTask = task;
+			bool result = logic.isTaskMatch(task, matchingTask);
+			Assert::IsTrue(result);
+
+			//Test if isTaskMatch will return false when all fields of tasks are same except title
+			matchingTask.title = "Floating Task 2";
+			result = logic.isTaskMatch(task, matchingTask);
+			Assert::IsFalse(result);
+
+			//Test if isTaskMatch will return false when all fields of tasks are same except date
+			matchingTask = task;
+			matchingTask.startDate.day = 1;
+			result = logic.isTaskMatch(task, matchingTask);
+			Assert::IsFalse(result);
+
+			//Test if isTaskMatch will return false when all fields of tasks are same except time
+			matchingTask = task;
+			matchingTask.startTime.hour = 1;
+			result = logic.isTaskMatch(task, matchingTask);
+			Assert::IsFalse(result);
+		}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicSearchUnitTest.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicSearchUnitTest.cpp
+	 */
+
+		TEST_METHOD(findMatchedTaskTest) {
+			Logic logic;
+
+			//Test if findMatchedTaskTest will return the displayedTask.size() of 1
+			//if matchingTask is the only task in allTasks
+			Task floatingTask;
+			floatingTask.title = "Floating Task";
+			std::vector<Task> allTasks;
+			allTasks.push_back(floatingTask);
+			std::vector<Task> displayedTask = logic.findMatchedTasks(allTasks, floatingTask);
+			Assert::AreEqual(1, (int)displayedTask.size());
+			
+			//Test if findMatchedTaskTest will return the displayedTask.size() of 1
+			//if matchingTask is the one of the two tasks in allTasks
+			Task dead;
+			dead.title = "Dead";
+			allTasks.push_back(dead);
+			displayedTask = logic.findMatchedTasks(allTasks, floatingTask);
+			Assert::AreEqual(1, (int)displayedTask.size());
+		}
+
+	};
+}
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\ParserUnitTest\LogicSearchUnitTest.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+const std::string SEARCH_START = "Start Search Function";
+const std::string SEARCH_END  = "End Search Function";
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+const std::string DISPLAY_START = "Start Display Function";
+const std::string DISPLAY_END = "End Display Function";
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+const std::string EDIT_START = "Start Edit Function";
+const std::string EDIT_END = "End Edit Function";
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+const std::string EMPTY = "Empty Array";
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This function is a general function that throw exception when array size = 0 
+void processArray(std::vector<Task> array) throw (exception) {
+	if (array.size() == 0){
+		throw exception();
+	} else {
+		//Do nothing
+	}
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This function searches through allTasks for searchedTask and return tasks which matched the searchedTask
+std::vector<Task> Logic::search(std::vector<Task> allTasks, Task searchedTask) {
+	assert(allTasks.size() >= 0);
+
+	std::vector<Task> matchedTasks;
+	success = OPERATION_FAILED;
+
+	utility.log(SEARCH_START);
+
+	try {
+		processArray(allTasks);
+
+		if (isTaskValid(searchedTask)) {
+			matchedTasks = findMatchedTasks(allTasks, searchedTask);
+			success = OPERATION_SUCCEEDED;
+		} else {
+			//Do nothing
+		}
+
+	} catch (exception& e) {
+		utility.log(EMPTY);
+	}
+
+	utility.log(SEARCH_END);
+
+	return matchedTasks;
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This function checks if task is valid by checking its taskType
+bool Logic::isTaskValid(Task task) {
+	if (task.taskType != NUL) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This function checks through allTasks for any tasks that matched task and return them
+std::vector<Task> Logic::findMatchedTasks(std::vector<Task> allTasks, Task task) {
+	std::vector<Task> matchedTasks;
+
+	for (int i = 0; i < allTasks.size(); i++) {
+		if (isTaskMatch(allTasks[i], task)) {
+			matchedTasks.push_back(allTasks[i]);
+		} else {
+			//Do nothing
+		}
+	}
+
+	return matchedTasks;
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This function will return true only when the task and matchingTask have same title, date and time
+bool Logic::isTaskMatch(Task task, Task matchingTask) {
+	bool isTitleMatch = utility.compareTitle(task, matchingTask);
+	bool isDateMatch = utility.compareDate(task, matchingTask);
+	bool isTimeMatch = utility.compareTime(task, matchingTask);
+
+	if (isTitleMatch && isDateMatch && isTimeMatch) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This functions finds all tasks from allTasks that corresponds to instruction and return them
+vector<Task> Logic::display(vector<Task> allTasks, Task specificTaskDate, InstructionType instruction)
+{
+	assert(allTasks.size() >= 0);
+
+	vector<Task> displayedTasks;
+
+	utility.log(DISPLAY_START);
+
+	try {
+		processArray(allTasks);
+
+		switch (instruction) {
+		case ALL:
+			displayedTasks = allTasks;
+			break;
+		case DISPLAYDONE:
+			displayedTasks = findDoneTasks(allTasks);
+			break;
+		case DISPLAYUNDONE:
+			displayedTasks = findUndoneTasks(allTasks);
+			break;
+		case OVERDUE:
+			displayedTasks = findOverdueTasks(allTasks);
+			break;
+		case TODAY:
+			displayedTasks = findTodayTasks(allTasks);
+			break;
+		case TMR:
+			displayedTasks = findTmrTasks(allTasks);
+			break;
+		case SHOWDATE:
+			displayedTasks = findSpecificDateTasks(allTasks, specificTaskDate);
+			break;
+		default:
+			break;
+		};
+
+	} catch (exception& e) {
+		utility.log(EMPTY);
+	}
+
+	//Sort displayedTasks according to date followed by time
+	sort(displayedTasks.begin(), displayedTasks.end(), bind(&Logic::orderTask,this,std::placeholders::_1,std::placeholders::_2));
+
+	utility.log(DISPLAY_END);
+
+	return displayedTasks;
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This function find and return today date
+Date Logic::getTodayDate() {
+	Date today;
+	time_t t = time(0);
+	struct tm * now = localtime(&t);
+
+	today = Date(now->tm_mday, now->tm_mon+1, now->tm_year+1900);
+
+	return today;
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This function find and return tmr date
+Date Logic::getTmrDate() {
+	Date tmrDate;
+	time_t t = time(0);
+	struct tm * now = localtime (&t);
+
+	time(&t);
+	t = t + (60 * 60 * 24);
+	struct tm * tmr = localtime (&t);
+		
+	tmrDate = Date(tmr->tm_mday, tmr->tm_mon+1, tmr->tm_year+1900);
+
+	return tmrDate;
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This function returns specificTaskDate in Date class format
+Date Logic::getSpecificDate(Task specificTaskDate) {
+	Date specificDate = Date(specificTaskDate.startDate.day,
+							 specificTaskDate.startDate.month,
+							 specificTaskDate.startDate.year);
+	return specificDate;
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This function finds and returns all done tasks
+std::vector<Task> Logic::findDoneTasks(std::vector<Task> allTasks) {
+	std::vector<Task> displayedTasks;
+
+	for (int i = 0; i < allTasks.size(); i++) {
+		bool displayCondition = allTasks[i].isDone;
+		if (displayCondition) {
+				displayedTasks.push_back(allTasks[i]);
+			}
+	}
+
+	return displayedTasks;
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This function finds and returns all undone tasks
+std::vector<Task> Logic::findUndoneTasks(std::vector<Task> allTasks) {
+	std::vector<Task> displayedTasks;
+
+	for (int i = 0; i < allTasks.size(); i++) {
+		bool displayCondition = !allTasks[i].isDone;
+		if (displayCondition) {
+			displayedTasks.push_back(allTasks[i]);
+		}
+	}
+
+	return displayedTasks;
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This function finds and returns all undone and overdue tasks based on today date
+std::vector<Task> Logic::findOverdueTasks(std::vector<Task> allTasks) {
+	std::vector<Task> displayedTasks;
+	Date today = getTodayDate();
+
+	for (int i = 0; i < allTasks.size(); i++) {
+
+		//displayCondition = when task is undone and task before today date
+		bool displayCondition = !allTasks[i].isDone && utility.beforeToday(allTasks[i].startDate, today);
+
+		if (displayCondition) {
+			displayedTasks.push_back(allTasks[i]);
+		}
+	}
+
+	return displayedTasks;
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This function finds and returns all undone and today tasks
+std::vector<Task> Logic::findTodayTasks(std::vector<Task> allTasks) {
+	std::vector<Task> displayedTasks;
+	Date today = getTodayDate();
+
+	for (int i = 0; i < allTasks.size(); i++) {
+
+		//displayCondition = when task is undone and today task or floating task
+		bool displayCondition = !allTasks[i].isDone &&
+								(allTasks[i].taskType == FLOATTASK || utility.isEqual(allTasks[i].startDate, today));
+		
+		if (displayCondition) {
+			displayedTasks.push_back(allTasks[i]);
+		}
+	}
+
+	return displayedTasks;
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This function finds and returns all undone and tmr tasks
+std::vector<Task> Logic::findTmrTasks(std::vector<Task> allTasks) {
+	std::vector<Task> displayedTasks;
+	Date tmr = getTmrDate();
+
+	for (int i = 0; i < allTasks.size(); i++) {
+
+		//displayCondition = when task is undone and tmr task or floating task
+		bool displayCondition = !allTasks[i].isDone &&
+								(allTasks[i].taskType == FLOATTASK || utility.isEqual(allTasks[i].startDate, tmr));
+		
+		if (displayCondition) {
+			displayedTasks.push_back(allTasks[i]);
+		}
+	}
+
+	return displayedTasks;
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This function finds and returns all undone and specific date tasks
+std::vector<Task> Logic::findSpecificDateTasks(std::vector<Task> allTasks, Task specificTaskDate) {
+	std::vector<Task> displayedTasks;
+	Date specificDate = getSpecificDate(specificTaskDate);
+
+	for (int i = 0; i < allTasks.size(); i++) {
+			
+			//displayCondition = when task is undone and specific date task or floating task
+			bool displayCondition = !allTasks[i].isDone &&
+									(allTasks[i].taskType == FLOATTASK || utility.isEqual(allTasks[i].startDate, specificDate));
+			
+			if (displayCondition) {
+				displayedTasks.push_back(allTasks[i]);
+			}
+		}
+
+	return displayedTasks;
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This functions edit allTasks with the newTaskInfo
+vector<Task> Logic::edit(vector<Task> allTasks, vector<Task> displayedTasks, int index, Task newTaskInfo)
+{
+	assert(allTasks.size() >= 0);
+	assert(displayedTasks.size() >= 0);
+
+	std::vector<Task> updatedAllTasks = allTasks;
+	success = OPERATION_FAILED;
+
+	utility.log(EDIT_START);
+
+	try {
+		processArray(allTasks);
+		processArray(displayedTasks);
+
+		if (isInputValid(displayedTasks, index, newTaskInfo)) {
+			Task toBeEditedTask = displayedTasks[index - 1];
+
+			if (isTaskTypeValid(toBeEditedTask, newTaskInfo)) {
+				updatedAllTasks = updateAllTasks(allTasks, toBeEditedTask, newTaskInfo);
+			} else {
+				//Do nothing
+			}
+
+		} else {
+			//Do nothing
+		}
+
+	} catch (exception& e) {
+		utility.log(EMPTY);
+	}
+
+	utility.log(EDIT_END);
+
+	return updatedAllTasks;
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This function checks if the edit input is correct
+bool Logic::isInputValid(std::vector<Task> displayedTasks, int index, Task newTaskInfo) {
+	if ((isIndexValid(displayedTasks, index)) && (isTaskValid(newTaskInfo))) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This function checks if index is valid by comparing with the displayTask's size
+bool Logic::isIndexValid(std::vector<Task> displayedTasks, int index) {
+	if ((index <= 0) || (index > displayedTasks.size())) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This function compares toBeEditedTask with newTaskInfo and determine if it is suitable to update toBeEditedTask
+bool Logic::isTaskTypeValid(Task toBeEditedTask, Task newTaskInfo) {
+	if (((toBeEditedTask.taskType == FLOATTASK) && (newTaskInfo.taskType != FLOATTASK)) ||
+		((toBeEditedTask.taskType == DEAD) && (newTaskInfo.taskType == TIMED)) ||
+		((toBeEditedTask.taskType == TIMED) && (newTaskInfo.taskType == DEAD))) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This function updates allTasks with the newTaskInfo
+std::vector<Task> Logic::updateAllTasks(vector<Task> allTasks, Task toBeEditedTask, Task newTaskInfo) {
+	std::vector<Task> updatedAllTasks = allTasks;
+
+	for (int i = 0; i < allTasks.size(); i++) {
+
+		if (utility.isSame(allTasks[i],toBeEditedTask)) {
+			Task updatedTask = updateTask(allTasks[i], newTaskInfo);
+
+			if (utility.isValidAddTask(updatedTask)) {
+				updatedAllTasks[i] = updatedTask;
+				success = OPERATION_SUCCEEDED;
+			} else {
+				//Do nothing
+			}
+		} else {
+			//Do nothing
+		}
+	}
+
+	return updatedAllTasks;
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
+	/**
+	 * origin: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+	 */
+
+//This functions updates toBeEditedTask with the newTaskInfo
+Task Logic::updateTask(Task toBeEditedTask, Task newTaskInfo) {
+	Task editedTask = toBeEditedTask;
+
+	//Update title
+	if (!utility.isNull(newTaskInfo.title)) {
+		editedTask.title = newTaskInfo.title;
+	} else {
+		//Do nothing
+	}
+
+	//Update Start Date
+	if (!utility.isNull(newTaskInfo.startDate)) {
+		editedTask.startDate = newTaskInfo.startDate;
+	} else {
+		//Do nothing
+	}
+
+	//Update End Date
+	if (!utility.isNull(newTaskInfo.endDate)) {
+		editedTask.endDate = newTaskInfo.endDate;
+	} else {
+		//Do nothing
+	}
+
+	//Update Start Time
+	if (!utility.isNull(newTaskInfo.startTime)) {
+		editedTask.startTime = newTaskInfo.startTime;
+	} else {
+		//Do nothing
+	}
+
+	//Update End Time
+	if (!utility.isNull(newTaskInfo.endTime)) {
+		editedTask.endTime = newTaskInfo.endTime;
+	} else {
+		//Do nothing
+	}
+
+	return editedTask;
+}
+
+	// End of segment: C:\Users\User\Downloads\Desktop\SE-Planner\SE-Planner\SE-Planner\Logic.cpp
+
+
+
+
+
