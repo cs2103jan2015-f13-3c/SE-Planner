@@ -7,9 +7,32 @@
 #include <iostream>
 #include <algorithm>
 #include <functional> 
+#include <assert.h>
 
 using namespace std;
 
+//@author A0108417J
+const std::string SEARCH_START = "Start Search Function";
+const std::string SEARCH_END  = "End Search Function";
+
+//@author A0108417J
+const std::string DISPLAY_START = "Start Display Function";
+const std::string DISPLAY_END = "End Display Function";
+
+//@author A0108417J
+const std::string EDIT_START = "Start Edit Function";
+const std::string EDIT_END = "End Edit Function";
+
+//@author A0108417J
+const std::string EMPTY = "Empty Array";
+
+//@author A0108417J
+//This function is a general function that throw exception when array size = 0 
+void processArray(std::vector<Task> array) throw (exception) {
+	if (array.size() == 0){
+		throw exception();
+	}
+}
 
 Logic::Logic(void){
 	Utility utility;
@@ -140,20 +163,36 @@ vector<Task> Logic::Done(vector<Task> allTask, vector<Task> displayedTask, vecto
 }
 
 //@author A0108417J
+//This function searches through allTasks for searchedTask and return tasks which matched the searchedTask
 std::vector<Task> Logic::search(std::vector<Task> allTasks, Task searchedTask) {
-	std::vector<Task> matchedTasks;
+	assert(allTasks.size() >= 0);
 
-	if (isTaskValid(searchedTask)) {
-		matchedTasks = findMatchedTasks(allTasks, searchedTask);
-		success = OPERATION_SUCCEEDED;
-	} else {
-		success = OPERATION_FAILED;
+	std::vector<Task> matchedTasks;
+	success = OPERATION_FAILED;
+
+	utility.log(SEARCH_START);
+
+	try {
+		processArray(allTasks);
+
+		if (isTaskValid(searchedTask)) {
+			matchedTasks = findMatchedTasks(allTasks, searchedTask);
+			success = OPERATION_SUCCEEDED;
+		} else {
+			//Do nothing
+		}
+
+	} catch (exception& e) {
+		utility.log(EMPTY);
 	}
+
+	utility.log(SEARCH_END);
 
 	return matchedTasks;
 }
 
 //@author A0108417J
+//This function checks if task is valid by checking its taskType
 bool Logic::isTaskValid(Task task) {
 	if (task.taskType != NUL) {
 		return true;
@@ -163,6 +202,7 @@ bool Logic::isTaskValid(Task task) {
 }
 
 //@author A0108417J
+//This function checks through allTasks for any tasks that matched task and return them
 std::vector<Task> Logic::findMatchedTasks(std::vector<Task> allTasks, Task task) {
 	std::vector<Task> matchedTasks;
 
@@ -178,6 +218,7 @@ std::vector<Task> Logic::findMatchedTasks(std::vector<Task> allTasks, Task task)
 }
 
 //@author A0108417J
+//This function will return true only when the task and matchingTask have same title, date and time
 bool Logic::isTaskMatch(Task task, Task matchingTask) {
 	bool isTitleMatch = utility.compareTitle(task, matchingTask);
 	bool isDateMatch = utility.compareDate(task, matchingTask);
@@ -190,171 +231,338 @@ bool Logic::isTaskMatch(Task task, Task matchingTask) {
 	}
 }
 
-//Display function's sub-functions
-Date getTodayDate() {
-	Date today;
-	time_t t = time(0);
-	struct tm * now = localtime ( &t );
-
-	today = Date(now->tm_mday,now->tm_mon+1,now->tm_year+1900);
-
-	return today;
-}
-
-Date getTmrDate() {
-	Date tmr;
-	time_t t = time(0);
-	struct tm * now = localtime ( &t );
-
-	time(&t);
-	t = t + (60 * 60 * 24);
-	struct tm * now1 = localtime (&t);
-		
-	tmr = Date(now1->tm_mday,now1->tm_mon+1,now1->tm_year+1900);
-
-	return tmr;
-}
-
-//Main display function
-vector<Task> Logic::Display(vector<Task> allTasks, Task displayedTaskDate, InstructionType instruction)
+//@author A0108417J
+//This functions finds all tasks from allTasks that corresponds to instruction and return them
+vector<Task> Logic::display(vector<Task> allTasks, Task specificTaskDate, InstructionType instruction)
 {
+	assert(allTasks.size() >= 0);
+
 	vector<Task> displayedTasks;
-	Date today = getTodayDate();
-	Date tmr =  getTmrDate();
-	Date specificDate = Date(displayedTaskDate.startDate.day,displayedTaskDate.startDate.month,displayedTaskDate.startDate.year);
 
-	switch (instruction) {
-	case ALL:
-		for (int i = 0; i < allTasks.size(); i++) {
-			displayedTasks.push_back(allTasks[i]);
-		}
-		break;
-	case DISPLAYDONE:
-		for (int i = 0; i < allTasks.size(); i++) {
-			if (allTasks[i].isDone) {
-				displayedTasks.push_back(allTasks[i]);
-			}
-		}
-		break;
-	case DISPLAYUNDONE:
-		for (int i = 0; i < allTasks.size(); i++) {
-			if (!allTasks[i].isDone) {
-				displayedTasks.push_back(allTasks[i]);
-			}
-		}
-		break;
-	case OVERDUE:
-		for (int i = 0; i < allTasks.size(); i++) {
-			if (!allTasks[i].isDone && utility.beforeToday(allTasks[i].startDate,today)) {
-				displayedTasks.push_back(allTasks[i]);
-			}
-		}
-		break;
-	case TODAY:
-		for (int i = 0; i < allTasks.size(); i++) {
-			if (!allTasks[i].isDone && (allTasks[i].taskType == FLOATTASK || utility.isEqual(allTasks[i].startDate,today))) {
-				displayedTasks.push_back(allTasks[i]);
-			}
-		}
-		break;
-	case TMR:
-		for (int i = 0; i < allTasks.size(); i++) {
-			if (!allTasks[i].isDone && (allTasks[i].taskType == FLOATTASK || utility.isEqual(allTasks[i].startDate,tmr))) {
-				displayedTasks.push_back(allTasks[i]);
-			}
-		}
-		break;
-	case SHOWDATE:
-		for (int i = 0; i < allTasks.size(); i++) {
-			if (!allTasks[i].isDone && (allTasks[i].taskType == FLOATTASK || utility.isEqual(allTasks[i].startDate,specificDate))) {
-				displayedTasks.push_back(allTasks[i]);
-			}
-		}
-		break;
-	default:
-		break;
-	};
+	utility.log(DISPLAY_START);
 
-	// sort Task
-	sort(displayedTasks.begin(),displayedTasks.end(),bind(&Logic::orderTask,this,std::placeholders::_1,std::placeholders::_2));
+	try {
+		processArray(allTasks);
+
+		switch (instruction) {
+		case ALL:
+			displayedTasks = allTasks;
+			break;
+		case DISPLAYDONE:
+			displayedTasks = findDoneTasks(allTasks);
+			break;
+		case DISPLAYUNDONE:
+			displayedTasks = findUndoneTasks(allTasks);
+			break;
+		case OVERDUE:
+			displayedTasks = findOverdueTasks(allTasks);
+			break;
+		case TODAY:
+			displayedTasks = findTodayTasks(allTasks);
+			break;
+		case TMR:
+			displayedTasks = findTmrTasks(allTasks);
+			break;
+		case SHOWDATE:
+			displayedTasks = findSpecificDateTasks(allTasks, specificTaskDate);
+			break;
+		default:
+			break;
+		};
+
+	} catch (exception& e) {
+		utility.log(EMPTY);
+	}
+
+	//Sort displayedTasks according to date followed by time
+	sort(displayedTasks.begin(), displayedTasks.end(), bind(&Logic::orderTask,this,std::placeholders::_1,std::placeholders::_2));
+
+	utility.log(DISPLAY_END);
 
 	return displayedTasks;
 }
 
-//Edit function's sub-functions
-bool isInputValid(vector<Task> displayedTasks, int index, Task newTaskInfo) {
-	if ((index > displayedTasks.size()) || (newTaskInfo.taskType == NUL)) {
+//@author A0108417J
+//This function find and return today date
+Date Logic::getTodayDate() {
+	Date today;
+	time_t t = time(0);
+	struct tm * now = localtime(&t);
+
+	today = Date(now->tm_mday, now->tm_mon+1, now->tm_year+1900);
+
+	return today;
+}
+
+//@author A0108417J
+//This function find and return tmr date
+Date Logic::getTmrDate() {
+	Date tmrDate;
+	time_t t = time(0);
+	struct tm * now = localtime (&t);
+
+	time(&t);
+	t = t + (60 * 60 * 24);
+	struct tm * tmr = localtime (&t);
+		
+	tmrDate = Date(tmr->tm_mday, tmr->tm_mon+1, tmr->tm_year+1900);
+
+	return tmrDate;
+}
+
+//@author A0108417J
+//This function returns specificTaskDate in Date class format
+Date Logic::getSpecificDate(Task specificTaskDate) {
+	Date specificDate = Date(specificTaskDate.startDate.day,
+							 specificTaskDate.startDate.month,
+							 specificTaskDate.startDate.year);
+	return specificDate;
+}
+
+//@author A0108417J
+//This function finds and returns all done tasks
+std::vector<Task> Logic::findDoneTasks(std::vector<Task> allTasks) {
+	std::vector<Task> displayedTasks;
+
+	for (int i = 0; i < allTasks.size(); i++) {
+		bool displayCondition = allTasks[i].isDone;
+		if (displayCondition) {
+				displayedTasks.push_back(allTasks[i]);
+			}
+	}
+
+	return displayedTasks;
+}
+
+//@author A0108417J
+//This function finds and returns all undone tasks
+std::vector<Task> Logic::findUndoneTasks(std::vector<Task> allTasks) {
+	std::vector<Task> displayedTasks;
+
+	for (int i = 0; i < allTasks.size(); i++) {
+		bool displayCondition = !allTasks[i].isDone;
+		if (displayCondition) {
+			displayedTasks.push_back(allTasks[i]);
+		}
+	}
+
+	return displayedTasks;
+}
+
+//@author A0108417J
+//This function finds and returns all undone and overdue tasks based on today date
+std::vector<Task> Logic::findOverdueTasks(std::vector<Task> allTasks) {
+	std::vector<Task> displayedTasks;
+	Date today = getTodayDate();
+
+	for (int i = 0; i < allTasks.size(); i++) {
+
+		//displayCondition = when task is undone and task before today date
+		bool displayCondition = !allTasks[i].isDone && utility.beforeToday(allTasks[i].startDate, today);
+
+		if (displayCondition) {
+			displayedTasks.push_back(allTasks[i]);
+		}
+	}
+
+	return displayedTasks;
+}
+
+//@author A0108417J
+//This function finds and returns all undone and today tasks
+std::vector<Task> Logic::findTodayTasks(std::vector<Task> allTasks) {
+	std::vector<Task> displayedTasks;
+	Date today = getTodayDate();
+
+	for (int i = 0; i < allTasks.size(); i++) {
+
+		//displayCondition = when task is undone and today task or floating task
+		bool displayCondition = !allTasks[i].isDone &&
+								(allTasks[i].taskType == FLOATTASK || utility.isEqual(allTasks[i].startDate, today));
+		
+		if (displayCondition) {
+			displayedTasks.push_back(allTasks[i]);
+		}
+	}
+
+	return displayedTasks;
+}
+
+//@author A0108417J
+//This function finds and returns all undone and tmr tasks
+std::vector<Task> Logic::findTmrTasks(std::vector<Task> allTasks) {
+	std::vector<Task> displayedTasks;
+	Date tmr = getTmrDate();
+
+	for (int i = 0; i < allTasks.size(); i++) {
+
+		//displayCondition = when task is undone and tmr task or floating task
+		bool displayCondition = !allTasks[i].isDone &&
+								(allTasks[i].taskType == FLOATTASK || utility.isEqual(allTasks[i].startDate, tmr));
+		
+		if (displayCondition) {
+			displayedTasks.push_back(allTasks[i]);
+		}
+	}
+
+	return displayedTasks;
+}
+
+//@author A0108417J
+//This function finds and returns all undone and specific date tasks
+std::vector<Task> Logic::findSpecificDateTasks(std::vector<Task> allTasks, Task specificTaskDate) {
+	std::vector<Task> displayedTasks;
+	Date specificDate = getSpecificDate(specificTaskDate);
+
+	for (int i = 0; i < allTasks.size(); i++) {
+			
+			//displayCondition = when task is undone and specific date task or floating task
+			bool displayCondition = !allTasks[i].isDone &&
+									(allTasks[i].taskType == FLOATTASK || utility.isEqual(allTasks[i].startDate, specificDate));
+			
+			if (displayCondition) {
+				displayedTasks.push_back(allTasks[i]);
+			}
+		}
+
+	return displayedTasks;
+}
+
+//@author A0108417J
+//This functions edit allTasks with the newTaskInfo
+vector<Task> Logic::edit(vector<Task> allTasks, vector<Task> displayedTasks, int index, Task newTaskInfo)
+{
+	assert(allTasks.size() >= 0);
+	assert(displayedTasks.size() >= 0);
+
+	std::vector<Task> updatedAllTasks = allTasks;
+	success = OPERATION_FAILED;
+
+	utility.log(EDIT_START);
+
+	try {
+		processArray(allTasks);
+		processArray(displayedTasks);
+
+		if (isInputValid(displayedTasks, index, newTaskInfo)) {
+			Task toBeEditedTask = displayedTasks[index - 1];
+
+			if (isTaskTypeValid(toBeEditedTask, newTaskInfo)) {
+				updatedAllTasks = updateAllTasks(allTasks, toBeEditedTask, newTaskInfo);
+			} else {
+				//Do nothing
+			}
+
+		} else {
+			//Do nothing
+		}
+
+	} catch (exception& e) {
+		utility.log(EMPTY);
+	}
+
+	utility.log(EDIT_END);
+
+	return updatedAllTasks;
+}
+
+//@author A0108417J
+//This function checks if the edit input is correct
+bool Logic::isInputValid(std::vector<Task> displayedTasks, int index, Task newTaskInfo) {
+	if ((isIndexValid(displayedTasks, index)) && (isTaskValid(newTaskInfo))) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+//@author A0108417J
+//This function checks if index is valid by comparing with the displayTask's size
+bool Logic::isIndexValid(std::vector<Task> displayedTasks, int index) {
+	if ((index <= 0) || (index > displayedTasks.size())) {
 		return false;
 	} else {
 		return true;
 	}
 }
 
-
-bool isTaskTypeValid(Task toBeEditedTask, Task newTaskInfo) {
+//@author A0108417J
+//This function compares toBeEditedTask with newTaskInfo and determine if it is suitable to update toBeEditedTask
+bool Logic::isTaskTypeValid(Task toBeEditedTask, Task newTaskInfo) {
 	if (((toBeEditedTask.taskType == FLOATTASK) && (newTaskInfo.taskType != FLOATTASK)) ||
 		((toBeEditedTask.taskType == DEAD) && (newTaskInfo.taskType == TIMED)) ||
 		((toBeEditedTask.taskType == TIMED) && (newTaskInfo.taskType == DEAD))) {
 		return false;
 	} else {
-		true;
+		return true;
 	}
 }
 
-Task updateTask(Task toBeEditedTask, Task newTaskInfo) {
-	Utility utility;
+//@author A0108417J
+//This function updates allTasks with the newTaskInfo
+std::vector<Task> Logic::updateAllTasks(vector<Task> allTasks, Task toBeEditedTask, Task newTaskInfo) {
+	std::vector<Task> updatedAllTasks = allTasks;
 
-	if (!utility.isNull(newTaskInfo.title)) {
-		toBeEditedTask.title = newTaskInfo.title;
-	}
+	for (int i = 0; i < allTasks.size(); i++) {
 
-	if (!utility.isNull(newTaskInfo.startDate)) {
-		toBeEditedTask.startDate = newTaskInfo.startDate;
-	}
+		if (utility.isSame(allTasks[i],toBeEditedTask)) {
+			Task updatedTask = updateTask(allTasks[i], newTaskInfo);
 
-	if (!utility.isNull(newTaskInfo.endDate)) {
-		toBeEditedTask.endDate = newTaskInfo.endDate;
-	}
-
-	if (!utility.isNull(newTaskInfo.startTime)) {
-		toBeEditedTask.startTime = newTaskInfo.startTime;
-	}
-
-	if (!utility.isNull(newTaskInfo.endTime)) {
-		toBeEditedTask.endTime = newTaskInfo.endTime;
-	}
-
-	return toBeEditedTask;
-}
-
-
-//Main edit function
-vector<Task> Logic::Edit(vector<Task> allTasks, vector<Task> displayedTasks, int index, Task newTaskInfo)
-{
-	success = OPERATION_SUCCEEDED;
-
-	if (isInputValid(displayedTasks, index, newTaskInfo)) {
-		Task toBeEditedTask = displayedTasks[index - 1];
-
-		if (isTaskTypeValid(toBeEditedTask, newTaskInfo)) {
-			for (int i = 0; i < allTasks.size(); i++) {
-				if (utility.isSame(allTasks[i],toBeEditedTask)) {
-					Task newTask = updateTask(allTasks[i], newTaskInfo);
-					if (utility.isValidAddTask(newTask)) allTasks[i] = newTask;
-					else success = OPERATION_FAILED;
-				}
+			if (utility.isValidAddTask(updatedTask)) {
+				updatedAllTasks[i] = updatedTask;
+				success = OPERATION_SUCCEEDED;
+			} else {
+				//Do nothing
 			}
+		} else {
+			//Do nothing
 		}
-		else {
-			success = OPERATION_FAILED;
-		}
-
-	}
-	else {
-		success = OPERATION_FAILED;
 	}
 
-	return allTasks;
+	return updatedAllTasks;
+}
+
+//@author A0108417J
+//This functions updates toBeEditedTask with the newTaskInfo
+Task Logic::updateTask(Task toBeEditedTask, Task newTaskInfo) {
+	Task editedTask = toBeEditedTask;
+
+	//Update title
+	if (!utility.isNull(newTaskInfo.title)) {
+		editedTask.title = newTaskInfo.title;
+	} else {
+		//Do nothing
+	}
+
+	//Update Start Date
+	if (!utility.isNull(newTaskInfo.startDate)) {
+		editedTask.startDate = newTaskInfo.startDate;
+	} else {
+		//Do nothing
+	}
+
+	//Update End Date
+	if (!utility.isNull(newTaskInfo.endDate)) {
+		editedTask.endDate = newTaskInfo.endDate;
+	} else {
+		//Do nothing
+	}
+
+	//Update Start Time
+	if (!utility.isNull(newTaskInfo.startTime)) {
+		editedTask.startTime = newTaskInfo.startTime;
+	} else {
+		//Do nothing
+	}
+
+	//Update End Time
+	if (!utility.isNull(newTaskInfo.endTime)) {
+		editedTask.endTime = newTaskInfo.endTime;
+	} else {
+		//Do nothing
+	}
+
+	return editedTask;
 }
 
 // Tung

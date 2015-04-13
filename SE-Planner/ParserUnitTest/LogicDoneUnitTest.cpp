@@ -22,7 +22,7 @@ namespace LogicDoneUnitTest
 			Task nulTask = Task();
 			
 			
-			vector<Task> displayedTaskList = logic.Display(allTask,nulTask,ALL);
+			vector<Task> displayedTaskList = logic.display(allTask,nulTask,ALL);
 			Assert::AreEqual(false,allTask[5].isDone);
 
 			
@@ -45,7 +45,7 @@ namespace LogicDoneUnitTest
 			Task nulTask = Task();
 			
 			
-			vector<Task> displayedTaskList = logic.Display(allTask,nulTask,ALL);
+			vector<Task> displayedTaskList = logic.display(allTask,nulTask,ALL);
 			Assert::AreEqual(false,allTask[5].isDone);
 
 			
@@ -69,7 +69,7 @@ namespace LogicDoneUnitTest
 			Task nulTask = Task();
 			
 			
-			vector<Task> displayedTaskList = logic.Display(allTask,nulTask,ALL);
+			vector<Task> displayedTaskList = logic.display(allTask,nulTask,ALL);
 			Assert::AreEqual(false,allTask[5].isDone);
 
 			
@@ -92,7 +92,7 @@ namespace LogicDoneUnitTest
 			Task nulTask = Task();
 			
 			
-			vector<Task> displayedTaskList = logic.Display(allTask,nulTask,ALL);
+			vector<Task> displayedTaskList = logic.display(allTask,nulTask,ALL);
 			Assert::AreEqual(false,allTask[5].isDone);
 
 			
@@ -115,7 +115,7 @@ namespace LogicDoneUnitTest
 			Task nulTask = Task();
 			
 			
-			vector<Task> displayedTaskList = logic.Display(allTask,nulTask,ALL);
+			vector<Task> displayedTaskList = logic.display(allTask,nulTask,ALL);
 			Assert::AreEqual(false,allTask[5].isDone);
 
 			
@@ -139,7 +139,7 @@ namespace LogicDoneUnitTest
 			Task nulTask = Task();
 			
 			
-			vector<Task> displayedTaskList = logic.Display(allTask,nulTask,ALL);
+			vector<Task> displayedTaskList = logic.display(allTask,nulTask,ALL);
 			Assert::AreEqual(false,allTask[5].isDone);
 
 			

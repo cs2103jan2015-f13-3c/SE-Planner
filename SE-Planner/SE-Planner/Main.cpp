@@ -88,13 +88,13 @@ int main()
 
 		else if (userCommand.cmd == DISPLAY) {
 			history.isNewState = false;
-			DisplayTaskList = logic.Display(MainTaskList,userTask,userCommand.instruction);
+			DisplayTaskList = logic.display(MainTaskList,userTask,userCommand.instruction);
 	
 			ui.showTaskList(DisplayTaskList);
 		}
 
 		else if (userCommand.cmd == EDIT) {
-			MainTaskList = logic.Edit(MainTaskList,DisplayTaskList,userCommand.idx[0],userTask);
+			MainTaskList = logic.edit(MainTaskList,DisplayTaskList,userCommand.idx[0],userTask);
 
 			if (logic.success == OPERATION_SUCCEEDED) {
 				history.isNewState = true;
